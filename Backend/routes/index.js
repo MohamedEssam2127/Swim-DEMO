@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.use("/organization", organizationRoutes);
 router.use("/location", locationRoutes);
-router.use("/inventor", inventoryRoutes);
+router.use("/inventory", inventoryRoutes);
 
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
