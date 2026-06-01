@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "../../components/Button";
 
 function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -68,12 +69,7 @@ function SignIn() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="inter tracking-widest w-full bg-primary-900 text-white py-4 mt-4 font-medium hover:bg-primary-700 transition-colors uppercase"
-              >
-                Authenticate
-              </button>
+              <Button type="submit">Authenticate</Button>
             </form>
 
             <div className="flex justify-between items-center mt-6">
