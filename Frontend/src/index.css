@@ -7,12 +7,23 @@
     --color-primary-100: #A8BACD;
     --color-primary-200: #819BB7;
     --color-primary-300: #5A7CA1;
-    --color-primary-400: #335D8B;
+    --color-primary-400: #335D8B; 
     --color-primary-500: #0C3E75;
     --color-primary-600: #0A3462;
     --color-primary-700: #082A50;
     --color-primary-800: #06203D;
     --color-primary-900: #04162A;
+
+    --color-tertiary-50: #D4D8DF;
+    --color-tertiary-100: #C7CDD5;
+    --color-tertiary-200: #AEB7C3;
+    --color-tertiary-300: #96A0B0;
+    --color-tertiary-400: #7D8A9E;
+    --color-tertiary-500: #64748B;
+    --color-tertiary-600: #546175;
+    --color-tertiary-700: #444F5F;
+    --color-tertiary-800: #343C48;
+    --color-tertiary-900: #242A32;
 
     --color-secondary-100: #FFCAB6;
     --color-secondary-200: #FFB296;
@@ -83,4 +94,13 @@
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
 }
