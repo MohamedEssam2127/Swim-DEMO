@@ -32,7 +32,7 @@ function History() {
           <div className="relative w-full md:w-auto shrink-0">
             <select
               id="sort-by"
-              className="regular text-[12px] tracking-widest text-tertiary-500 border border-neutral-300 bg-[#FBF9FB] px-4 py-3 pr-10 appearance-none cursor-pointer uppercase w-full md:w-[220px] outline-none focus:border-neutral-500"
+              className="regular text-[12px] tracking-widest text-tertiary-500 border border-neutral-300 bg-[#FBF9FB] px-4 py-3 pr-10 appearance-none cursor-pointer uppercase w-full md:w-55 outline-none focus:border-neutral-500"
             >
               <option>Sort By Quantity</option>
               <option>Sort By Date</option>
@@ -56,7 +56,7 @@ function History() {
         </div>
 
         <div className="overflow-x-auto no-scrollbar">
-          <div className="min-w-[850px] md:min-w-full">
+          <div className="min-w-212.5 md:min-w-full">
             <div className={`${gridClass} pb-3 border-b-2 border-neutral-300`}>
               <div className="flex justify-center">
                 <span className="regular text-[10px] tracking-widest text-neutral-500 uppercase">Order ID</span>

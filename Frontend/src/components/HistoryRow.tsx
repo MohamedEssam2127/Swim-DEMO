@@ -15,17 +15,17 @@ function HistoryRow({ order }: { order: Order }) {
         <span className="regular text-[11px] text-neutral-700 leading-snug">{num}</span>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-[2px]">
+      <div className="flex flex-col items-center justify-center gap-0.5">
         <span className="header text-[12px] font-bold text-neutral-900 tracking-wide">{order.destination}</span>
         <span className="regular text-[10px] text-neutral-500 tracking-widest">{order.location}</span>
       </div>
 
-      <div className="flex flex-row md:flex-col items-center justify-center gap-1 md:gap-[2px]">
+      <div className="flex flex-row md:flex-col items-center justify-center gap-1 md:gap-0.5">
         <span className="header text-[13px] font-bold text-neutral-900">{order.quantity}</span>
         <span className="regular text-[10px] text-neutral-500 tracking-widest">{order.unit}</span>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-[2px]">
+      <div className="flex flex-col items-center justify-center gap-0.5">
         <span className="header text-[12px] font-bold text-neutral-900 tracking-wide">{order.customer}</span>
         <span className="regular text-[10px] text-neutral-500">{order.customerId}</span>
       </div>
