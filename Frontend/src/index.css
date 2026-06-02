@@ -1,97 +1,98 @@
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 @import "tailwindcss";
 
 @theme {
-    --spacing-section-mobile: 2rem;
-    --spacing-section-desktop: 4rem;
-    --color-primary-100: #A8BACD;
-    --color-primary-200: #819BB7;
-    --color-primary-300: #5A7CA1;
-    --color-primary-400: #335D8B; 
-    --color-primary-500: #0C3E75;
-    --color-primary-600: #0A3462;
-    --color-primary-700: #082A50;
-    --color-primary-800: #06203D;
-    --color-primary-900: #04162A;
+  --spacing-section-mobile: 2rem;
+  --spacing-section-desktop: 4rem;
+  
+  --color-primary-100: #A8BACD;
+  --color-primary-200: #819BB7;
+  --color-primary-300: #5A7CA1;
+  --color-primary-400: #335D8B;
+  --color-primary-500: #0C3E75;
+  --color-primary-600: #0A3462;
+  --color-primary-700: #082A50;
+  --color-primary-800: #06203D;
+  --color-primary-900: #04162A;
 
-    --color-tertiary-50: #D4D8DF;
-    --color-tertiary-100: #C7CDD5;
-    --color-tertiary-200: #AEB7C3;
-    --color-tertiary-300: #96A0B0;
-    --color-tertiary-400: #7D8A9E;
-    --color-tertiary-500: #64748B;
-    --color-tertiary-600: #546175;
-    --color-tertiary-700: #444F5F;
-    --color-tertiary-800: #343C48;
-    --color-tertiary-900: #242A32;
+  --color-tertiary-50: #D4D8DF;
+  --color-tertiary-100: #C7CDD5;
+  --color-tertiary-200: #AEB7C3;
+  --color-tertiary-300: #96A0B0;
+  --color-tertiary-400: #7D8A9E;
+  --color-tertiary-500: #64748B;
+  --color-tertiary-600: #546175;
+  --color-tertiary-700: #444F5F;
+  --color-tertiary-800: #343C48;
+  --color-tertiary-900: #242A32;
 
-    --color-secondary-100: #FFCAB6;
-    --color-secondary-200: #FFB296;
-    --color-secondary-300: #FF9A76;
-    --color-secondary-400: #FF8355;
-    --color-secondary-500: #FF6B35;
-    --color-secondary-600: #D65A2D;
-    --color-secondary-700: #B34A26;
-    --color-secondary-800: #903A1F;
-    --color-secondary-900: #6D2A18;
+  --color-secondary-100: #FFCAB6;
+  --color-secondary-200: #FFB296;
+  --color-secondary-300: #FF9A76;
+  --color-secondary-400: #FF8355;
+  --color-secondary-500: #FF6B35;
+  --color-secondary-600: #D65A2D;
+  --color-secondary-700: #B34A26;
+  --color-secondary-800: #903A1F;
+  --color-secondary-900: #6D2A18;
 
-    --color-neutral-100: #CECECF;
-    --color-neutral-200: #B8B8B9;
-    --color-neutral-300: #A3A3A4;
-    --color-neutral-400: #8D8D8E;
-    --color-neutral-500: #777779;
-    --color-neutral-600: #646466;
-    --color-neutral-700: #515152;
-    --color-neutral-800: #3E3E3F;
-    --color-neutral-900: #2B2B2C;
+  --color-neutral-100: #cececf;
+  --color-neutral-200: #b8b8b9;
+  --color-neutral-300: #a3a3a4;
+  --color-neutral-400: #8d8d8e;
+  --color-neutral-500: #777779;
+  --color-neutral-600: #646466;
+  --color-neutral-700: #515152;
+  --color-neutral-800: #3e3e3f;
+  --color-neutral-900: #2b2b2c;
 
-    --color-light-100: #FFF6E4;   
-    --color-light-200: #FFF2D7;
-    --color-light-300: #FFEECB;
-    --color-light-400: #FFEABF;
-    --color-light-500: #FFE6B3;
-    --color-light-600: #D6C196;
-    --color-light-700: #AD9C7A;
-    --color-light-800: #85785D;
-    --color-light-900: #5C5340;
+  --color-light-100: #FFF6E4;
+  --color-light-200: #FFF2D7;
+  --color-light-300: #FFEECB;
+  --color-light-400: #FFEABF;
+  --color-light-500: #FFE6B3;
+  --color-light-600: #D6C196;
+  --color-light-700: #AD9C7A;
+  --color-light-800: #85785D;
+  --color-light-900: #5C5340;
 
-    --color-Accents-red:#FF383C;
+  --color-Accents-red:#FF383C;
 }
 
 @layer base {
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
 :root {
-    --general-border: 1px solid var(--color-neutral-300);
-    --desktop-section-padding: 4rem;
-    --mobile-section-padding: 2rem;
-    --container-margin: 100px auto;
+  --general-border: 1px solid var(--color-neutral-300);
+  --desktop-section-padding: 4rem;
+  --mobile-section-padding: 2rem;
+  --container-margin: 100px auto;
 }
 
 .inter {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .header {
-    font-family: "Hanken Grotesk", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
 }
 
 .subheader {
-    font-family: "Hanken Grotesk", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .regular {
