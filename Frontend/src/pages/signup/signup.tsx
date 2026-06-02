@@ -1,6 +1,6 @@
 import { useState } from "react";
 import octopusImg from "../../assets/images/octupus.svg";
-import Button from "../../components/Button"; 
+import Button from "../../components/button/button"
 
 function SignUp() {
   const [step, setStep] = useState<number>(1);
@@ -30,7 +30,7 @@ function SignUp() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-grow flex justify-center pt-16 px-4 pb-12">
-        <div className="w-full max-w-4xl flex flex-col">
+        <div className="w-full max-w-7xl flex flex-col">
           
           {step === 1 && (
             <div className="w-full flex flex-col animate-fade-in">
@@ -76,7 +76,9 @@ function SignUp() {
                   </div>
                 </div>
 
-                <Button type="submit">Next Step</Button>
+                <Button type="submit" variant="primary" className="w-full mt-4">
+                  Next Step
+                </Button>
               </form>
             </div>
           )}
@@ -133,7 +135,9 @@ function SignUp() {
                   <label htmlFor="protocol" className="regular text-xs text-neutral-700 uppercase tracking-widest cursor-pointer mt-[2px]">I agree to the protocol</label>
                 </div>
 
-                <Button type="submit">Create Account</Button>
+                <Button type="submit" variant="primary" className="w-full mt-4">
+                  Create Account
+                </Button>
               </form>
             </div>
           )}
