@@ -15,7 +15,7 @@ function Pricing() {
 
         <div className="flex flex-col gap-8 lg:gap-12">
           {/* Left Column */}
-          <div className="flex justify-between gap-8 items-start">
+          <div className="flex justify-between flex-col sm:flex-row gap-8 items-start">
             <PriceCard
               title="CORE"
               price="$0"

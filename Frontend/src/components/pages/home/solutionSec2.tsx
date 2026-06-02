@@ -70,8 +70,8 @@ function SolutionSec2() {
           />
 
           {/* Floating Sign 1: ORDERING SYSTEM READY */}
-          <div className="absolute top-[10%] left-10 md:left-[5%] z-30 pointer-events-none">
-            <div className="relative inline-block">
+          <div className="absolute top-[10%] left-0 md:left-[5%] z-30 pointer-events-none">
+            <div className="relative inline-block bg-[#f8f8f8] py-6 px-8 shadow-2xl">
               <Sign title="ORDERING SYSTEM READY" />
               <div
                 className="absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none rounded-sm"
@@ -81,13 +81,9 @@ function SolutionSec2() {
           </div>
 
           {/* Floating Sign 2: LOGO CUSTOMIZATION */}
-          <div className="absolute bottom-[10%] right-10 md:right-[5%] z-30 pointer-events-none">
-            <div className="relative inline-block">
+          <div className="absolute bottom-[10%] right-0 md:right-[5%] z-30 pointer-events-none">
+            <div className="relative inline-block bg-[#f8f8f8] py-6 px-8 shadow-2xl">
               <Sign title="LOGO CUSTOMIZATION" />
-              <div
-                className="absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none rounded-sm"
-                style={{ backgroundImage: noiseBg }}
-              ></div>
             </div>
           </div>
         </div>

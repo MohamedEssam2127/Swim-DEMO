@@ -3,7 +3,7 @@ import whalePic from "../../../assets/images/whale-pic 1.png";
 
 function Welcome() {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto overflow-hidden">
       <div className="w-full mx-auto px-4 md:px-8 py-10  relative">
         <style>{`
         .whale-mask {
@@ -93,7 +93,10 @@ function Welcome() {
 
             {/* Right Panel */}
             <div className="pointer-events-auto z-20 flex flex-col items-start mt-[40px] mr-4">
-              <a href="#pricing" className="block w-full max-w-[250px] mb-[40px]">
+              <a
+                href="#pricing"
+                className="block w-full max-w-[250px] mb-[40px]"
+              >
                 <Button
                   variant="primary"
                   className="w-full transition-transform hover:scale-105"
@@ -171,7 +174,10 @@ function Welcome() {
               </span>
             </div>
 
-            <a href="#pricing" className="block w-full max-w-[350px] mx-auto mb-8">
+            <a
+              href="#pricing"
+              className="block w-full max-w-[350px] mx-auto mb-8"
+            >
               <Button
                 variant="primary"
                 className="w-full transition-transform active:scale-95"

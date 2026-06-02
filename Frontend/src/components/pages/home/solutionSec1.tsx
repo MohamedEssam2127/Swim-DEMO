@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import type { MouseEvent, ReactNode } from "react";
 
+import Sign from "../../sign/sign";
 import anchorPic from "../../../assets/images/anchor 1.png";
 import laptopPic from "../../../assets/images/Rectangle.png";
 
@@ -143,11 +144,7 @@ function SolutionSec1() {
                 className="absolute inset-0 opacity-20 pointer-events-none"
                 style={{ backgroundImage: noiseBg }}
               ></div>
-              <p className="text-[#7A3626] font-bold text-lg md:text-2xl text-center leading-tight relative z-10 inter drop-shadow-sm">
-                MULTI-BRANCH
-                <br />
-                MANAGEMENT
-              </p>
+              <Sign title="MULTI-BRANCH MANAGEMENT" />
             </div>
           </ScrollReveal>
 
@@ -162,13 +159,7 @@ function SolutionSec1() {
                 className="absolute inset-0 opacity-20 pointer-events-none"
                 style={{ backgroundImage: noiseBg }}
               ></div>
-              <p className="text-[#7A3626] font-bold text-lg md:text-2xl text-center leading-tight relative z-10 inter drop-shadow-sm">
-                REAL-TIME
-                <br />
-                STOCK
-                <br />
-                TRACKING
-              </p>
+              <Sign title="REAL-TIME STOCK TRACKING" />
             </div>
           </ScrollReveal>
 
