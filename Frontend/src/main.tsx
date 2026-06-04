@@ -12,6 +12,7 @@ import SignIn from './pages/signin/signin'
 import SignUp from './pages/signup/signup'
 import Statistics from './pages/statistics/statistics'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Popups from './pages/popups/popups'
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "statistics",
         element: <Statistics />
+      },
+      {
+        path: "popups",
+        element: <Popups/>
       }
     ],
   },
