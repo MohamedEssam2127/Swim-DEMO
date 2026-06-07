@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PageTitle from "../../components/PageTitle/PageTitle";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import SortDropdown from "../../components/SortDropdown/SortDropdown";
-import { type InventoryItem } from "../../components/InventoryRow/InventoryRow";
+import { type InventoryItem, type Location } from "../../interfaces/InventoryTypes/inventory";
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   fetchAllLocations, 
@@ -17,9 +17,14 @@ import {
 } from '../../store/slices/InventorySclice';
 import InventoryStats from '../../components/pages/inventory/InventoryStats';
 import InventoryTable from '../../components/pages/inventory/InventoryTable';
+import type { AppDispatch } from '../../store';
+import FloatingActionButton from '../../components/floatingActionButton/floatingActionButton';
+import WarehouseOperationsPopup from '../../components/warehouseOperationsPopup/warehouseOperationsPopup';
+import AddNewItemPopup from '../../components/addNewItemPopup/addNewItemPopup';
+import ExportToStorePopup from '../../components/exportToStorePopup/exportToStorePopup';
 
 function Inventory() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [selectedLocationId, setSelectedLocationId] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,15 +39,24 @@ function Inventory() {
   const inventoryStatus = useSelector(selectInventoryStatus);
   const inventoryError = useSelector(selectInventoryError);
 
+  const [isWarehousePopupOpen, setIsWarehousePopupOpen] = useState(false);
+  const [isAddNewItemPopupOpen, setIsAddNewItemPopupOpen] = useState(false);
+  const [isExportToStorePopupOpen, setIsExportToStorePopupOpen] = useState(false);
+  
   const activeList = currentView ? totalWarehouses : totalStores;
-  const selectedLocation = activeList.find((loc: any) => loc._id === selectedLocationId);
+
+  const activeLocationId = selectedLocationId && activeList.some((loc: Location) => loc._id === selectedLocationId)
+    ? selectedLocationId
+    : (activeList[0]?._id || '');
+
+  const selectedLocation = activeList.find((loc: Location) => loc._id === activeLocationId);
 
   const changeCurrentView = () => {
     dispatch(setCurrentView(!currentView));
   };
 
   useEffect(() => {
-    dispatch(fetchAllLocations() as any);
+    dispatch(fetchAllLocations());
   }, [dispatch]);
 
   useEffect(() => {
@@ -57,21 +71,10 @@ function Inventory() {
   }, []);
 
   useEffect(() => {
-    if (activeList.length > 0) {
-      const exists = activeList.some((loc: any) => loc._id === selectedLocationId);
-      if (!exists) {
-        setSelectedLocationId(activeList[0]._id);
-      }
-    } else {
-      setSelectedLocationId('');
+    if (activeLocationId) {
+      dispatch(fetchInventoryForLocation(activeLocationId));
     }
-  }, [activeList, selectedLocationId]);
-
-  useEffect(() => {
-    if (selectedLocationId) {
-      dispatch(fetchInventoryForLocation(selectedLocationId) as any);
-    }
-  }, [dispatch, selectedLocationId]);
+  }, [dispatch, activeLocationId]);
 
   const filteredItems = inventoryItems
     .filter((item: InventoryItem) => {
@@ -79,7 +82,8 @@ function Inventory() {
       const q = searchQuery.toLowerCase();
       return (
         item.itemId.name.toLowerCase().includes(q) ||
-        item.itemId.category.toLowerCase().includes(q)
+        item.itemId.category.toLowerCase().includes(q) ||
+        (item.itemId._id || '').toLowerCase().includes(q)
       );
     })
     .sort((a: InventoryItem, b: InventoryItem) => {
@@ -92,6 +96,11 @@ function Inventory() {
         return priceB - priceA;
       }
       if (sortBy === 'Sort By ID') {
+        const idA = a.itemId?._id || '';
+        const idB = b.itemId?._id || '';
+        return idA.localeCompare(idB);
+      }
+      if (sortBy === 'Sort By Name') {
         const nameA = a.itemId?.name || '';
         const nameB = b.itemId?.name || '';
         return nameA.localeCompare(nameB);
@@ -145,8 +154,8 @@ function Inventory() {
           {isDropdownOpen && (
             <div className="absolute left-0 z-50 w-full mt-1 bg-white border border-neutral-300 shadow-xl overflow-hidden animate-slide-down">
               <div className="max-h-60 overflow-y-auto no-scrollbar">
-                {activeList.map((item: any) => {
-                  const isSelected = item._id === selectedLocationId;
+                {activeList.map((item: Location) => {
+                  const isSelected = item._id === activeLocationId;
                   return (
                     <button
                       key={item._id}
@@ -181,14 +190,14 @@ function Inventory() {
             id="search-inventory"
             value={searchQuery}
             onChange={setSearchQuery}
-            placeholder="Search With Item Name"
+            placeholder="Search With Item Name, Category, or ID"
           />
         </div>
         <SortDropdown
           id="sort-inventory"
           value={sortBy}
           onChange={setSortBy}
-          options={['Sort By Quantity', 'Sort By Price', 'Sort By ID']}
+          options={['Sort By Quantity', 'Sort By Price', 'Sort By Name', 'Sort By ID']}
         />
       </div>
 
@@ -199,6 +208,31 @@ function Inventory() {
         inventoryError={inventoryError}
         onClearSearch={() => setSearchQuery('')}
       />
+      
+      <FloatingActionButton onClick={() => setIsWarehousePopupOpen(true)} />
+      
+      <WarehouseOperationsPopup
+        isOpen={isWarehousePopupOpen}
+        onClose={() => setIsWarehousePopupOpen(false)}
+        onAddNewItem={() => {
+          setIsWarehousePopupOpen(false);
+          setIsAddNewItemPopupOpen(true);
+        }}
+        onExportToStore={()=>{
+          setIsWarehousePopupOpen(false);
+          setIsExportToStorePopupOpen(true);
+        }}
+      />
+
+      <AddNewItemPopup
+        isOpen={isAddNewItemPopupOpen}
+        onClose={() => setIsAddNewItemPopupOpen(false)}
+      ></AddNewItemPopup>
+
+      <ExportToStorePopup
+        isOpen={isExportToStorePopupOpen}
+        onClose={()=>setIsExportToStorePopupOpen(false)}
+      ></ExportToStorePopup>
     </div>
   );
 }
