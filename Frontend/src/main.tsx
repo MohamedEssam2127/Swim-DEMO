@@ -1,17 +1,21 @@
 // import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.module.css'
-import App from './App'
-import Home from './pages/home/home'
-import History from './pages/history/history'
-import Inventory from './pages/inventory/inventory'
-import Order from './pages/order/order'
-import Profile from './pages/profile/profile'
-import Reciept from './pages/reciept/reciept'
-import SignIn from './pages/signin/signin'
-import SignUp from './pages/signup/signup'
-import Statistics from './pages/statistics/statistics'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import Home from "./pages/home/home";
+import History from "./pages/history/history";
+import Inventory from "./pages/inventory/inventory";
+import Order from "./pages/order/order";
+import Profile from "./pages/profile/profile";
+import Reciept from "./pages/reciept/reciept";
+import SignIn from "./pages/signin/signin";
+import SignUp from "./pages/signup/signup";
+import Statistics from "./pages/statistics/statistics";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import Popups from "./pages/popups/popups";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -20,50 +24,62 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "home",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "history",
-        element: <History />
+        element: <History />,
       },
       {
         path: "inventory",
-        element: <Inventory />
+        element: <Inventory />,
       },
       {
         path: "order",
-        element: <Order />
+        element: <Order />,
       },
       {
         path: "profile",
-        element: <Profile />
+        element: <Profile />,
       },
       {
         path: "reciept",
-        element: <Reciept />
+        element: <Reciept />,
       },
       {
         path: "signin",
-        element: <SignIn />
+        element: <SignIn />,
       },
       {
         path: "signup",
-        element: <SignUp />
+        element: <SignUp />,
       },
       {
         path: "statistics",
-        element: <Statistics />
-      }
+        element: <Statistics />,
+      },
+      // {
+      //   path: "popups",
+      //   element: <Popups/>
+      // },
     ],
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   // <StrictMode>
-  <RouterProvider router={router} />
+  <Provider store={store}>
+    <RouterProvider router={router} />
+    <Toaster
+      position="top-center"
+      containerStyle={{
+        top: 80,
+      }}
+    />
+  </Provider>,
   // </StrictMode>,
-)
+);
