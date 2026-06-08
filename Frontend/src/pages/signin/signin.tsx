@@ -4,58 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../store/slices/authSlice";
 import type { AppDispatch, RootState } from "../../store";
 import Button from "../../components/button/button";
-import toast from "react-hot-toast";
+import { showSuccessToast, showErrorToast } from "../../utils/toast";
 
 function SignIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  
+
   const { isLoading } = useSelector((state: RootState) => state.auth);
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const resultAction = await dispatch(loginUser({ email, password }));
 
     if (loginUser.fulfilled.match(resultAction)) {
-      toast.success("Access Granted! Welcome to SWIM Protocol.", {
-        duration: 4000,
-        style: {
-          background: '#04162A', 
-          color: '#fff',
-          fontFamily: '"Inter", sans-serif',
-          letterSpacing: '0.5px',
-          padding: '20px 40px',
-          fontSize: '18px',
-          fontWeight: 'bold',
-          borderRadius: '10px'
-        },
-        iconTheme: {
-          primary: '#22c55e',
-          secondary: '#04162A',
-        },
-      });
+      showSuccessToast("Access Granted! Welcome to SWIM Protocol.");
       navigate("/statistics");
-      
     } else {
-      toast.error(resultAction.payload as string, {
-        duration: 4000,
-        style: {
-          background: '#fff',
-          color: '#FF383C', 
-          border: '2px solid #FF383C',
-          fontFamily: '"Inter", sans-serif',
-          letterSpacing: '0.5px',
-          padding: '20px 40px',
-          fontSize: '18px',     
-          fontWeight: 'bold',
-          borderRadius: '10px',
-          boxShadow: '0 10px 25px -5px rgba(255, 56, 60, 0.2)'
-        },
-      });
+      showErrorToast(resultAction.payload as string);
     }
   };
 
@@ -117,9 +85,9 @@ function SignIn() {
                 />
               </div>
 
-              <Button 
-                type="submit" 
-                variant="primary" 
+              <Button
+                type="submit"
+                variant="primary"
                 className={`w-full mt-4 ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
                 disabled={isLoading}
               >

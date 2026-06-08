@@ -47,7 +47,7 @@ export default function LocationManager() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`relative flex-shrink-0 flex items-center gap-2 px-5 py-3 header text-[13px] tracking-widest uppercase font-bold transition-colors cursor-pointer whitespace-nowrap ${
+              className={`relative shrink-0 flex items-center gap-2 px-5 py-3 header text-[13px] tracking-widest uppercase font-bold transition-colors cursor-pointer whitespace-nowrap ${
                 isActive
                   ? "border-b-2 border-primary-800 text-primary-800"
                   : "text-neutral-500 hover:text-neutral-800"

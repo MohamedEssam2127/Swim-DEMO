@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import SortDropdown from "../../components/SortDropdown/SortDropdown";
@@ -67,11 +67,15 @@ function Inventory() {
 
   const activeList = currentView ? totalWarehouses : totalStores;
 
-  const activeLocationId = selectedLocationId && activeList.some((loc: Location) => loc._id === selectedLocationId)
-    ? selectedLocationId
-    : (activeList[0]?._id || '');
+  const activeLocationId =
+    selectedLocationId &&
+    activeList.some((loc: Location) => loc._id === selectedLocationId)
+      ? selectedLocationId
+      : activeList[0]?._id || "";
 
-  const selectedLocation = activeList.find((loc: Location) => loc._id === activeLocationId);
+  const selectedLocation = activeList.find(
+    (loc: Location) => loc._id === activeLocationId,
+  );
 
   const changeCurrentView = () => {
     dispatch(setCurrentView(!currentView));
@@ -90,12 +94,12 @@ function Inventory() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.closest('.custom-dropdown-container')) {
+      if (!target.closest(".custom-dropdown-container")) {
         setIsDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -111,38 +115,41 @@ function Inventory() {
       return (
         item.itemId.name.toLowerCase().includes(q) ||
         item.itemId.category.toLowerCase().includes(q) ||
-        (item.itemId._id || '').toLowerCase().includes(q)
+        (item.itemId._id || "").toLowerCase().includes(q)
       );
     })
     .sort((a: InventoryItem, b: InventoryItem) => {
-      if (sortBy === 'Sort By Quantity') {
+      if (sortBy === "Sort By Quantity") {
         return b.quantity - a.quantity;
       }
-      if (sortBy === 'Sort By Price') {
+      if (sortBy === "Sort By Price") {
         const priceA = a.itemId?.price || 0;
         const priceB = b.itemId?.price || 0;
         return priceB - priceA;
       }
-      if (sortBy === 'Sort By ID') {
-        const idA = a.itemId?._id || '';
-        const idB = b.itemId?._id || '';
+      if (sortBy === "Sort By ID") {
+        const idA = a.itemId?._id || "";
+        const idB = b.itemId?._id || "";
         return idA.localeCompare(idB);
       }
-      if (sortBy === 'Sort By Name') {
-        const nameA = a.itemId?.name || '';
-        const nameB = b.itemId?.name || '';
+      if (sortBy === "Sort By Name") {
+        const nameA = a.itemId?.name || "";
+        const nameB = b.itemId?.name || "";
         return nameA.localeCompare(nameB);
       }
       return 0;
     });
 
-  const totalValue = filteredItems.reduce((acc: number, item: InventoryItem) => {
-    const price = item.itemId?.price || 0;
-    return acc + (item.quantity * price);
-  }, 0);
+  const totalValue = filteredItems.reduce(
+    (acc: number, item: InventoryItem) => {
+      const price = item.itemId?.price || 0;
+      return acc + item.quantity * price;
+    },
+    0,
+  );
 
   return (
-    <div className="p-section-mobile md:p-section-desktop ">
+    <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
       <PageTitle title="Swim Inventory" />
 
       {isOwner && (
@@ -230,7 +237,12 @@ function Inventory() {
           id="sort-inventory"
           value={sortBy}
           onChange={setSortBy}
-          options={['Sort By Quantity', 'Sort By Price', 'Sort By Name', 'Sort By ID']}
+          options={[
+            "Sort By Quantity",
+            "Sort By Price",
+            "Sort By Name",
+            "Sort By ID",
+          ]}
         />
       </div>
 
@@ -239,10 +251,12 @@ function Inventory() {
         inventoryItemsCount={inventoryItems.length}
         inventoryStatus={inventoryStatus}
         inventoryError={inventoryError}
-        onClearSearch={() => setSearchQuery('')}
+        onClearSearch={() => setSearchQuery("")}
       />
 
+
       <FloatingActionButton onClick={() => setIsWarehousePopupOpen(true)} />
+
 
       <WarehouseOperationsPopup
         isOpen={isWarehousePopupOpen}
@@ -251,6 +265,7 @@ function Inventory() {
           setIsWarehousePopupOpen(false);
           setIsAddNewItemPopupOpen(true);
         }}
+        onExportToStore={() => {
         onExportToStore={() => {
           setIsWarehousePopupOpen(false);
           setIsExportToStorePopupOpen(true);
@@ -264,6 +279,7 @@ function Inventory() {
 
       <ExportToStorePopup
         isOpen={isExportToStorePopupOpen}
+        onClose={() => setIsExportToStorePopupOpen(false)}
         onClose={() => setIsExportToStorePopupOpen(false)}
       ></ExportToStorePopup>
     </div>
