@@ -1,21 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch } from '../../store';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../../store";
 import {
   fetchRequests,
-  approveRequest,
   declineRequest,
+  approveRequest,
   selectAllRequests,
   selectRequestsStatus,
-} from '../../store/slices/requestsSlice';
-import type { StockRequest } from '../../interfaces/RequestTypes/request';
-import FormSection from '../../components/FormSection/FormSection';
+} from "../../store/slices/requestsSlice";
+import type { StockRequest } from "../../interfaces/RequestTypes/request";
+import FormSection from "../../components/FormSection/FormSection";
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 
 function InboxIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
       <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
     </svg>
@@ -24,7 +33,16 @@ function InboxIcon() {
 
 function CheckIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
@@ -32,7 +50,16 @@ function CheckIcon() {
 
 function XIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
@@ -41,7 +68,16 @@ function XIcon() {
 
 function EditIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
     </svg>
@@ -50,7 +86,16 @@ function EditIcon() {
 
 function FilterIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
     </svg>
   );
@@ -58,21 +103,21 @@ function FilterIcon() {
 
 // ─── Status Badge ─────────────────────────────────────────────────────────────
 
-type RequestStatus = 'Pending' | 'Approved' | 'Declined';
+type RequestStatus = "pending" | "approved" | "rejected";
 
 function StatusBadge({ status }: { status: RequestStatus }) {
   const config: Record<RequestStatus, { label: string; classes: string }> = {
-    Pending: {
-      label: 'Pending',
-      classes: 'text-amber-700 bg-amber-50 border-amber-200',
+    pending: {
+      label: "Pending",
+      classes: "text-amber-700 bg-amber-50 border-amber-200",
     },
-    Approved: {
-      label: 'Approved',
-      classes: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+    approved: {
+      label: "Approved",
+      classes: "text-emerald-700 bg-emerald-50 border-emerald-200",
     },
-    Declined: {
-      label: 'Declined',
-      classes: 'text-red-700 bg-red-50 border-red-200',
+    rejected: {
+      label: "Declined",
+      classes: "text-red-700 bg-red-50 border-red-200",
     },
   };
   const { label, classes } = config[status];
@@ -98,7 +143,7 @@ function EditApproveRow({
   onCancel: () => void;
   isLoading: boolean;
 }) {
-  const [qty, setQty] = useState(request.requestedQuantity);
+  const [qty, setQty] = useState<number>(request.items[0]?.quantity ?? 1);
 
   return (
     <div className="mt-3 border border-primary-200 bg-primary-50 px-4 py-3 flex flex-col gap-3">
@@ -130,7 +175,7 @@ function EditApproveRow({
           </button>
         </div>
         <span className="regular text-[10px] text-neutral-400 tracking-widest uppercase">
-          (requested: {request.requestedQuantity})
+          (requested: {request.items[0]?.quantity ?? 0})
         </span>
       </div>
       <div className="flex gap-2">
@@ -154,7 +199,9 @@ function EditApproveRow({
           onClick={onCancel}
           className="flex items-center gap-1.5 px-4 py-2 border border-neutral-300 text-neutral-600 hover:bg-neutral-100 transition-colors cursor-pointer"
         >
-          <span className="regular text-[10px] tracking-widest uppercase font-bold">Cancel</span>
+          <span className="regular text-[10px] tracking-widest uppercase font-bold">
+            Cancel
+          </span>
         </button>
       </div>
     </div>
@@ -166,12 +213,14 @@ function EditApproveRow({
 function RequestCard({ request }: { request: StockRequest }) {
   const dispatch = useDispatch<AppDispatch>();
   const [editMode, setEditMode] = useState(false);
-  const [actionLoading, setActionLoading] = useState<'approve' | 'decline' | 'editApprove' | null>(null);
+  const [actionLoading, setActionLoading] = useState<
+    "approve" | "decline" | "editApprove" | null
+  >(null);
 
-  const isPending = request.status === 'Pending';
+  const isPending = request.status === "pending";
 
   const handleApprove = async () => {
-    setActionLoading('approve');
+    setActionLoading("approve");
     try {
       await dispatch(approveRequest({ id: request._id })).unwrap();
     } finally {
@@ -180,7 +229,7 @@ function RequestCard({ request }: { request: StockRequest }) {
   };
 
   const handleDecline = async () => {
-    setActionLoading('decline');
+    setActionLoading("decline");
     try {
       await dispatch(declineRequest(request._id)).unwrap();
     } finally {
@@ -189,9 +238,11 @@ function RequestCard({ request }: { request: StockRequest }) {
   };
 
   const handleEditApprove = async (qty: number) => {
-    setActionLoading('editApprove');
+    setActionLoading("editApprove");
     try {
-      await dispatch(approveRequest({ id: request._id, approvedQuantity: qty })).unwrap();
+      await dispatch(
+        approveRequest({ id: request._id, approvedQuantity: qty }),
+      ).unwrap();
       setEditMode(false);
     } finally {
       setActionLoading(null);
@@ -199,39 +250,39 @@ function RequestCard({ request }: { request: StockRequest }) {
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
+    return new Date(dateStr).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
     });
   };
 
   return (
     <div
       className={`border bg-white px-4 py-4 flex flex-col gap-3 transition-colors ${
-        isPending ? 'border-amber-200' : 'border-neutral-200'
+        isPending ? "border-amber-200" : "border-neutral-200"
       }`}
     >
       {/* Header row */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
         <div className="flex flex-col gap-0.5">
           <span className="font-bold text-primary-800 uppercase tracking-wider text-sm">
-            {request.itemName || 'Unknown Item'}
+            {request.items[0]?.itemId || "Unknown Item"}
           </span>
           <div className="flex items-center gap-2 flex-wrap">
             <span className="regular text-[10px] tracking-widest text-neutral-500 uppercase">
-              By {request.storeManagerName || 'Unknown'}
+              By {request.requestedBy.fullName || "Unknown"}
             </span>
             <span className="text-neutral-300">·</span>
             <span className="regular text-[10px] tracking-widest text-neutral-400 uppercase">
-              {request.storeName || 'Unknown Store'}
+              {request.storeName || "Unknown Store"}
             </span>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <StatusBadge status={request.status} />
           <span className="regular text-[9px] tracking-widest text-neutral-400 uppercase">
-            {formatDate(request.createdAt)}
+            {formatDate(request.resolvedAt)}
           </span>
         </div>
       </div>
@@ -243,10 +294,10 @@ function RequestCard({ request }: { request: StockRequest }) {
             Requested
           </span>
           <span className="header text-[20px] font-bold text-neutral-800 leading-none">
-            {request.requestedQuantity}
+            {request.items[0]?.quantity ?? 0}
           </span>
         </div>
-        {request.approvedQuantity !== undefined && (
+        {request !== undefined && (
           <>
             <div className="text-neutral-300 text-xl">→</div>
             <div className="flex flex-col gap-0.5">
@@ -254,14 +305,14 @@ function RequestCard({ request }: { request: StockRequest }) {
                 Approved
               </span>
               <span className="header text-[20px] font-bold text-emerald-700 leading-none">
-                {request.approvedQuantity}
+                {request.items[0]?.quantity ?? 0}
               </span>
             </div>
           </>
         )}
-        {request.note && (
+        {request.notes && (
           <p className="regular text-[10px] tracking-widest text-neutral-400 italic ml-auto">
-            {request.note}
+            {request.notes}
           </p>
         )}
       </div>
@@ -276,12 +327,14 @@ function RequestCard({ request }: { request: StockRequest }) {
             onClick={handleApprove}
             className="flex items-center gap-1.5 px-4 py-2 bg-emerald-700 text-white hover:bg-emerald-600 active:bg-emerald-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
-            {actionLoading === 'approve' ? (
+            {actionLoading === "approve" ? (
               <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <CheckIcon />
             )}
-            <span className="regular text-[10px] tracking-widest uppercase font-bold">Approve</span>
+            <span className="regular text-[10px] tracking-widest uppercase font-bold">
+              Approve
+            </span>
           </button>
 
           {/* Edit & Approve */}
@@ -304,12 +357,14 @@ function RequestCard({ request }: { request: StockRequest }) {
             onClick={handleDecline}
             className="flex items-center gap-1.5 px-4 py-2 border border-red-300 text-red-700 hover:bg-red-50 active:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
-            {actionLoading === 'decline' ? (
+            {actionLoading === "decline" ? (
               <div className="w-3 h-3 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
             ) : (
               <XIcon />
             )}
-            <span className="regular text-[10px] tracking-widest uppercase font-bold">Decline</span>
+            <span className="regular text-[10px] tracking-widest uppercase font-bold">
+              Decline
+            </span>
           </button>
         </div>
       )}
@@ -320,7 +375,7 @@ function RequestCard({ request }: { request: StockRequest }) {
           request={request}
           onConfirm={handleEditApprove}
           onCancel={() => setEditMode(false)}
-          isLoading={actionLoading === 'editApprove'}
+          isLoading={actionLoading === "editApprove"}
         />
       )}
     </div>
@@ -329,40 +384,50 @@ function RequestCard({ request }: { request: StockRequest }) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-type FilterType = 'All' | 'Pending' | 'Approved' | 'Declined';
+type FilterType = "All" | RequestStatus;
 
 export default function RequestsTab() {
   const dispatch = useDispatch<AppDispatch>();
   const allRequests = useSelector(selectAllRequests);
   const status = useSelector(selectRequestsStatus);
 
-  const [filter, setFilter] = useState<FilterType>('All');
+  const [filter, setFilter] = useState<FilterType>("All");
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (status === "idle") {
       dispatch(fetchRequests());
     }
   }, [dispatch, status]);
 
   const filteredRequests =
-    filter === 'All' ? allRequests : allRequests.filter((r) => r.status === filter);
+    filter === "All"
+      ? allRequests
+      : allRequests.filter((r) => r.status === filter);
 
   const counts = {
     All: allRequests.length,
-    Pending: allRequests.filter((r) => r.status === 'Pending').length,
-    Approved: allRequests.filter((r) => r.status === 'Approved').length,
-    Declined: allRequests.filter((r) => r.status === 'Declined').length,
+    pending: allRequests.filter((r) => r.status === "pending").length,
+    approved: allRequests.filter((r) => r.status === "approved").length,
+    rejected: allRequests.filter((r) => r.status === "rejected").length,
   };
 
-  const filterOptions: FilterType[] = ['All', 'Pending', 'Approved', 'Declined'];
+  const filterOptions: FilterType[] = [
+    "All",
+    "pending",
+    "approved",
+    "rejected",
+  ];
 
   const filterBtnClass = (f: FilterType) => {
     const base =
-      'flex items-center gap-1.5 px-3 py-1.5 regular text-[10px] tracking-widest uppercase font-bold transition-colors cursor-pointer border';
+      "flex items-center gap-1.5 px-3 py-1.5 regular text-[10px] tracking-widest uppercase font-bold transition-colors cursor-pointer border";
     if (filter === f) {
-      if (f === 'Pending') return `${base} bg-amber-700 text-white border-amber-700`;
-      if (f === 'Approved') return `${base} bg-emerald-700 text-white border-emerald-700`;
-      if (f === 'Declined') return `${base} bg-red-700 text-white border-red-700`;
+      if (f === "pending")
+        return `${base} bg-amber-700 text-white border-amber-700`;
+      if (f === "approved")
+        return `${base} bg-emerald-700 text-white border-emerald-700`;
+      if (f === "rejected")
+        return `${base} bg-red-700 text-white border-red-700`;
       return `${base} bg-primary-800 text-white border-primary-800`;
     }
     return `${base} bg-white text-neutral-500 border-neutral-200 hover:border-neutral-400 hover:text-neutral-700`;
@@ -375,7 +440,9 @@ export default function RequestsTab() {
         <div className="flex items-center gap-2 flex-wrap mb-4">
           <div className="flex items-center gap-1 text-neutral-400">
             <FilterIcon />
-            <span className="regular text-[9px] tracking-widest uppercase font-bold">Filter:</span>
+            <span className="regular text-[9px] tracking-widest uppercase font-bold">
+              Filter:
+            </span>
           </div>
           {filterOptions.map((f) => (
             <button
@@ -391,17 +458,18 @@ export default function RequestsTab() {
         </div>
 
         {/* Pending notice */}
-        {counts.Pending > 0 && (
+        {counts.pending > 0 && (
           <div className="flex items-center gap-2 border border-amber-200 bg-amber-50 px-4 py-2.5 mb-4">
-            <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse flex-shrink-0" />
+            <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
             <span className="regular text-[10px] tracking-widest uppercase text-amber-700 font-bold">
-              {counts.Pending} request{counts.Pending > 1 ? 's' : ''} awaiting your decision
+              {counts.pending} request{counts.pending > 1 ? "s" : ""} awaiting
+              your decision
             </span>
           </div>
         )}
 
         {/* Content */}
-        {status === 'loading' ? (
+        {status === "loading" ? (
           <div className="flex items-center gap-2 py-6 justify-center">
             <div className="w-5 h-5 border-2 border-primary-600 border-t-transparent rounded-full animate-spin" />
             <span className="regular text-[11px] tracking-widest uppercase text-neutral-400">
@@ -410,12 +478,23 @@ export default function RequestsTab() {
           </div>
         ) : filteredRequests.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-10 text-center">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" className="text-neutral-300">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-neutral-300"
+            >
               <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
               <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
             </svg>
             <p className="regular text-[11px] tracking-widest uppercase text-neutral-400">
-              No {filter !== 'All' ? filter.toLowerCase() + ' ' : ''}requests found.
+              No {filter !== "All" ? filter.toLowerCase() + " " : ""}requests
+              found.
             </p>
           </div>
         ) : (

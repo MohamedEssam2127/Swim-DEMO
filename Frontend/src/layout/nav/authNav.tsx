@@ -4,18 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/slices/authSlice";
 import type { AppDispatch } from "../../store";
-import toast from "react-hot-toast";
+import { showSuccessToast } from "../../utils/toast";
 export default function AuthNav() {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLogout = () => {
     dispatch(logout());
-    toast.success("Logged out securely.", {
-      duration: 3000,
-      style: { background: "#04162A", color: "#fff", fontWeight: "bold" },
-      iconTheme: { primary: "#22c55e", secondary: "#04162A" },
-    });
+    showSuccessToast("Logged out securely.", 3000);
     navigate("/signin");
   };
   return (

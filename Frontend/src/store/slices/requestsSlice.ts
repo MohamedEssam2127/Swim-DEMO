@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type {
-  StockRequest,
-  ApproveRequestPayload,
-} from "../../interfaces/RequestTypes/request";
+import type { StockRequest } from "../../interfaces/RequestTypes/request";
 import type { RootState } from "../index";
 
 // ─── Mock Data (swap for real endpoint) ──────────────────────────────────────
@@ -71,28 +68,18 @@ export const fetchRequests = createAsyncThunk<StockRequest[]>(
 );
 
 export const approveRequest = createAsyncThunk<
-  { id: string; approvedQuantity: number },
-  ApproveRequestPayload
->(
-  "requests/approve",
-  async ({ itemId, quantity }, { getState, rejectWithValue }) => {
-    try {
-      const state = getState() as RootState;
-      const request = state.requests.requests.find((r) => r._id === id);
-      const qty = quantity ?? request?.quantity ?? 0;
-
-      // TODO: replace with real endpoint:
-      // await axios.patch(`${API_BASE_URL}requests/${id}/approve`, { approvedQuantity: qty });
-
-      await new Promise((r) => setTimeout(r, 400));
-      return { id, approvedQuantity: qty };
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to approve request",
-      );
-    }
-  },
-);
+  { id: string; approvedQuantity?: number },
+  { id: string; approvedQuantity?: number }
+>("requests/approve", async ({ id, approvedQuantity }, { rejectWithValue }) => {
+  try {
+    await new Promise((r) => setTimeout(r, 400));
+    return { id, approvedQuantity };
+  } catch (error: any) {
+    return rejectWithValue(
+      error.response?.data?.message || "Failed to approve request",
+    );
+  }
+});
 
 export const declineRequest = createAsyncThunk<string, string>(
   "requests/decline",
@@ -130,18 +117,21 @@ const requestsSlice = createSlice({
         state.status = "failed";
         state.error = action.payload as string;
       })
+
       .addCase(approveRequest.fulfilled, (state, action) => {
-        const { id, approvedQuantity } = action.payload;
-        const req = state.requests.find((r) => r._id === id);
+        const req = state.requests.find((r) => r._id === action.payload.id);
         if (req) {
-          req.status = "Approved";
-          req.approvedQuantity = approvedQuantity;
+          req.status = "approved";
+          if (action.payload.approvedQuantity !== undefined && req.items[0]) {
+            req.items[0].quantity = action.payload.approvedQuantity;
+          }
         }
       })
+
       .addCase(declineRequest.fulfilled, (state, action) => {
         const req = state.requests.find((r) => r._id === action.payload);
         if (req) {
-          req.status = "Declined";
+          req.status = "rejected";
         }
       });
   },
@@ -150,7 +140,8 @@ const requestsSlice = createSlice({
 // ─── Selectors ────────────────────────────────────────────────────────────────
 export const selectAllRequests = (state: RootState) => state.requests.requests;
 export const selectPendingRequests = (state: RootState) =>
-  state.requests.requests.filter((r) => r.status === "Pending");
+  state.requests.requests.filter((request) => request.status === "pending");
+
 export const selectRequestsStatus = (state: RootState) => state.requests.status;
 export const selectRequestsError = (state: RootState) => state.requests.error;
 

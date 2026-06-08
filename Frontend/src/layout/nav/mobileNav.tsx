@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/slices/authSlice";
 import type { AppDispatch, RootState } from "../../store";
-import toast from "react-hot-toast";
+import { showSuccessToast } from "../../utils/toast";
 
 export default function MobileNav({
   variant = "public",
@@ -18,11 +18,7 @@ export default function MobileNav({
 
   const handleLogout = () => {
     dispatch(logout());
-    toast.success("Logged out securely.", {
-      duration: 3000,
-      style: { background: "#04162A", color: "#fff", fontWeight: "bold" },
-      iconTheme: { primary: "#22c55e", secondary: "#04162A" },
-    });
+    showSuccessToast("Logged out securely.", 3000);
     navigate("/signin");
   };
 
@@ -294,7 +290,7 @@ export default function MobileNav({
         </span>
       </a>
 
-     {/* SIGN UP */}
+      {/* SIGN UP */}
       <Link
         to="/signup"
         className={`flex-1 flex flex-col items-center justify-center transition-colors border-r border-gray-200 ${
