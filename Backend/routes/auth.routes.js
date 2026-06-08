@@ -4,16 +4,18 @@ import {
   login,
   forgotPassword,
   resetPassword,
-  addStoreManager,
+  inviteUser,
 } from "../controllers/auth.controller.js";
-
 import { protect } from "../middlewares/auth.middleware.js";
+import { authorize } from "../middlewares/role.middleware.js";
+
+const router = express.Router();
 
 /**
  * @swagger
  * tags:
- *   name: Auth
- *   description: Authentication endpoints – register, login, password reset
+ *   - name: Auth
+ *     description: Authentication endpoints – register, login, password reset
  */
 
 /**
@@ -21,7 +23,8 @@ import { protect } from "../middlewares/auth.middleware.js";
  * /api/auth/register:
  *   post:
  *     summary: Register a new user
- *     tags: [Auth]
+ *     tags:
+ *       - Auth
  *     security: []
  *     requestBody:
  *       required: true
@@ -30,13 +33,13 @@ import { protect } from "../middlewares/auth.middleware.js";
  *           schema:
  *             $ref: '#/components/schemas/RegisterRequest'
  *     responses:
- *       201:
+ *       '201':
  *         description: User registered successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/AuthResponse'
- *       400:
+ *       '400':
  *         description: Validation error or email already registered
  *         content:
  *           application/json:
@@ -50,7 +53,8 @@ router.post("/register", register);
  * /api/auth/login:
  *   post:
  *     summary: Login with email and password
- *     tags: [Auth]
+ *     tags:
+ *       - Auth
  *     security: []
  *     requestBody:
  *       required: true
@@ -59,13 +63,13 @@ router.post("/register", register);
  *           schema:
  *             $ref: '#/components/schemas/LoginRequest'
  *     responses:
- *       200:
+ *       '200':
  *         description: Logged in successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/AuthResponse'
- *       401:
+ *       '401':
  *         description: Invalid email or password
  *         content:
  *           application/json:
@@ -79,7 +83,8 @@ router.post("/login", login);
  * /api/auth/forgotpassword:
  *   post:
  *     summary: Request a password-reset token
- *     tags: [Auth]
+ *     tags:
+ *       - Auth
  *     security: []
  *     requestBody:
  *       required: true
@@ -87,14 +92,15 @@ router.post("/login", login);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [email]
+ *             required:
+ *               - email
  *             properties:
  *               email:
  *                 type: string
  *                 format: email
  *                 example: johndoe@example.com
  *     responses:
- *       200:
+ *       '200':
  *         description: Reset token generated (pretend this was sent via email)
  *         content:
  *           application/json:
@@ -112,7 +118,7 @@ router.post("/login", login);
  *                       type: string
  *                     resetUrl:
  *                       type: string
- *       404:
+ *       '404':
  *         description: No user found with that email
  *         content:
  *           application/json:
@@ -126,7 +132,8 @@ router.post("/forgotpassword", forgotPassword);
  * /api/auth/resetpassword/{resettoken}:
  *   put:
  *     summary: Reset password using the reset token
- *     tags: [Auth]
+ *     tags:
+ *       - Auth
  *     security: []
  *     parameters:
  *       - in: path
@@ -141,14 +148,15 @@ router.post("/forgotpassword", forgotPassword);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [password]
+ *             required:
+ *               - password
  *             properties:
  *               password:
  *                 type: string
  *                 minLength: 6
  *                 example: newSecret123
  *     responses:
- *       200:
+ *       '200':
  *         description: Password reset successfully, returns new JWT
  *         content:
  *           application/json:
@@ -161,7 +169,7 @@ router.post("/forgotpassword", forgotPassword);
  *                   type: string
  *                 token:
  *                   type: string
- *       400:
+ *       '400':
  *         description: Invalid or expired reset token
  *         content:
  *           application/json:
@@ -170,6 +178,48 @@ router.post("/forgotpassword", forgotPassword);
  */
 router.put("/resetpassword/:resettoken", resetPassword);
 
-router.post("/add-manager", protect, addStoreManager);
+/**
+ * @swagger
+ * /api/auth/invite:
+ *   post:
+ *     summary: Owner invites a new WarehouseOwner or StoreManager to their organization
+ *     tags:
+ *       - Auth
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - fullName
+ *               - email
+ *               - password
+ *               - role
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 minLength: 6
+ *               role:
+ *                 type: string
+ *                 enum:
+ *                   - WarehouseOwner
+ *                   - StoreManager
+ *     responses:
+ *       '201':
+ *         description: User invited successfully
+ *       '400':
+ *         description: Validation error or email already registered
+ *       '403':
+ *         description: Owner role required
+ */
+router.post("/invite", protect, authorize("Owner"), inviteUser);
 
 export default router;
