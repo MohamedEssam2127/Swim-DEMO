@@ -21,8 +21,6 @@ interface AlertItem {
   message: string;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
 const REAL_TIME_METRICS: PerformanceMetric[] = [
   { label: "LATENCY", value: "14ms" },
   { label: "THROUGHPUT", value: "8.2k/hr" },
@@ -63,7 +61,6 @@ const ALERTS: AlertItem[] = [
   { type: "info", message: "MANIFEST 7729 AUTO-UPDATED" },
 ];
 
-// Stock velocity bar chart data (relative heights 0-100)
 const VELOCITY_BARS = [
   { time: "08:00", height: 45 },
   { time: "", height: 70 },
@@ -79,7 +76,6 @@ const VELOCITY_BARS = [
   { time: "16:00", height: 90 },
 ];
 
-// Logistics performance bar chart data
 const LOGISTICS_BARS = [
   { height: 40 },
   { height: 55 },
@@ -92,8 +88,6 @@ const LOGISTICS_BARS = [
   { height: 30 },
   { height: 75 },
 ];
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function StatusBadge({ status }: { status: DockActivity["status"] }) {
   const config = {
@@ -171,7 +165,7 @@ function Statistics() {
       </p>
 
       {/* ── Total Stock Value Banner ── */}
-      <div className="bg-[#1A1A1B] border border-neutral-800 px-8 py-6 mb-6 flex flex-col items-center justify-center text-center">
+      <div className="bg-neutral-900 border border-neutral-800 px-8 py-6 mb-6 flex flex-col items-center justify-center text-center">
         <span className="regular text-[10px] tracking-[0.2em] text-neutral-400 uppercase mb-2">
           TOTAL STOCK VALUE
         </span>
@@ -250,7 +244,7 @@ function Statistics() {
           {metrics.map((metric) => (
             <div
               key={metric.label}
-              className="bg-[#1A1A1B] border border-neutral-800 px-5 py-4 flex flex-col gap-2 hover:border-[#0C3E75] transition-colors duration-300"
+              className="bg-neutral-900 border border-neutral-800 px-5 py-4 flex flex-col gap-2 hover:border-[#0C3E75] transition-colors duration-300"
             >
               <span className="regular text-[9px] tracking-widest uppercase text-neutral-400 font-bold">
                 {metric.label}
