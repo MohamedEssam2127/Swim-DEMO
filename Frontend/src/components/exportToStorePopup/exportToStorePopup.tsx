@@ -75,7 +75,7 @@ function ExportToStorePopup({ isOpen, onClose }: props) {
                 <label className="uppercase text-light-100">48 hours</label>
               </div>
             </div>
-            <Button className="bg-secondary-500">
+            <Button variant="secondary">
               <div className="flex justify-center gap-5">
                 execute export
                 <img src={arrowRightLong}></img>
