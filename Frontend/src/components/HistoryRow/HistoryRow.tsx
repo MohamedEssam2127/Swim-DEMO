@@ -1,30 +1,31 @@
+import { useNavigate } from 'react-router-dom';
 import { gridClass } from '../types';
 import StatusBadge from '../StatusBadge/StatusBadge';
 import ActionButton from '../ActionButton/ActionButton';
-import type { FetchedOrder } from '../../interfaces/historyTypes/history';
-import { useState } from 'react';
-import OrderConfirmationPopup from '../orderConfirmationPopup/orderConfirmationPopup';
+import type { FetchedOrder, FetchedOrderItem } from '../../interfaces/historyTypes/history';
 
-const getOrderStatus = (createdAt: string) => {
-  if (!createdAt) return 'PENDING';
-  const orderTime = new Date(createdAt).getTime();
-  const threshold = 24 * 60 * 60 * 1000; // 24 hours
-  return (orderTime + threshold) > Date.now() ? 'PENDING' : 'COMPLETED';
-};
-
-function HistoryRow({ order }: { order: FetchedOrder }) {
+function HistoryRow({ order, isOwner, gridLayoutClass }: { order: FetchedOrder; isOwner?: boolean; gridLayoutClass?: string }) {
+  const navigate = useNavigate();
   const idToUse = order._id || '';
   const parts = idToUse.includes('-') ? idToUse.split('-') : ['ORD', idToUse.substring(Math.max(0, idToUse.length - 6)).toUpperCase()];
   const prefix = parts[0];
   const num = parts[1];
 
-  const totalQty = order.items?.reduce((sum, item: any) => sum + (item.quantity || 1), 0) || 0;
-  const status = getOrderStatus(order.createdAt);
-
-  const [isOrderConfirmationPopupOpen, setIsOrderConfirmationPopupOpen] = useState(false);
+  const totalQty = order.items?.reduce((sum, item: FetchedOrderItem) => sum + (item.quantity || 1), 0) || 0;
+  
+  // Use backend status directly, fallback to PENDING
+  const status = (order.status ? order.status.toUpperCase() : 'PENDING') as any;
   
   return (
-    <div className={`${gridClass} py-5 border-b border-neutral-200 items-center`}>
+    <div className={`${gridLayoutClass || gridClass} py-5 border-b border-neutral-200 items-center`}>
+
+      {isOwner && (
+        <div className="flex justify-center">
+          <span className="header text-[12px] font-bold text-primary-700 tracking-wide uppercase text-center max-w-[120px] truncate">
+            {order.storeId?.name || 'Unknown Store'}
+          </span>
+        </div>
+      )}
 
       <div className="flex flex-row md:flex-col items-center justify-center">
         <span className="regular text-[11px] text-neutral-700 leading-snug">
@@ -65,17 +66,8 @@ function HistoryRow({ order }: { order: FetchedOrder }) {
         {status === 'PENDING' && (
           <ActionButton variant="secondary">{'EDIT\nORDER'}</ActionButton>
         )}
-        <ActionButton variant="primary" onClick={()=>setIsOrderConfirmationPopupOpen(true)}>{'CREATE\nRECEIPT'}</ActionButton>
+        <ActionButton variant="primary" onClick={() => navigate(`/reciept?orderId=${order._id}`)}>{'CREATE\nRECEIPT'}</ActionButton>
       </div>
-
-      <OrderConfirmationPopup
-        isOpen={isOrderConfirmationPopupOpen}
-        onClose={() =>setIsOrderConfirmationPopupOpen(false)}
-        idPrefix={prefix}
-        idNum={num}
-        customerName={order.customerId?.name || 'Unknown Customer'}
-        itemCount={totalQty}
-        />
     </div>
   );
 }

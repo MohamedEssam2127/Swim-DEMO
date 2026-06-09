@@ -1,11 +1,12 @@
 import { registerValidator, loginValidator } from "../utils/validators.js";
 import User from "../models/user.model.js";
-import Organization from "../models/organization.model.js";
-import Location from "../models/location.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import Organization from "../models/organization.model.js";
+import Location from "../models/location.model.js";
 import Joi from "joi";
+import sendEmail from "../utils/sendEmail.js";
 
 const generateToken = (id, role, organizationID) => {
   return jwt.sign({ id, role, organizationID }, process.env.JWT_SECRET, {
@@ -179,6 +180,17 @@ export const inviteUser = async (req, res, next) => {
         typeError.statusCode = 400;
         throw typeError;
       }
+
+      const managerExists = await User.findOne({
+        assignedLocation,
+        role: "StoreManager",
+      });
+
+      if (managerExists) {
+        const dupError = new Error("A StoreManager is already assigned to this store/location.");
+        dupError.statusCode = 400;
+        throw dupError;
+      }
     }
 
     const newUser = await User.create({
@@ -261,18 +273,34 @@ export const forgotPassword = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
+
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    const resetUrl = `http://localhost:3000/api/auth/resetpassword/${resetToken}`;
-    res.status(200).json({
-      success: true,
-      message: "Token generated (pretend this was sent via email)",
-      data: {
-        resetToken,
-        resetUrl,
-      },
-    });
+    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+
+    const message = `You are receiving this email because you (or someone else) have requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
+
+   try {
+      console.log("Attempting to send email..."); 
+      await sendEmail({
+        email: user.email,
+        subject: "Password Reset Token",
+        message,
+      });
+      console.log("Email sent successfully!"); 
+      res.status(200).json({ success: true, message: "Email sent" });
+    } catch (err) {
+      console.error(" REAL MAILTRAP ERROR:", err); 
+
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+      
+      const error = new Error("Email could not be sent");
+      error.statusCode = 500;
+      throw error;
+    }
   } catch (error) {
     next(error);
   }
