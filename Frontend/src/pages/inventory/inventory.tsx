@@ -433,42 +433,46 @@ function Inventory() {
         inventoryError={inventoryError}
         onClearSearch={() => setSearchQuery("")}
       />
+      
+      {isOwner && (
+        <>
+          <FloatingActionButton onClick={() => setIsWarehousePopupOpen(true)} />
 
+          <WarehouseOperationsPopup
+            isOpen={isWarehousePopupOpen}
+            onClose={() => setIsWarehousePopupOpen(false)}
+            onAddNewItem={() => {
+              setIsWarehousePopupOpen(false);
+              setIsAddNewItemPopupOpen(true);
+            }}
+            onExportToStore={() => {
+              setIsWarehousePopupOpen(false);
+              setIsExportToStorePopupOpen(true);
+            }}
+            onMoveBetweenWarehouses={() => {
+              setIsWarehousePopupOpen(false);
+              setIsMoveBetweenWarehousesPopupOpen(true);
+            }}
+          />
 
-      <FloatingActionButton onClick={() => setIsWarehousePopupOpen(true)} />
+          <AddNewItemPopup
+            isOpen={isAddNewItemPopupOpen}
+            onClose={() => setIsAddNewItemPopupOpen(false)}
+          ></AddNewItemPopup>
 
+          <ExportToStorePopup
+            isOpen={isExportToStorePopupOpen}
+            onClose={() => setIsExportToStorePopupOpen(false)}
+            warehouseId={activeLocationId}
+          ></ExportToStorePopup>
 
-      <WarehouseOperationsPopup
-        isOpen={isWarehousePopupOpen}
-        onClose={() => setIsWarehousePopupOpen(false)}
-        onAddNewItem={() => {
-          setIsWarehousePopupOpen(false);
-          setIsAddNewItemPopupOpen(true);
-        }}
-        onExportToStore={() => {
-          setIsWarehousePopupOpen(false);
-          setIsExportToStorePopupOpen(true);
-        }}
-        onMoveBetweenWarehouses={() => {
-          setIsWarehousePopupOpen(false);
-          setIsMoveBetweenWarehousesPopupOpen(true);
-        }}
-      />
-
-      <AddNewItemPopup
-        isOpen={isAddNewItemPopupOpen}
-        onClose={() => setIsAddNewItemPopupOpen(false)}
-      ></AddNewItemPopup>
-
-      <ExportToStorePopup
-        isOpen={isExportToStorePopupOpen}
-        onClose={() => setIsExportToStorePopupOpen(false)}
-      ></ExportToStorePopup>
-
-      <MoveBetweenWarehousesPopup
-        isOpen={isMoveBetweenWarehousesPopupOpen}
-        onClose={() => setIsMoveBetweenWarehousesPopupOpen(false)}
-      ></MoveBetweenWarehousesPopup>
+          <MoveBetweenWarehousesPopup
+            isOpen={isMoveBetweenWarehousesPopupOpen}
+            onClose={() => setIsMoveBetweenWarehousesPopupOpen(false)}
+          ></MoveBetweenWarehousesPopup>
+        </>
+      )}
+      
     </div>
   );
 }
