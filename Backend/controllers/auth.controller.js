@@ -243,6 +243,7 @@ export const login = async (req, res, next) => {
         email: user.email,
         role: user.role,
         organizationID: user.organizationID,
+        assignedLocation: user.assignedLocation,
       },
       message: "Logged in successfully",
     });
