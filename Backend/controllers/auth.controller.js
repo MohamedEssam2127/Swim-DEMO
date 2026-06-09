@@ -1,7 +1,5 @@
 import { registerValidator, loginValidator } from "../utils/validators.js";
 import User from "../models/user.model.js";
-import Organization from "../models/organization.model.js";
-import Location from "../models/location.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
