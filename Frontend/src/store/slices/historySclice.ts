@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import apiClient from "../../core/apiClient";
 import type { RootState } from "../index";
 import type { FetchedOrder } from "../../interfaces/historyTypes/history";
@@ -6,12 +6,14 @@ import type { FetchedOrder } from "../../interfaces/historyTypes/history";
 interface HistoryState {
   orders: FetchedOrder[];
   status: "idle" | "loading" | "succeeded" | "failed";
+  selectedStoreId: string;
 }
 
-export const fetchHistory = createAsyncThunk(
+export const fetchHistory = createAsyncThunk<{ data: FetchedOrder[] }, string | undefined>(
   "history/fetchHistory",
-  async () => {
-    const response = await apiClient.get("order");
+  async (storeId) => {
+    const url = storeId ? `order/store/${storeId}` : "order";
+    const response = await apiClient.get(url);
     return response.data;
   },
 );
@@ -19,12 +21,17 @@ export const fetchHistory = createAsyncThunk(
 const initialState: HistoryState = {
   orders: [],
   status: "idle",
+  selectedStoreId: "",
 };
 
 const historySlice = createSlice({
   name: "history",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedStoreId(state, action: PayloadAction<string>) {
+      state.selectedStoreId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchHistory.pending, (state) => {
@@ -40,6 +47,10 @@ const historySlice = createSlice({
   },
 });
 
+export const { setSelectedStoreId } = historySlice.actions;
+
 export const selectOrders = (state: RootState) => state.history.orders;
+export const selectHistoryStatus = (state: RootState) => state.history.status;
+export const selectSelectedStoreId = (state: RootState) => state.history.selectedStoreId;
 
 export default historySlice.reducer;
