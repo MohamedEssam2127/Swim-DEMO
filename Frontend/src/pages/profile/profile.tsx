@@ -6,6 +6,7 @@ import FormSection from "../../components/FormSection/FormSection";
 import FormField from "../../components/FormField/FormField";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch";
 import LocationManager from "./LocationManager";
+import StoreTab from "./storeTab";
 import type { RootState } from "../../store";
 import apiClient from "../../core/apiClient";
 import { showSuccessToast, showErrorToast } from "../../utils/toast";
@@ -411,9 +412,10 @@ function Profile() {
         </button>
       </form>
 
-      <LocationManager />
+      {(user as any)?.role === "Owner" ? <LocationManager /> : <StoreTab />}
 
       <div
+
         className="mt-5 relative overflow-hidden"
         style={{ height: "160px" }}
       >
