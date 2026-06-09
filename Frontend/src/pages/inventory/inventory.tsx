@@ -68,7 +68,7 @@ function Inventory() {
   const [isAddNewItemPopupOpen, setIsAddNewItemPopupOpen] = useState(false);
   const [isExportToStorePopupOpen, setIsExportToStorePopupOpen] = useState(false);
   const [isMoveBetweenWarehousesPopupOpen, setIsMoveBetweenWarehousesPopupOpen] = useState(false);
-  
+
   const [otherLocationsInfo, setOtherLocationsInfo] = useState<{
     matchingItems: { _id: string; name: string; category: string }[];
     otherLocations: { itemId: string; itemName: string; location: Location; quantity: number }[];
@@ -80,7 +80,7 @@ function Inventory() {
 
   const activeLocationId =
     selectedLocationId &&
-    activeList.some((loc: Location) => loc._id === selectedLocationId)
+      activeList.some((loc: Location) => loc._id === selectedLocationId)
       ? selectedLocationId
       : activeList[0]?._id || "";
 
@@ -182,7 +182,6 @@ function Inventory() {
   );
 
   useEffect(() => {
-    // Immediately clear stale results and reset dismiss flag when starting a new search
     setOtherLocationsInfo(null);
     setIsAlertDismissed(false);
 
@@ -268,8 +267,8 @@ function Inventory() {
                           setIsDropdownOpen(false);
                         }}
                         className={`flex items-center justify-between w-full px-6 py-4 text-left header font-bold text-[18px] md:text-[24px] tracking-wide uppercase transition-all duration-200 cursor-pointer ${isSelected
-                            ? 'bg-neutral-100 text-primary-700 font-extrabold'
-                            : 'text-neutral-700 hover:bg-neutral-50 hover:text-primary-700'
+                          ? 'bg-neutral-100 text-primary-700 font-extrabold'
+                          : 'text-neutral-700 hover:bg-neutral-50 hover:text-primary-700'
                           }`}
                       >
                         <span>{item.name}</span>
@@ -342,7 +341,7 @@ function Inventory() {
               <p className="regular text-[10px] md:text-[13px] text-neutral-500 uppercase tracking-widest mb-4">
                 THE SEARCH QUERY "{searchQuery.toUpperCase()}" MATCHES ITEMS THAT DO NOT EXIST AT {selectedLocation?.name.toUpperCase() || 'THIS WAREHOUSE'}, BUT ARE AVAILABLE ELSEWHERE:
               </p>
-              
+
               <div className="flex flex-col gap-3 w-full bg-white border border-neutral-200 p-4 mb-2">
                 {otherLocationsInfo.matchingItems
                   .filter(item => otherLocationsInfo.otherLocations.some(loc => loc.itemId === item._id))
@@ -450,7 +449,7 @@ function Inventory() {
           setIsWarehousePopupOpen(false);
           setIsExportToStorePopupOpen(true);
         }}
-        onMoveBetweenWarehouses={()=>{
+        onMoveBetweenWarehouses={() => {
           setIsWarehousePopupOpen(false);
           setIsMoveBetweenWarehousesPopupOpen(true);
         }}
@@ -468,7 +467,7 @@ function Inventory() {
 
       <MoveBetweenWarehousesPopup
         isOpen={isMoveBetweenWarehousesPopupOpen}
-        onClose={()=>setIsMoveBetweenWarehousesPopupOpen(false)}
+        onClose={() => setIsMoveBetweenWarehousesPopupOpen(false)}
       ></MoveBetweenWarehousesPopup>
     </div>
   );
