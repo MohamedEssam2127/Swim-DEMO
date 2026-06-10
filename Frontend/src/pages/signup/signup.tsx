@@ -14,6 +14,9 @@ function SignUp() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
   const [orgName, setOrgName] = useState<string>("");
   const [warehouse, setWarehouse] = useState<string>("");
@@ -192,42 +195,69 @@ function SignUp() {
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
                       Password
                     </label>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        validateField("password", e.target.value);
-                      }}
-                      onBlur={(e) => validateField("password", e.target.value)}
-                      placeholder="******"
-                      className={`regular w-full border p-4 text-primary-900 focus:outline-none transition-colors ${errors.password ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          validateField("password", e.target.value);
+                        }}
+                        onBlur={(e) => validateField("password", e.target.value)}
+                        placeholder="******"
+                        className={`regular w-full border p-4 pr-12 text-primary-900 focus:outline-none transition-colors ${errors.password ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-primary-900 transition-colors focus:outline-none"
+                      >
+                        {showPassword ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 2 20 20"/><path d="M6.71 6.71q2.3-.71 5.29-.71 7 0 10 7-1.07 2.4-3 4.29"/><path d="M14.08 14.08a3 3 0 0 1-4.16-4.16"/><path d="M17.29 17.29q-2.3.71-5.29.71-7 0-10-7 1.07-2.4 3-4.29"/></svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        )}
+                      </button>
+                    </div>
                     {errors.password && (
                       <span className="text-red-500 text-xs regular">
                         {errors.password}
                       </span>
                     )}
                   </div>
+
                   <div className="flex flex-col gap-2 w-full">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
                       Confirm Password
                     </label>
-                    <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                        validateField("confirmPassword", e.target.value);
-                      }}
-                      onBlur={(e) =>
-                        validateField("confirmPassword", e.target.value)
-                      }
-                      placeholder="******"
-                      className={`regular w-full border p-4 text-primary-900 focus:outline-none transition-colors ${errors.confirmPassword ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                          validateField("confirmPassword", e.target.value);
+                        }}
+                        onBlur={(e) =>
+                          validateField("confirmPassword", e.target.value)
+                        }
+                        placeholder="******"
+                        className={`regular w-full border p-4 pr-12 text-primary-900 focus:outline-none transition-colors ${errors.confirmPassword ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-primary-900 transition-colors focus:outline-none"
+                      >
+                        {showConfirmPassword ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 2 20 20"/><path d="M6.71 6.71q2.3-.71 5.29-.71 7 0 10 7-1.07 2.4-3 4.29"/><path d="M14.08 14.08a3 3 0 0 1-4.16-4.16"/><path d="M17.29 17.29q-2.3.71-5.29.71-7 0-10-7 1.07-2.4 3-4.29"/></svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        )}
+                      </button>
+                    </div>
                     {errors.confirmPassword && (
                       <span className="text-red-500 text-xs regular">
                         {errors.confirmPassword}
@@ -349,8 +379,8 @@ function SignUp() {
                     onChange={(e) => setIndustry(e.target.value)}
                     className="regular appearance-none w-full border border-neutral-200 p-4 text-primary-900 focus:border-primary-400 bg-white"
                   >
-                    <option value="" disabled>
-                      Select Industry
+                    <option value="">
+                      None (Select Industry)
                     </option>
                     <option value="retail">Retail</option>
                     <option value="manufacturing">Manufacturing</option>
