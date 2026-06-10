@@ -1,10 +1,24 @@
 import type { RequestStatus } from "../../types/requestStatus";
-import type { User } from "../StoreManager/storeManager";
+
+export interface RequestUser {
+  _id?: string;
+  fullName: string;
+  email?: string;
+  organizationID?: string;
+  role: string;
+}
+
+export interface PopulatedItem {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+}
 
 export interface StockRequest {
   _id: string;
-  warehouseId: string;
-  storeId: string;
+  warehouseId: string | PopulatedLocation;
+  storeId: string | PopulatedLocation;
   storeName?: string;
   organizationId: string;
   items: ApproveRequestPayload[];
@@ -12,11 +26,17 @@ export interface StockRequest {
   notes?: string;
   resolvedAt: string;
   adminNote?: string;
-  requestedBy: User;
-  resolvedBy: User;
+  requestedBy: RequestUser;
+  resolvedBy: RequestUser;
 }
 
 export interface ApproveRequestPayload {
-  itemId: string;
+  itemId: string | PopulatedItem;
   quantity: number;
+}
+
+export interface PopulatedLocation {
+  _id: string;
+  name: string;
+  type: string;
 }

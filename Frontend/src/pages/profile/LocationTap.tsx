@@ -9,6 +9,7 @@ import {
 import FormSection from "../../components/FormSection/FormSection";
 import type { AppDispatch } from "../../store";
 import FormField from "../../components/FormField/FormField";
+import { showErrorToast, showSuccessToast } from "../../utils/toast";
 
 function StoreIcon() {
   return (
@@ -78,7 +79,7 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
     dispatch(fetchAllLocations());
   }, [dispatch]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 

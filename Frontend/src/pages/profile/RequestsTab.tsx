@@ -10,8 +10,8 @@ import {
 } from "../../store/slices/requestsSlice";
 import type { StockRequest } from "../../interfaces/RequestTypes/request";
 import FormSection from "../../components/FormSection/FormSection";
-
-// ─── Icons ───────────────────────────────────────────────────────────────────
+import type { RequestStatus } from "../../types/requestStatus";
+import { showSuccessToast, showErrorToast } from "../../utils/toast";
 
 function InboxIcon() {
   return (
@@ -100,10 +100,6 @@ function FilterIcon() {
     </svg>
   );
 }
-
-// ─── Status Badge ─────────────────────────────────────────────────────────────
-
-type RequestStatus = "pending" | "approved" | "rejected";
 
 function StatusBadge({ status }: { status: RequestStatus }) {
   const config: Record<RequestStatus, { label: string; classes: string }> = {
@@ -208,8 +204,6 @@ function EditApproveRow({
   );
 }
 
-// ─── Request Card ─────────────────────────────────────────────────────────────
-
 function RequestCard({ request }: { request: StockRequest }) {
   const dispatch = useDispatch<AppDispatch>();
   const [editMode, setEditMode] = useState(false);
@@ -223,6 +217,13 @@ function RequestCard({ request }: { request: StockRequest }) {
     setActionLoading("approve");
     try {
       await dispatch(approveRequest({ id: request._id })).unwrap();
+      showSuccessToast("Request approved successfully.");
+    } catch (error: any) {
+      showErrorToast(
+        typeof error === "string"
+          ? error
+          : error?.message || "Failed to approve request.",
+      );
     } finally {
       setActionLoading(null);
     }
@@ -231,7 +232,14 @@ function RequestCard({ request }: { request: StockRequest }) {
   const handleDecline = async () => {
     setActionLoading("decline");
     try {
-      await dispatch(declineRequest(request._id)).unwrap();
+      await dispatch(declineRequest({ id: request._id })).unwrap();
+      showSuccessToast("Request declined successfully.");
+    } catch (error: any) {
+      showErrorToast(
+        typeof error === "string"
+          ? error
+          : error?.message || "Failed to decline request.",
+      );
     } finally {
       setActionLoading(null);
     }
@@ -243,7 +251,14 @@ function RequestCard({ request }: { request: StockRequest }) {
       await dispatch(
         approveRequest({ id: request._id, approvedQuantity: qty }),
       ).unwrap();
+      showSuccessToast("Request approved with updated quantity.");
       setEditMode(false);
+    } catch (error: any) {
+      showErrorToast(
+        typeof error === "string"
+          ? error
+          : error?.message || "Failed to approve request.",
+      );
     } finally {
       setActionLoading(null);
     }
@@ -257,6 +272,15 @@ function RequestCard({ request }: { request: StockRequest }) {
     });
   };
 
+  const itemName = (() => {
+    const item = request.items[0];
+    if (!item) return "Unknown Item";
+    if (typeof item.itemId === "object") {
+      return item.itemId.name || item.itemId._id;
+    }
+    return item.itemId;
+  })();
+
   return (
     <div
       className={`border bg-white px-4 py-4 flex flex-col gap-3 transition-colors ${
@@ -267,7 +291,7 @@ function RequestCard({ request }: { request: StockRequest }) {
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
         <div className="flex flex-col gap-0.5">
           <span className="font-bold text-primary-800 uppercase tracking-wider text-sm">
-            {request.items[0]?.itemId || "Unknown Item"}
+            {itemName}
           </span>
           <div className="flex items-center gap-2 flex-wrap">
             <span className="regular text-[10px] tracking-widest text-neutral-500 uppercase">

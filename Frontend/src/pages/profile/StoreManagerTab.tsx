@@ -10,7 +10,7 @@ import {
 import { selectTotalStores } from "../../store/slices/InventorySclice";
 import FormField from "../../components/FormField/FormField";
 import FormSection from "../../components/FormSection/FormSection";
-import { showSuccessToast } from "../../utils/toast";
+import { showErrorToast, showSuccessToast } from "../../utils/toast";
 
 function UserPlusIcon() {
   return (
@@ -65,7 +65,6 @@ export default function StoreManagerTab() {
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchStoreManagers());
-      console.log(managers);
     }
   }, [dispatch, status]);
 
@@ -92,6 +91,8 @@ export default function StoreManagerTab() {
       setPassword("");
       setStoreId("");
       showSuccessToast("Store manager is created successfully");
+    } catch (err) {
+      showErrorToast(`Failed to create a store manager due to ${err}`);
     } finally {
       setIsSubmitting(false);
     }

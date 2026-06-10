@@ -40,20 +40,20 @@ function FilterIcon() {
 
 function StatusBadge({ status }: { status: RequestStatus }) {
   const config: Record<RequestStatus, { label: string; classes: string }> = {
-    Pending: {
+    pending: {
       label: "Pending",
       classes: "text-amber-700 bg-amber-50 border-amber-200",
     },
-    Approved: {
+    approved: {
       label: "Approved",
       classes: "text-emerald-700 bg-emerald-50 border-emerald-200",
     },
-    Rejected: {
+    rejected: {
       label: "Declined",
       classes: "text-red-700 bg-red-50 border-red-200",
     },
   };
-  const { label, classes } = config[status] || config.Pending;
+  const { label, classes } = config[status] || config.pending;
   return (
     <span
       className={`regular text-[9px] tracking-widest uppercase font-bold border px-2 py-1 ${classes}`}
@@ -142,7 +142,7 @@ function RequestCard({ request }: { request: any }) {
           </>
         )}
         {request.notes && (
-          <p className="regular text-[10px] tracking-widest text-neutral-400 italic ml-auto max-w-[200px] truncate">
+          <p className="regular text-[10px] tracking-widest text-neutral-400 italic ml-auto max-w-50 truncate">
             "{request.notes}"
           </p>
         )}
@@ -206,20 +206,20 @@ export default function MyRequests() {
 
   const filterOptions: FilterType[] = [
     "All",
-    "Pending",
-    "Approved",
-    "Rejected",
+    "pending",
+    "approved",
+    "rejected",
   ];
 
   const filterBtnClass = (f: FilterType) => {
     const base =
       "flex items-center gap-1.5 px-3 py-1.5 regular text-[10px] tracking-widest uppercase font-bold transition-colors cursor-pointer border";
     if (filter === f) {
-      if (f === "Pending")
+      if (f === "pending")
         return `${base} bg-amber-700 text-white border-amber-700`;
-      if (f === "Approved")
+      if (f === "approved")
         return `${base} bg-emerald-700 text-white border-emerald-700`;
-      if (f === "Rejected")
+      if (f === "rejected")
         return `${base} bg-red-700 text-white border-red-700`;
       return `${base} bg-primary-800 text-white border-primary-800`;
     }
@@ -244,7 +244,7 @@ export default function MyRequests() {
               onClick={() => setFilter(f)}
               className={filterBtnClass(f)}
             >
-              {f}
+              {f === "All" ? f : f.charAt(0).toUpperCase() + f.slice(1)}
               <span className="ml-1 text-[9px] opacity-70">({counts[f]})</span>
             </button>
           ))}
