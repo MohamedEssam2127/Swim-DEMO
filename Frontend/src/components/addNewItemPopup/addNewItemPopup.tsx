@@ -1,7 +1,5 @@
 import cancelIcon from "../../assets/icons/cancel-02.svg";
 import Button from "../button/button";
-import qrCodeIcon from "../../assets/icons/qr-code-icon.svg";
-import printerIcon from "../../assets/icons/printer-icon.svg";
 import boltIcon from "../../assets/icons/bolt-icon.svg";
 import { useState } from "react";
 import apiClient from "../../core/apiClient";
@@ -10,15 +8,17 @@ import { showSuccessToast } from "../../utils/toast";
 interface props {
   isOpen: boolean;
   onClose: () => void;
+  warehouseId: string;
 }
 
-function AddNewItemPopup({ isOpen, onClose }: props) {
+function AddNewItemPopup({ isOpen, onClose, warehouseId }: props) {
   if (!isOpen) return null;
 
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   const addNewItem = async () => {
     try {
@@ -29,7 +29,11 @@ function AddNewItemPopup({ isOpen, onClose }: props) {
         price: Number(price),
       };
 
-      await apiClient.post("/item", itemData);
+      const itemResponse = await apiClient.post("/item", itemData);
+      await apiClient.post(`/inventory/${warehouseId}`, {
+        itemId: itemResponse.data.data._id,
+        quantity: quantity,
+      });
       showSuccessToast("item added successfully");
       onClose();
     } catch (error: any) {
@@ -95,16 +99,15 @@ function AddNewItemPopup({ isOpen, onClose }: props) {
               className="regular w-full border border-neutral-200 p-4 text-light-100 placeholder-neutral-400 focus:outline-none focus:border-primary-400 transition-colors"
             />
             <label className="regular text-xs text-light-100 uppercase tracking-widest">
-              tracking protocol
+              quantity
             </label>
-            <div className="flex flex-row gap-5">
-              <Button icon={qrCodeIcon} className="flex-1">
-                rfid
-              </Button>
-              <Button icon={printerIcon} className="flex-1">
-                print tag
-              </Button>
-            </div>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder="0"
+              className="regular w-full border border-neutral-200 p-4 text-light-100 placeholder-neutral-400 focus:outline-none focus:border-primary-400 transition-colors"
+            />
             <div className="w-full border my-1 border-light-100"></div>
             <Button
               icon={boltIcon}

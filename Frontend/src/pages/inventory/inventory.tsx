@@ -140,6 +140,7 @@ function Inventory() {
           <AddNewItemPopup
             isOpen={isAddNewItemPopupOpen}
             onClose={() => setIsAddNewItemPopupOpen(false)}
+            warehouseId={activeLocationId}
           />
 
           <ExportToStorePopup
