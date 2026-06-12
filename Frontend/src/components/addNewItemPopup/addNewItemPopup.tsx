@@ -83,7 +83,7 @@ function AddNewItemPopup({ isOpen, onClose, locationId }: props) {
                     onChange={(e) => setItemName(e.target.value)}
                     value={itemName}
                     placeholder="e.g., SWIM-9982-AX"
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-primary-700 focus:outline-none focus:border-white/40 transition-colors text-sm uppercase"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors text-sm uppercase"
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-[2px] opacity-50">
                     <div className="w-[2px] h-4 bg-white"></div>
@@ -123,7 +123,7 @@ function AddNewItemPopup({ isOpen, onClose, locationId }: props) {
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-primary-700 focus:outline-none focus:border-white/40 transition-colors resize-none h-24 text-sm"
+                  className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors resize-none h-24 text-sm"
                   placeholder="Enter technical specifications and physical properties..."
                 ></textarea>
               </div>
@@ -137,7 +137,7 @@ function AddNewItemPopup({ isOpen, onClose, locationId }: props) {
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="0"
-                  className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-primary-700 focus:outline-none focus:border-white/40 transition-colors text-sm"
+                  className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors text-sm"
                 />
               </div>
 

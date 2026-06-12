@@ -183,7 +183,7 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="ENTER QUANTITY"
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-primary-700 focus:outline-none focus:border-white/40 transition-colors text-sm uppercase"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors text-sm uppercase"
                   />
                 </div>
               </div>

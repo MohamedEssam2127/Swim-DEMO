@@ -167,7 +167,7 @@ function ImportFromWarehouse({ isOpen, onClose, storeId }: props) {
                       value={quantity}
                       onChange={(e) => setQuantitiy(e.target.value)}
                       placeholder="0000"
-                      className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-primary-600 focus:outline-none focus:border-white/40 transition-colors text-sm"
+                      className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors text-sm"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary-500 uppercase tracking-wider font-bold text-[10px]">
                       units
