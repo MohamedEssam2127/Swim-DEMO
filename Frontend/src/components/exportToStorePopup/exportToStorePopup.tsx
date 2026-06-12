@@ -75,9 +75,18 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
     <>
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-neutral-900/60 backdrop-blur-sm">
         <div className="relative w-[380px] bg-primary-900 border border-primary-800 shadow-2xl overflow-hidden">
-          {/* Watermark */}
-          <div className="absolute -bottom-6 -right-6 text-[240px] font-bold text-primary-800/40 leading-none select-none pointer-events-none z-0 header">
+          {/* Watermarks */}
+          <div className="absolute top-10 -left-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            S
+          </div>
+          <div className="absolute top-10 -right-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
             W
+          </div>
+          <div className="absolute bottom-10 -left-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            I
+          </div>
+          <div className="absolute bottom-10 -right-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            M
           </div>
 
           <div className="relative z-10 flex flex-col h-full">

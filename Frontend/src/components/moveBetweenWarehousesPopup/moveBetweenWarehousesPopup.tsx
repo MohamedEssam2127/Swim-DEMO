@@ -78,7 +78,16 @@ function MoveBetweenWarehousesPopup({ isOpen, onClose }: props) {
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-neutral-900/60 backdrop-blur-sm">
         <div className="relative w-[380px] bg-primary-900 border border-primary-800 shadow-2xl overflow-hidden">
           {/* Watermarks */}
-          <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+          <div className="absolute top-10 -left-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            S
+          </div>
+          <div className="absolute top-10 -right-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            W
+          </div>
+          <div className="absolute bottom-10 -left-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            I
+          </div>
+          <div className="absolute bottom-10 -right-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
             M
           </div>
 
@@ -87,7 +96,7 @@ function MoveBetweenWarehousesPopup({ isOpen, onClose }: props) {
               <span className="regular text-[10px] text-primary-400 tracking-[0.2em] uppercase leading-tight">
                 operation id: trns-991284
               </span>
-              <button onClick={onClose} className="text-primary-300 hover:text-white transition-colors">
+              <button onClick={onClose} className="text-Accents-red hover:text-red-400 transition-colors">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>

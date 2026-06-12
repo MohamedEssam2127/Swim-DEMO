@@ -49,8 +49,17 @@ function AddNewItemPopup({ isOpen, onClose, locationId }: props) {
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-neutral-900/60 backdrop-blur-sm">
         <div className="relative w-[420px] bg-primary-900 border border-primary-800 border-l-[4px] border-l-secondary-500 shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar">
           {/* Watermarks */}
-          <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
-            A
+          <div className="absolute top-10 -left-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            S
+          </div>
+          <div className="absolute top-10 -right-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            W
+          </div>
+          <div className="absolute bottom-10 -left-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            I
+          </div>
+          <div className="absolute bottom-10 -right-4 text-[200px] font-bold text-white/[0.03] leading-none select-none pointer-events-none z-0 header">
+            M
           </div>
 
           <div className="relative z-10">
@@ -58,9 +67,9 @@ function AddNewItemPopup({ isOpen, onClose, locationId }: props) {
               <span className="font-semibold uppercase flex items-center gap-3">
                 <span className="text-[16px] leading-none flex items-center justify-center bg-white text-primary-900 w-5 h-5 rounded-[2px] font-bold">+</span> ADD NEW ITEM
               </span>
-              <button onClick={onClose} className="text-primary-300 hover:text-white transition-colors">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              </button>
+              <button onClick={onClose} className="text-Accents-red hover:text-red-400 transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
             </div>
             
             <div className="flex flex-col gap-5 p-6">
