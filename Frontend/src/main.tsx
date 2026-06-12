@@ -15,6 +15,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { Toaster } from "react-hot-toast";
+import { I18nProvider } from "./localization/i18n";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 
@@ -82,8 +83,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
   <Provider store={store}>
-    <RouterProvider router={router} />
-    <Toaster
+    <I18nProvider>
+      <RouterProvider router={router} />
+      <Toaster
       position="top-center"
       containerStyle={{
         top: 80,
@@ -122,7 +124,8 @@ createRoot(document.getElementById("root")!).render(
           },
         },
       }}
-    />
+      />
+    </I18nProvider>
   </Provider>,
   // </StrictMode>,
 );

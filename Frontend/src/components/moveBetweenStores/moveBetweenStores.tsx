@@ -1,5 +1,3 @@
-import Button from "../button/button";
-import cancelIcon from "../../assets/icons/cancel-02.svg";
 import transitIcon from "../../assets/icons/transit-icon.svg";
 import { useSelector } from "react-redux";
 import {
@@ -9,6 +7,7 @@ import { useEffect, useState } from "react";
 import { type InventoryItem } from "../../interfaces/InventoryTypes/inventory";
 import apiClient from "../../core/apiClient";
 import { showSuccessToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 interface props {
   isOpen: boolean;
@@ -16,7 +15,7 @@ interface props {
 }
 
 function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
-  if (!isOpen) return null;
+  const { t } = useTranslation("inventory");
 
   const stores = useSelector(selectTotalStores);
   const [items, setItems] = useState<InventoryItem[]>([]);
@@ -24,6 +23,15 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
   const [selectedTargetStoreId, setSelectedTargetStoreId] = useState("");
   const [selectedItemId, setSelectedItemId] = useState("");
   const [quantity, setQuantity] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      setQuantity("");
+      setSelectedSourceStoreId(stores[0]?._id || "");
+      setSelectedTargetStoreId(stores[0]?._id || "");
+      setSelectedItemId("");
+    }
+  }, [isOpen, stores]);
 
   useEffect(() => {
     if (stores.length > 0 && !selectedSourceStoreId) {
@@ -38,6 +46,7 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
   }, [stores, selectedTargetStoreId]);
 
   useEffect(() => {
+    if (!isOpen || !selectedSourceStoreId) return;
     const fetchStoreInventory = async () => {
       try {
         const response = await apiClient.get<{ inventory: InventoryItem[] }>(
@@ -66,12 +75,14 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
         itemId: selectedItemId,
         quantity: Number(quantity),
       });
-      showSuccessToast("item moved successfully");
+      showSuccessToast(t("popups.moveBetween.successToast"));
       onClose();
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (!isOpen) return null;
 
   return (
     <>
@@ -93,8 +104,8 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
 
           <div className="relative z-10 flex flex-col h-full">
             <div className="flex items-start justify-between p-6 pb-2">
-              <span className="regular text-[10px] text-primary-400 tracking-[0.2em] uppercase leading-tight">
-                operation id: trns-991284
+              <span className="regular text-[10px] text-primary-400 tracking-[0.2em] uppercase leading-tight rtl:text-right">
+                {t("popups.moveBetween.opSubtitle")}
               </span>
               <button onClick={onClose} className="text-Accents-red hover:text-red-400 transition-colors cursor-pointer">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -102,87 +113,87 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
             </div>
             
             <div className="px-6 pb-6">
-              <h2 className="header text-3xl font-bold text-white uppercase leading-tight tracking-wide mb-8">
-                move<br />between<br />stores
+              <h2 className="header text-3xl font-bold text-white uppercase leading-tight tracking-wide mb-8 rtl:text-right">
+                {t("popups.moveBetween.titleStores")}
               </h2>
 
               <div className="flex flex-col gap-5">
                 {/* Source Facility */}
                 <div className="flex flex-col gap-2 relative">
-                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em]">
-                    source facility
+                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.moveBetween.sourceFacility")}
                   </label>
                   <select
                     value={selectedSourceStoreId}
                     onChange={(e) => setSelectedSourceStoreId(e.target.value)}
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40 rtl:text-right"
                   >
-                    <option value="" disabled hidden>CHOOSE SOURCE</option>
+                    <option value="" disabled hidden>{t("popups.moveBetween.chooseSourcePlaceholder")}</option>
                     {stores.map((store) => (
                       <option key={store._id} value={store._id} className="uppercase bg-primary-900">
                         {store.name}
                       </option>
                     ))}
                   </select>
-                  <div className="absolute right-4 bottom-4 pointer-events-none text-primary-400">
+                  <div className="absolute right-4 rtl:right-auto rtl:left-4 bottom-4 pointer-events-none text-primary-400">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
                   </div>
                 </div>
 
                 {/* Target Facility */}
                 <div className="flex flex-col gap-2 relative">
-                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em]">
-                    target facility
+                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.moveBetween.targetFacility")}
                   </label>
                   <select
                     value={selectedTargetStoreId}
                     onChange={(e) => setSelectedTargetStoreId(e.target.value)}
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40 rtl:text-right"
                   >
-                    <option value="" disabled hidden>CHOOSE TARGET</option>
+                    <option value="" disabled hidden>{t("popups.moveBetween.chooseTargetPlaceholder")}</option>
                     {stores.map((store) => (
                       <option key={store._id} value={store._id} className="uppercase bg-primary-900">
                         {store.name}
                       </option>
                     ))}
                   </select>
-                  <div className="absolute right-4 bottom-4 pointer-events-none text-primary-400">
+                  <div className="absolute right-4 rtl:right-auto rtl:left-4 bottom-4 pointer-events-none text-primary-400">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
                   </div>
                 </div>
 
                 {/* Item Selection */}
                 <div className="flex flex-col gap-2 relative">
-                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em]">
-                    item selection
+                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.moveBetween.itemSelection")}
                   </label>
                   <select
                     value={selectedItemId}
                     onChange={(e) => setSelectedItemId(e.target.value)}
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40 rtl:text-right"
                   >
-                    <option value="" disabled hidden>CHOOSE ITEM</option>
+                    <option value="" disabled hidden>{t("popups.moveBetween.chooseItemPlaceholder")}</option>
                     {items.map((item) => (
                       <option key={item.itemId!._id} value={item.itemId!._id} className="uppercase bg-primary-900">
                         {item.itemId!.name}
                       </option>
                     ))}
                   </select>
-                  <div className="absolute right-4 bottom-4 pointer-events-none text-primary-400">
+                  <div className="absolute right-4 rtl:right-auto rtl:left-4 bottom-4 pointer-events-none text-primary-400">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                   </div>
                 </div>
 
                 {/* Quantity */}
                 <div className="flex flex-col gap-2">
-                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em]">
-                    quantity
+                  <label className="regular text-[10px] text-primary-300 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.moveBetween.quantity")}
                   </label>
                   <input
                     type="number"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
-                    placeholder="ENTER QUANTITY"
+                    placeholder={t("popups.moveBetween.quantityPlaceholder")}
                     className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors text-sm uppercase"
                   />
                 </div>
@@ -192,14 +203,14 @@ function MoveBetweenStoresPopup({ isOpen, onClose }: props) {
                 className="w-full bg-secondary-500 hover:bg-secondary-600 text-white py-4 mt-8 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-[0.1em] transition-colors relative z-10"
                 onClick={moveBetweenStores}
               >
-                <img src={transitIcon} alt="transit" className="w-4 h-4 filter brightness-0 invert" />
-                initiate transfer
+                <img src={transitIcon} alt="transit" className="w-4 h-4 filter brightness-0 invert rtl:scale-x-[-1]" />
+                {t("popups.moveBetween.initiateTransfer")}
               </button>
             </div>
 
             <div className="px-6 pb-6 mt-auto">
-              <span className="regular text-[10px] text-primary-600 uppercase tracking-widest block">
-                logging to system transaction ledger ...
+              <span className="regular text-[10px] text-primary-600 uppercase tracking-widest block rtl:text-right">
+                {t("popups.moveBetween.systemLogLedger")}
               </span>
             </div>
           </div>

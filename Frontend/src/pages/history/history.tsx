@@ -9,9 +9,11 @@ import type { AppDispatch, RootState } from "../../store";
 import { fetchHistory, selectOrders, selectHistoryStatus, selectSelectedStoreId, setSelectedStoreId } from "../../store/slices/historySclice";
 import type { FetchedOrder } from "../../interfaces/historyTypes/history";
 import { fetchAllLocations, selectTotalStores } from "../../store/slices/InventorySclice";
+import { useTranslation } from "../../localization/i18n";
 
 function History() {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation("history");
   const totalOrders = useSelector(selectOrders) as FetchedOrder[];
   const historyStatus = useSelector(selectHistoryStatus);
   const user = useSelector((state: RootState) => state.auth.user);
@@ -25,7 +27,13 @@ function History() {
     : gridClass;
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState("Sort By Date");
+  const [sortBy, setSortBy] = useState("byDate");
+
+  const sortOptionsMap: Record<string, string> = {
+    "byDate": t("sort.byDate"),
+    "byCustomerName": t("sort.byCustomerName"),
+    "byOrderId": t("sort.byOrderId"),
+  };
 
   const filteredOrders = (totalOrders || [])
     .filter((order) => {
@@ -40,17 +48,17 @@ function History() {
       );
     })
     .sort((a, b) => {
-      if (sortBy === "Sort By Customer Name") {
+      if (sortBy === "byCustomerName") {
         const nameA = a.customerId?.name || "";
         const nameB = b.customerId?.name || "";
         return nameA.localeCompare(nameB);
       }
-      if (sortBy === "Sort By Date") {
+      if (sortBy === "byDate") {
         const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return dateB - dateA; // newest first
       }
-      if (sortBy === "Sort By Order ID") {
+      if (sortBy === "byOrderId") {
         const idA = a._id || "";
         const idB = b._id || "";
         return idA.localeCompare(idB);
@@ -81,21 +89,21 @@ function History() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
-      <PageTitle title="History Management" />
+      <PageTitle title={t("title")} />
 
       <div>
         <div className="regular text-[13px] md:text-[14px] text-center md:text-left text-tertiary-500 tracking-widest uppercase mb-6 leading-relaxed">
-          <span className="block md:inline">Active Logistics Queue — </span>
+          <span className="block md:inline">{t("activeQueue")} </span>
           <span className="block md:inline">
-            {filteredOrders.length} Items{" "}
+            {filteredOrders.length} {t("items")}{" "}
           </span>
-          <span className="block">Total</span>
+          <span className="block">{t("total")}</span>
         </div>
 
         {isOwner && (
           <div className="mb-6 custom-dropdown-container relative">
             <h2 className="header font-bold text-[14px] md:text-[18px] tracking-widest uppercase mb-3 text-left">
-              Filter by Store
+              {t("filterByStore")}
             </h2>
             <div className="relative w-full">
               <button
@@ -105,8 +113,8 @@ function History() {
               >
                 <span>
                   {selectedStoreId
-                    ? stores.find((s) => s._id === selectedStoreId)?.name || "Unknown Store"
-                    : "All Stores"}
+                    ? stores.find((s) => s._id === selectedStoreId)?.name || t("unknownStore")
+                    : t("allStores")}
                 </span>
                 <svg
                   className={`w-5 h-5 text-neutral-600 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
@@ -132,7 +140,7 @@ function History() {
                           : 'text-neutral-700 hover:bg-neutral-50 hover:text-primary-700'
                       }`}
                     >
-                      <span>All Stores</span>
+                      <span>{t("allStores")}</span>
                       {!selectedStoreId && (
                         <svg className="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -174,13 +182,12 @@ function History() {
         <div className="flex flex-col md:flex-row gap-3 mb-6">
           <SortDropdown
             id="sort-by"
-            value={sortBy}
-            onChange={setSortBy}
-            options={[
-              "Sort By Date",
-              "Sort By Customer Name",
-              "Sort By Order ID",
-            ]}
+            value={sortOptionsMap[sortBy] || sortBy}
+            onChange={(label) => {
+              const key = Object.keys(sortOptionsMap).find(k => sortOptionsMap[k] === label) || "byDate";
+              setSortBy(key);
+            }}
+            options={Object.values(sortOptionsMap)}
           />
 
           <div className="flex-1">
@@ -188,7 +195,7 @@ function History() {
               id="search-item"
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Search With Customer Name, Date, or Order ID"
+              placeholder={t("searchPlaceholder")}
             />
           </div>
         </div>
@@ -199,57 +206,57 @@ function History() {
               {isOwner && (
                 <div className="flex justify-center">
                   <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold text-center">
-                    Store
+                    {t("table.store")}
                   </span>
                 </div>
               )}
               <div className="flex justify-center">
                 <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold text-center">
-                  Order ID
+                  {t("table.orderId")}
                 </span>
               </div>
               <div className="flex justify-center">
                 <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold">
-                  Order Created When
+                  {t("table.orderCreatedWhen")}
                 </span>
               </div>
               <div className="flex justify-center">
                 <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold">
-                  Quantity
+                  {t("table.quantity")}
                 </span>
               </div>
               <div className="flex justify-center">
                 <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold">
-                  Customer
+                  {t("table.customer")}
                 </span>
               </div>
               <div className="flex justify-center">
                 <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold">
-                  Status
+                  {t("table.status")}
                 </span>
               </div>
               <div className="flex justify-end">
                 <span className="regular text-[14px] tracking-widest text-neutral-500 uppercase font-bold pr-1">
-                  Actions
+                  {t("table.actions")}
                 </span>
               </div>
             </div>
 
             {historyStatus === 'loading' && (
               <div className="text-center py-8 text-neutral-500 uppercase font-bold tracking-widest animate-pulse">
-                Loading History...
+                {t("states.loading")}
               </div>
             )}
 
             {historyStatus === 'failed' && (
               <div className="text-center py-8 text-red-500 uppercase font-bold tracking-widest">
-                Failed to fetch history.
+                {t("states.failed")}
               </div>
             )}
 
             {historyStatus === 'succeeded' && filteredOrders.length === 0 && (
               <div className="text-center py-8 text-neutral-500 uppercase font-bold tracking-widest">
-                No history items found.
+                {t("states.noItems")}
               </div>
             )}
 
@@ -261,10 +268,10 @@ function History() {
 
         <div className="flex justify-between items-center pt-4 border-t border-neutral-200">
           <span className="regular text-[11px] tracking-widest text-neutral-400 uppercase">
-            {filteredOrders.length} of {totalOrders.length} Orders
+            {filteredOrders.length} {t("of")} {totalOrders.length} {t("orders")}
           </span>
           <span className="regular text-[11px] tracking-widest text-neutral-900 font-bold uppercase cursor-pointer hover:text-primary-500 transition-colors">
-            See More
+            {t("seeMore")}
           </span>
         </div>
       </div>

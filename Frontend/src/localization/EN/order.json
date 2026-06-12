@@ -1,0 +1,54 @@
+{
+  "title": "Order Management",
+  "systemProvision": "System Provision",
+  "moduleLabel": "Module: Order_Initialization_V4",
+  "loadingCatalogue": "Loading catalogue data…",
+  "sections": {
+    "customerData": "Customer Data",
+    "storeLocation": "Store Location",
+    "itemSelection": "Item Selection"
+  },
+  "customer": {
+    "selectLabel": "Select Customer",
+    "selectPlaceholder": "Choose a Customer",
+    "addNew": "+ Add new customer",
+    "newDetails": "New Customer Details",
+    "fullName": "Full Name *",
+    "fullNamePlaceholder": "E.g. Jane Doe",
+    "phone": "Phone (Optional)",
+    "phonePlaceholder": "+1234567890",
+    "email": "Email (Optional)",
+    "emailPlaceholder": "jane@example.com",
+    "saving": "Saving...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "nameRequired": "Customer name is required",
+    "addedSuccess": "Customer added successfully",
+    "createFailed": "Failed to create customer"
+  },
+  "store": {
+    "label": "Store",
+    "placeholder": "Choose a Store",
+    "preSelected": "Pre-selected based on your assigned store"
+  },
+  "items": {
+    "chooseItem": "Choose Item",
+    "selectPlaceholder": "Select Hardware Module",
+    "unitPrice": "Unit Price",
+    "enterQuantity": "Enter Quantity",
+    "enterQuantityMax": "Enter Quantity (Max: {{max}})",
+    "addMore": "+ Add more item",
+    "removeItem": "Remove Item"
+  },
+  "totals": {
+    "estimatedTotal": "Estimated Total",
+    "usd": "USD"
+  },
+  "submit": {
+    "initializeOrder": "Initialize Order",
+    "processing": "Processing…",
+    "fillRequired": "Please fill in all required fields",
+    "success": "Order placed and payment confirmed!",
+    "failed": "Order failed. Please try again."
+  }
+}

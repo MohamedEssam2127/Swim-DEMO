@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import apiClient from "../../core/apiClient";
 import FormSection from "../../components/FormSection/FormSection";
 import type { RootState } from "../../store";
+import { useTranslation } from "../../localization/i18n";
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 function StoreIcon() {
@@ -25,6 +26,7 @@ function StoreIcon() {
 
 export default function StoreRequestForm() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation("profile");
 
   const [stores, setStores] = useState<any[]>([]);
   const [warehouses, setWarehouses] = useState<any[]>([]);
@@ -135,7 +137,7 @@ export default function StoreRequestForm() {
       await apiClient.post("/stock-requests", payload);
       setMessage({
         type: "success",
-        text: "Restock request sent successfully!",
+        text: t("storeRequest.requestSuccess"),
       });
       setItemId("");
       setQuantity(1);
@@ -144,7 +146,7 @@ export default function StoreRequestForm() {
     } catch (err: any) {
       setMessage({
         type: "error",
-        text: err.response?.data?.message || "Failed to send request.",
+        text: err.response?.data?.message || t("storeRequest.requestFailed"),
       });
     } finally {
       setIsSubmitting(false);
@@ -153,12 +155,12 @@ export default function StoreRequestForm() {
 
   return (
     <div className="flex flex-col gap-5">
-      <FormSection icon={<StoreIcon />} title="Create Restock Request">
+      <FormSection icon={<StoreIcon />} title={t("storeRequest.title")}>
         {isLoading ? (
           <div className="flex items-center gap-2 py-6 justify-center">
             <div className="w-5 h-5 border-2 border-primary-600 border-t-transparent rounded-full animate-spin" />
             <span className="regular text-[11px] tracking-widest uppercase text-neutral-400">
-              Loading form data...
+              {t("storeRequest.loadingFormData")}
             </span>
           </div>
         ) : (
@@ -166,8 +168,8 @@ export default function StoreRequestForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Store Selection (Locked) */}
               <div className="flex flex-col gap-1.5">
-                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                  Select Store
+                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold rtl:text-right">
+                  {t("storeRequest.selectStore")}
                 </label>
                 <select
                   value={storeId}
@@ -175,7 +177,7 @@ export default function StoreRequestForm() {
                   className="px-3 py-2 border border-neutral-200 bg-neutral-50 text-neutral-500 outline-none transition-colors regular text-[13px] cursor-not-allowed"
                 >
                   {stores.length === 0 && (
-                    <option value="">-- No Assigned Store --</option>
+                    <option value="">{t("storeRequest.noAssignedStore")}</option>
                   )}
                   {stores.map((s) => (
                     <option key={s._id} value={s._id}>
@@ -187,8 +189,8 @@ export default function StoreRequestForm() {
 
               {/* Warehouse Selection */}
               <div className="flex flex-col gap-1.5">
-                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                  Select Warehouse
+                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold rtl:text-right">
+                  {t("storeRequest.selectWarehouse")}
                 </label>
                 <select
                   required
@@ -196,7 +198,7 @@ export default function StoreRequestForm() {
                   onChange={(e) => setWarehouseId(e.target.value)}
                   className="px-3 py-2 border border-neutral-300 bg-white outline-none focus:border-primary-800 transition-colors regular text-[13px]"
                 >
-                  <option value="">-- Select Warehouse --</option>
+                  <option value="">{t("storeRequest.selectWarehousePlaceholder")}</option>
                   {warehouses.map((w) => (
                     <option key={w._id} value={w._id}>
                       {w.name}
@@ -209,8 +211,8 @@ export default function StoreRequestForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Item Selection */}
               <div className="flex flex-col gap-1.5">
-                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                  Select Item
+                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold rtl:text-right">
+                  {t("storeRequest.selectItem")}
                 </label>
                 <select
                   required
@@ -218,7 +220,7 @@ export default function StoreRequestForm() {
                   onChange={(e) => setItemId(e.target.value)}
                   className="px-3 py-2 border border-neutral-300 bg-white outline-none focus:border-primary-800 transition-colors regular text-[13px]"
                 >
-                  <option value="">-- Select Item --</option>
+                  <option value="">{t("storeRequest.selectItemPlaceholder")}</option>
                   {items.map((item) => (
                     <option key={item._id} value={item._id}>
                       {item.name}
@@ -229,8 +231,8 @@ export default function StoreRequestForm() {
 
               {/* Quantity */}
               <div className="flex flex-col gap-1.5">
-                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                  Quantity
+                <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold rtl:text-right">
+                  {t("storeRequest.quantity")}
                 </label>
                 <input
                   type="number"
@@ -245,12 +247,12 @@ export default function StoreRequestForm() {
 
             {/* Notes */}
             <div className="flex flex-col gap-1.5">
-              <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                Notes / Reason
+              <label className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold rtl:text-right">
+                {t("storeRequest.notes")}
               </label>
               <textarea
                 rows={3}
-                placeholder="e.g. Urgent — running low on keyboards"
+                placeholder={t("storeRequest.notesPlaceholder")}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 className="px-3 py-2 border border-neutral-300 bg-white outline-none focus:border-primary-800 transition-colors regular text-[13px]"
@@ -262,8 +264,8 @@ export default function StoreRequestForm() {
               <div
                 className={`p-3 border ${
                   message.type === "success"
-                    ? "bg-emerald-50 border-emerald-200 text-emerald-800"
-                    : "bg-red-50 border-red-200 text-red-800"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-800 text-left rtl:text-right"
+                    : "bg-red-50 border-red-200 text-red-800 text-left rtl:text-right"
                 }`}
               >
                 <span className="regular text-[12px] font-bold">
@@ -276,7 +278,7 @@ export default function StoreRequestForm() {
             <button
               type="submit"
               disabled={isSubmitting || !storeId}
-              className="self-end mt-2 flex items-center gap-2 px-5 py-2.5 bg-primary-800 text-white hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="self-end mt-2 flex items-center gap-2 px-5 py-2.5 bg-primary-800 text-white hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSubmitting ? (
                 <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -296,7 +298,7 @@ export default function StoreRequestForm() {
                 </svg>
               )}
               <span className="regular text-[11px] tracking-widest uppercase font-bold">
-                Send Request
+                {t("storeRequest.sendRequest")}
               </span>
             </button>
           </form>

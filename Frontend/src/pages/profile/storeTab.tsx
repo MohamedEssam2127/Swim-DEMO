@@ -1,15 +1,17 @@
 import { useState } from "react";
 import StoreRequestForm from "./store";
 import MyRequests from "./request";
+import { useTranslation } from "../../localization/i18n";
 
 type ActiveTab = "store" | "request";
 
 export default function StoreTab() {
   const [activeTab, setActiveTab] = useState<ActiveTab>("store");
+  const { t } = useTranslation("profile");
 
   const tabs: { id: ActiveTab; label: string }[] = [
-    { id: "store", label: "Store Request" },
-    { id: "request", label: "My Requests" },
+    { id: "store", label: t("tabs.storeRequest") },
+    { id: "request", label: t("tabs.myRequests") },
   ];
 
   return (

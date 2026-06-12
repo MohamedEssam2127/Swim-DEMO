@@ -1,6 +1,3 @@
-import Button from "../button/button";
-import cancelIcon from "../../assets/icons/cancel-02.svg";
-import arrowRightLong from "../../assets/icons/arrow-right-long.svg";
 import { useSelector } from "react-redux";
 import { selectTotalStores } from "../../store/slices/InventorySclice";
 import { useEffect, useState } from "react";
@@ -10,6 +7,7 @@ import {
 } from "../../interfaces/InventoryTypes/inventory";
 import apiClient from "../../core/apiClient";
 import { showSuccessToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 interface props {
   isOpen: boolean;
@@ -18,7 +16,7 @@ interface props {
 }
 
 function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
-  if (!isOpen) return null;
+  const { t } = useTranslation("inventory");
 
   const stores = useSelector(selectTotalStores);
 
@@ -27,6 +25,14 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
   const [selectedItemId, setSelectedItemId] = useState("");
   const [selectedStoreId, setSelectedStoreId] = useState("");
   const [quantity, setQuantitiy] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      setQuantitiy("");
+      setSelectedStoreId(stores[0]?._id || "");
+      setSelectedItemId("");
+    }
+  }, [isOpen, stores]);
 
   useEffect(() => {
     if (!isOpen || !warehouseId) return;
@@ -64,12 +70,14 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
         itemId: selectedItemId,
         quantity: Number(quantity),
       });
-      showSuccessToast("item moved successfully");
+      showSuccessToast(t("popups.exportToStore.successToast"));
       onClose();
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (!isOpen) return null;
 
   return (
     <>
@@ -93,8 +101,8 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
             <div className="flex items-start justify-between p-6 pb-2">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-secondary-500 mt-1"></div>
-                <span className="regular text-[10px] text-primary-200 tracking-[0.2em] uppercase leading-tight max-w-[140px]">
-                  warehouse operation v4.2
+                <span className="regular text-[10px] text-primary-200 tracking-[0.2em] uppercase leading-tight max-w-[140px] rtl:text-right">
+                  {t("popups.exportToStore.subtitle")}
                 </span>
               </div>
               <button onClick={onClose} className="text-Accents-red hover:text-red-400 transition-colors cursor-pointer">
@@ -103,22 +111,22 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
             </div>
             
             <div className="px-6 pb-6">
-              <h2 className="header text-3xl font-bold text-white uppercase leading-tight tracking-wide mb-6">
-                export to<br />store
+              <h2 className="header text-3xl font-bold text-white uppercase leading-tight tracking-wide mb-6 rtl:text-right">
+                {t("popups.exportToStore.title")}
               </h2>
 
               <div className="flex flex-col gap-5">
                 {/* Choose Item */}
                 <div className="flex flex-col gap-2 relative z-10">
-                  <label className="regular text-[10px] text-primary-200 uppercase tracking-[0.1em]">
-                    choose item
+                  <label className="regular text-[10px] text-primary-200 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.exportToStore.chooseItem")}
                   </label>
                   <select
                     value={selectedItemId}
                     onChange={(e) => setSelectedItemId(e.target.value)}
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40 rtl:text-right"
                   >
-                    <option value="" disabled hidden>CHOOSE ITEM</option>
+                    <option value="" disabled hidden>{t("popups.exportToStore.chooseItemPlaceholder")}</option>
                     {items.map((inventory) => (
                       <option
                         key={inventory.itemId!._id}
@@ -129,48 +137,48 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
                       </option>
                     ))}
                   </select>
-                  <div className="absolute right-4 bottom-4 pointer-events-none text-primary-400">
+                  <div className="absolute right-4 rtl:right-auto rtl:left-4 bottom-4 pointer-events-none text-primary-400">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
                   </div>
                 </div>
 
                 {/* Destination Store */}
                 <div className="flex flex-col gap-2 relative z-10">
-                  <label className="regular text-[10px] text-primary-200 uppercase tracking-[0.1em]">
-                    destination store
+                  <label className="regular text-[10px] text-primary-200 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.exportToStore.destinationStore")}
                   </label>
                   <select
                     value={selectedStoreId}
                     onChange={(e) => setSelectedStoreId(e.target.value)}
-                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40"
+                    className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white focus:outline-none appearance-none text-sm cursor-pointer uppercase transition-colors hover:border-white/40 rtl:text-right"
                   >
-                    <option value="" disabled hidden>CHOOSE DESTINATION</option>
+                    <option value="" disabled hidden>{t("popups.exportToStore.chooseDestinationPlaceholder")}</option>
                     {stores.map((store: Location) => (
                       <option key={store._id} value={store._id} className="uppercase bg-primary-900">
                         {store.name}
                       </option>
                     ))}
                   </select>
-                  <div className="absolute right-4 bottom-4 pointer-events-none text-primary-400">
+                  <div className="absolute right-4 rtl:right-auto rtl:left-4 bottom-4 pointer-events-none text-primary-400">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
                   </div>
                 </div>
 
                 {/* Enter Quantity */}
                 <div className="flex flex-col gap-2 relative z-10">
-                  <label className="regular text-[10px] text-primary-200 uppercase tracking-[0.1em]">
-                    enter quantity
+                  <label className="regular text-[10px] text-primary-200 uppercase tracking-[0.1em] rtl:text-right">
+                    {t("popups.exportToStore.enterQuantity")}
                   </label>
                   <div className="relative">
                     <input
                       type="number"
                       value={quantity}
                       onChange={(e) => setQuantitiy(e.target.value)}
-                      placeholder="0000"
+                      placeholder={t("popups.exportToStore.quantityPlaceholder")}
                       className="regular w-full bg-[#131C2A] border border-white/20 rounded-[4px] p-4 text-white placeholder-neutral-400 focus:outline-none focus:border-white/40 transition-colors text-sm"
                     />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary-500 uppercase tracking-wider font-bold text-[10px]">
-                      units
+                    <div className="absolute right-4 rtl:right-auto rtl:left-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary-500 uppercase tracking-wider font-bold text-[10px]">
+                      {t("alert.units")}
                     </div>
                   </div>
                 </div>
@@ -183,8 +191,8 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
                   <div className="text-primary-300">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="regular text-[10px] text-primary-300 uppercase tracking-widest leading-tight">current stock</span>
+                  <div className="flex flex-col rtl:text-right">
+                    <span className="regular text-[10px] text-primary-300 uppercase tracking-widest leading-tight">{t("popups.exportToStore.currentStock")}</span>
                     <span className="regular text-sm text-white font-bold leading-tight mt-1">14,202</span>
                   </div>
                 </div>
@@ -193,9 +201,9 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
                   <div className="text-primary-300">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="regular text-[10px] text-primary-300 uppercase tracking-widest leading-tight">transit lead</span>
-                    <span className="regular text-sm text-white font-bold leading-tight mt-1">48 HOURS</span>
+                  <div className="flex flex-col rtl:text-right">
+                    <span className="regular text-[10px] text-primary-300 uppercase tracking-widest leading-tight">{t("popups.exportToStore.transitLead")}</span>
+                    <span className="regular text-sm text-white font-bold leading-tight mt-1">{t("popups.exportToStore.transitLeadValue")}</span>
                   </div>
                 </div>
               </div>
@@ -204,18 +212,18 @@ function ExportToStorePopup({ isOpen, onClose, warehouseId }: props) {
                 className="w-full bg-secondary-500 hover:bg-secondary-600 text-white py-4 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-[0.1em] transition-colors relative z-10"
                 onClick={exportToStore}
               >
-                execute export
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                {t("popups.exportToStore.executeExport")}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="rtl:rotate-180"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </button>
             </div>
 
             <div className="px-6 pb-6 mt-auto">
               <div className="flex justify-between items-end text-[10px] text-primary-600 uppercase tracking-widest regular">
-                <div className="flex flex-col">
+                <div className="flex flex-col rtl:text-right">
                   <span>auth:</span>
                   <span>admin_lvl_4 //</span>
                 </div>
-                <div className="flex flex-col text-right">
+                <div className="flex flex-col text-right rtl:text-left">
                   <span>ts: 2023-11-20</span>
                   <span>14:22:01</span>
                 </div>

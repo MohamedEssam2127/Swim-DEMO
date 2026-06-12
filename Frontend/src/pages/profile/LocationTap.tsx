@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import {
   createLocation,
   fetchAllLocations,
@@ -10,6 +11,7 @@ import FormSection from "../../components/FormSection/FormSection";
 import type { AppDispatch } from "../../store";
 import FormField from "../../components/FormField/FormField";
 import { showErrorToast, showSuccessToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 function StoreIcon() {
   return (
@@ -71,6 +73,7 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
   const dispatch = useDispatch<AppDispatch>();
   const stores = useSelector(selectTotalStores);
   const warehouses = useSelector(selectTotalWarehouses);
+  const { t } = useTranslation("profile");
 
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
@@ -79,7 +82,10 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
     dispatch(fetchAllLocations());
   }, [dispatch]);
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const locationsList = activeTab === "store" ? stores : warehouses;
+  const singularType = activeTab === "store" ? t("store", "inventory") : t("warehouse", "inventory");
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
@@ -89,7 +95,11 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
     );
 
     if (isDuplicate) {
-      showErrorToast(`A ${label.toLowerCase()} with the name "${trimmedName}" already exists.`);
+      showErrorToast(
+        t("locationTab.duplicateError")
+          .replace("{{type}}", singularType)
+          .replace("{{name}}", trimmedName)
+      );
       return;
     }
 
@@ -104,31 +114,28 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
       .then(() => {
         setName("");
         setDetails("");
-        showSuccessToast(`${label} created successfully!`);
+        showSuccessToast(t("locationTab.createSuccess").replace("{{type}}", singularType));
       })
       .catch((err: any) => {
         const errorMsg =
           typeof err === "string"
             ? err
-            : err?.message || `Failed to create ${label.toLowerCase()}`;
+            : err?.message || t("locationTab.createFailed").replace("{{type}}", singularType);
         showErrorToast(errorMsg);
       });
   };
 
-  const locationsList = activeTab === "store" ? stores : warehouses;
-  const label = activeTab === "store" ? "Store" : "Warehouse";
-
   return (
     <FormSection
       icon={activeTab === "store" ? <StoreIcon /> : <WarehouseIcon />}
-      title={`Manage ${label}s`}
+      title={activeTab === "store" ? t("locationTab.manageStores") : t("locationTab.manageWarehouses")}
     >
       <div className="mb-6">
-        <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-3">
-          Current {label}s
+        <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-3 rtl:text-right">
+          {activeTab === "store" ? t("locationTab.currentStores") : t("locationTab.currentWarehouses")}
         </h3>
         {locationsList.length === 0 ? (
-          <p className="text-sm text-neutral-400 italic">No locations found.</p>
+          <p className="text-sm text-neutral-400 italic rtl:text-right">{t("locationTab.noLocations")}</p>
         ) : (
           <ul className="flex flex-col gap-2">
             {locationsList.map((loc) => (
@@ -151,23 +158,23 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
       </div>
 
       <div className="border-t border-neutral-200 pt-5 mt-5">
-        <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-4">
-          Create New {label}
+        <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-4 rtl:text-right">
+          {activeTab === "store" ? t("locationTab.createNewStore") : t("locationTab.createNewWarehouse")}
         </h3>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <FormField
             id={`new-${activeTab}-name`}
-            label={`${label} Name`}
+            label={activeTab === "store" ? t("locationTab.storeName") : t("locationTab.warehouseName")}
             value={name}
             onChange={setName}
-            placeholder="e.g. Node-Alpha"
+            placeholder={activeTab === "store" ? t("locationTab.storeNamePlaceholder") : t("locationTab.warehouseNamePlaceholder")}
           />
           <FormField
             id={`new-${activeTab}-details`}
-            label="Location Details (Optional)"
+            label={t("locationTab.locationDetails")}
             value={details}
             onChange={setDetails}
-            placeholder="e.g. Sector 7G"
+            placeholder={t("locationTab.locationDetailsPlaceholder")}
           />
           <button
             type="submit"
@@ -175,9 +182,9 @@ function LocationTab({ activeTab }: { activeTab: "store" | "warehouse" }) {
             className="mt-2 w-full border border-primary-800 text-primary-800 hover:bg-primary-50 active:bg-primary-100 disabled:opacity-50 disabled:cursor-not-allowed py-3 transition-colors cursor-pointer flex items-center justify-center gap-2 group"
           >
             <span className="regular text-[11px] md:text-[12px] tracking-widest uppercase font-bold">
-              Create {label}
+              {activeTab === "store" ? t("locationTab.createStore") : t("locationTab.createWarehouse")}
             </span>
-            <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+            <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform rtl:group-hover:-translate-x-0.5">
               <SaveIcon />
             </span>
           </button>

@@ -1,0 +1,28 @@
+{
+  "title": "نظام الوصول",
+  "subtitle": "بروتوكول SWIM الإصدار 4.02. محطة آمنة لإدارة مخزون المتاجر والمستودعات الصناعية. يتم تسجيل ومتابعة الوصول غير المصرح به.",
+  "authTitle": "المصادقة",
+  "authRequired1": "مطل",
+  "authRequired2": "وبة",
+  "labels": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور"
+  },
+  "placeholders": {
+    "email": "operator@iti.gov.eg",
+    "password": "******"
+  },
+  "buttons": {
+    "authenticate": "تسجيل الدخول",
+    "authenticating": "جارٍ المصادقة..."
+  },
+  "links": {
+    "forgotPasskey": "نسيت كلمة المرور؟",
+    "newToSwim": "جديد في SWIM؟",
+    "signUp": "إنشاء حساب"
+  },
+  "messages": {
+    "success": "تم منح الوصول! مرحباً في بروتوكول SWIM.",
+    "error": "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+  }
+}

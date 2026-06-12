@@ -1,7 +1,10 @@
 import Button from "../../components/button/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "../../localization/i18n";
 
 export default function Nav() {
+  const { t } = useTranslation("common");
+
   return (
     <nav className="hidden md:flex w-full h-[90px] bg-white items-center justify-center border-b-2 border-gray-100 sticky top-0 z-[100] shadow-sm">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex items-center justify-between">
@@ -142,7 +145,7 @@ export default function Nav() {
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
-              HOME
+              {t("nav.home")}
             </Button>
           </Link>
           <Button
@@ -164,7 +167,7 @@ export default function Nav() {
               <circle cx="12" cy="12" r="2"></circle>
               <path d="M6 12h.01M18 12h.01"></path>
             </svg>
-            PRICING
+            {t("nav.pricing")}
           </Button>
         </div>
 
@@ -175,7 +178,7 @@ export default function Nav() {
               variant="primary"
               className="!bg-[#051426] hover:!bg-[#0a2342] !px-8 hidden sm:block text-white"
             >
-              SIGN UP
+              {t("nav.signUp")}
             </Button>
           </Link>
           <Link to="/signin">
@@ -183,7 +186,7 @@ export default function Nav() {
               variant="primary"
               className="!bg-[#051426] hover:!bg-[#0a2342] !px-8 text-white"
             >
-              LOGIN
+              {t("nav.login")}
             </Button>
           </Link>
         </div>

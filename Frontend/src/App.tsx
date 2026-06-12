@@ -12,10 +12,13 @@ import {
 import Nav from "./layout/nav/nav";
 import MobileNav from "./layout/nav/mobileNav";
 import Footer from "./layout/footer/footer";
+import LanguageSwitcher from "./components/common/LanguageSwitcher";
+import { useTranslation } from "./localization/i18n";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   const { user, token } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     if (user && token) {
@@ -46,7 +49,9 @@ function App() {
 
         // Show toast notification using the application's premium theme
         showRequestNotificationToast(
-          `New request from ${requester} for ${storeName}`,
+          t("toast.newRequest")
+            .replace("{{requester}}", requester)
+            .replace("{{store}}", storeName),
           6000
         );
 
@@ -60,7 +65,7 @@ function App() {
         socket.off("new_stock_request", handleNewRequest);
       };
     }
-  }, [user, token, dispatch]);
+  }, [user, token, dispatch, t]);
 
   // ── Store manager: notified when owner approves or rejects their request ──
   useEffect(() => {
@@ -73,11 +78,17 @@ function App() {
       }) => {
         if (payload.status === "approved") {
           showApprovedToast(
-            `✅ Request approved! "${payload.itemNames}" is on its way to ${payload.storeName}.`
+            `✅ ${t("toast.requestApproved")
+              .replace("{{items}}", payload.itemNames)
+              .replace("{{store}}", payload.storeName)}`
           );
         } else {
           showRejectedToast(
-            `❌ Request rejected for ${payload.storeName}.${payload.adminNote ? ` Reason: ${payload.adminNote}` : ""}`
+            `❌ ${t("toast.requestRejected").replace("{{store}}", payload.storeName)}${
+              payload.adminNote
+                ? ` ${t("toast.reason").replace("{{note}}", payload.adminNote)}`
+                : ""
+            }`
           );
         }
       };
@@ -88,7 +99,7 @@ function App() {
         socket.off("stock_request_resolved", handleResolved);
       };
     }
-  }, [user, token]);
+  }, [user, token, t]);
 
   return (
     <div className="app-layout min-h-screen flex flex-col relative pb-[80px] md:pb-0">
@@ -98,6 +109,7 @@ function App() {
       </main>
       <Footer />
       <MobileNav />
+      <LanguageSwitcher />
     </div>
   );
 }

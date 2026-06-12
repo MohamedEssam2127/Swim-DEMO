@@ -1,0 +1,152 @@
+{
+  "title": "Operator Settings",
+  "subtitle1": "Update primary authentication details and",
+  "subtitle2": "system interaction protocols for Node-34.",
+  "tabs": {
+    "stores": "Stores",
+    "warehouses": "Warehouses",
+    "storeManagers": "Store Managers",
+    "requests": "Requests",
+    "storeRequest": "Store Request",
+    "myRequests": "My Requests"
+  },
+  "locationTab": {
+    "manageStores": "Manage Stores",
+    "manageWarehouses": "Manage Warehouses",
+    "currentStores": "Current Stores",
+    "currentWarehouses": "Current Warehouses",
+    "noLocations": "No locations found.",
+    "createNewStore": "Create New Store",
+    "createNewWarehouse": "Create New Warehouse",
+    "storeName": "Store Name",
+    "warehouseName": "Warehouse Name",
+    "locationDetails": "Location Details (Optional)",
+    "storeNamePlaceholder": "e.g. Node-Alpha",
+    "warehouseNamePlaceholder": "e.g. Node-Beta",
+    "locationDetailsPlaceholder": "e.g. Sector 7G",
+    "createStore": "Create Store",
+    "createWarehouse": "Create Warehouse",
+    "duplicateError": "A {{type}} with the name \"{{name}}\" already exists.",
+    "createSuccess": "{{type}} created successfully!",
+    "createFailed": "Failed to create {{type}}"
+  },
+  "requestsTab": {
+    "title": "Stock Requests",
+    "statusPending": "Pending",
+    "statusApproved": "Approved",
+    "statusDeclined": "Declined",
+    "editQtyBeforeApprove": "Edit quantity before approving",
+    "requestedQty": "(requested: {{qty}})",
+    "confirmApprove": "Confirm & Approve",
+    "cancel": "Cancel",
+    "approveSuccess": "Request approved successfully.",
+    "approveFailed": "Failed to approve request.",
+    "declineSuccess": "Request declined successfully.",
+    "declineFailed": "Failed to decline request.",
+    "approveSuccessQty": "Request approved with updated quantity.",
+    "requested": "Requested",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "actionApprove": "Approve",
+    "actionEditApprove": "Edit & Approve",
+    "actionDecline": "Decline",
+    "filter": "Filter:",
+    "filterAll": "All",
+    "awaitingDecision": "{{count}} request awaiting your decision",
+    "awaitingDecisionPlural": "{{count}} requests awaiting your decision",
+    "loadingRequests": "Loading requests...",
+    "noRequestsFound": "No requests found.",
+    "noFilteredRequestsFound": "No {{filter}} requests found.",
+    "myTitle": "My Stock Requests",
+    "adminNote": "Admin Note"
+  },
+  "storeManagerTab": {
+    "title": "Store Managers",
+    "currentManagers": "Current Managers",
+    "noManagers": "No store managers assigned yet.",
+    "manager": "Manager",
+    "assignTitle": "Assign New Store Manager",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "e.g. John Doe",
+    "email": "Authentication Email",
+    "emailPlaceholder": "e.g. j.doe@swim-hq.io",
+    "password": "Initial Password",
+    "passwordPlaceholder": "Minimum 8 characters",
+    "assignedStore": "Assigned Store",
+    "selectStore": "— Select a store —",
+    "noStoresAvailable": "No stores available",
+    "createStoreFirst": "⚠ Create a store first before assigning a manager.",
+    "assignButton": "Assign Manager",
+    "createSuccess": "Store manager is created successfully",
+    "createFailed": "Failed to create a store manager due to {{error}}"
+  },
+  "storeRequest": {
+    "title": "Create Restock Request",
+    "loadingFormData": "Loading form data...",
+    "selectStore": "Select Store",
+    "noAssignedStore": "-- No Assigned Store --",
+    "selectWarehouse": "Select Warehouse",
+    "selectWarehousePlaceholder": "-- Select Warehouse --",
+    "selectItem": "Select Item",
+    "selectItemPlaceholder": "-- Select Item --",
+    "quantity": "Quantity",
+    "notes": "Notes / Reason",
+    "notesPlaceholder": "e.g. Urgent — running low on keyboards",
+    "sendRequest": "Send Request",
+    "requestSuccess": "Restock request sent successfully!",
+    "requestFailed": "Failed to send request."
+  },
+  "sections": {
+    "operatorProfile": "Operator Profile",
+    "securityKeys": "Security Keys",
+    "systemProtocols": "System Protocols"
+  },
+  "fields": {
+    "fullName": "Full Legal Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Authentication Email",
+    "emailPlaceholder": "Enter your email",
+    "role": "Designated Rank / Role",
+    "bio": "Operational Bio",
+    "bioPlaceholder": "Input operational overview..."
+  },
+  "roles": {
+    "seniorLogistics": "Senior Logistics Coordinator",
+    "inventoryManager": "Inventory Manager",
+    "operationsLead": "Operations Lead",
+    "systemAdmin": "System Administrator",
+    "analyst": "Data Analyst"
+  },
+  "security": {
+    "twoFaStatus": "2FA Status",
+    "enforced": "Enforced",
+    "hardwareToken": "Hardware Token",
+    "hideToken": "Hide token",
+    "showToken": "Show token",
+    "copyToken": "Copy token",
+    "changePasskey": "Change Master Passkey"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "criticalStock": "Critical Stock Alerts",
+    "orderLate": "Order Late Arrivals",
+    "systemMaintenance": "System Maintenance"
+  },
+  "uiPreferences": {
+    "title": "UI Preferences",
+    "highContrast": "High Contrast Mode",
+    "realtimeTelemetry": "Real-Time Telemetry",
+    "denseViewport": "Dense Viewport"
+  },
+  "buttons": {
+    "updateProfile": "Update Profile"
+  },
+  "footer": {
+    "encryption": "Encryption Protocol: AES-256-GCM Active"
+  },
+  "messages": {
+    "updateSuccess": "Profile updated successfully!",
+    "updateFailed": "Failed to update profile.",
+    "fetchFailed": "Failed to fetch user data."
+  }
+}

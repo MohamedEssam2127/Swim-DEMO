@@ -10,6 +10,7 @@ import StoreTab from "./storeTab";
 import type { RootState } from "../../store";
 import apiClient from "../../core/apiClient";
 import { showSuccessToast, showErrorToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 function UserIcon() {
   return (
@@ -123,21 +124,22 @@ function CopyIcon() {
   );
 }
 
-const ROLE_OPTIONS = [
-  { value: "senior-logistics", label: "Senior Logistics Coordinator" },
-  { value: "inventory-manager", label: "Inventory Manager" },
-  { value: "operations-lead", label: "Operations Lead" },
-  { value: "system-admin", label: "System Administrator" },
-  { value: "analyst", label: "Data Analyst" },
-];
-
 function Profile() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation("profile");
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [rank, setRank] = useState("inventory-manager");
   const [bio, setBio] = useState("");
+
+  const ROLE_OPTIONS = [
+    { value: "senior-logistics", label: t("roles.seniorLogistics") },
+    { value: "inventory-manager", label: t("roles.inventoryManager") },
+    { value: "operations-lead", label: t("roles.operationsLead") },
+    { value: "system-admin", label: t("roles.systemAdmin") },
+    { value: "analyst", label: t("roles.analyst") },
+  ];
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -151,12 +153,12 @@ function Profile() {
           setRank(data.rank || "inventory-manager");
           setBio(data.bio || "");
         } catch (error) {
-          showErrorToast("Failed to fetch user data.");
+          showErrorToast(t("messages.fetchFailed"));
         }
       }
     };
     fetchUser();
-  }, [user]);
+  }, [user, t]);
 
   const [showToken, setShowToken] = useState(false);
   const [tokenCopied, setTokenCopied] = useState(false);
@@ -186,44 +188,44 @@ function Profile() {
         rank,
         bio,
       });
-      showSuccessToast("Profile updated successfully!");
+      showSuccessToast(t("messages.updateSuccess"));
     } catch (error) {
-      showErrorToast("Failed to update profile.");
+      showErrorToast(t("messages.updateFailed"));
     }
   };
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
       {/* Page Header */}
-      <PageTitle title="Operator Settings" />
+      <PageTitle title={t("title")} />
 
       <div className="regular text-[11px] md:text-[13px] tracking-widest text-tertiary-500 uppercase mb-1 mt-1">
-        Update primary authentication details and
+        {t("subtitle1")}
       </div>
       <div className="regular text-[9px] md:text-[10px] tracking-widest text-neutral-400 uppercase mb-8">
-        system interaction protocols for Node-34.
+        {t("subtitle2")}
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <FormSection icon={<UserIcon />} title="Operator Profile">
+        <FormSection icon={<UserIcon />} title={t("sections.operatorProfile")}>
           <FormField
             id="profile-full-name"
-            label="Full Legal Name"
+            label={t("fields.fullName")}
             value={fullName}
             onChange={setFullName}
-            placeholder="Enter your full name"
+            placeholder={t("fields.fullNamePlaceholder")}
           />
           <FormField
             id="profile-email"
-            label="Authentication Email"
+            label={t("fields.email")}
             type="email"
             value={email}
             onChange={setEmail}
-            placeholder="Enter your email"
+            placeholder={t("fields.emailPlaceholder")}
           />
           <FormField
             id="profile-role"
-            label="Designated Rank / Role"
+            label={t("fields.role")}
             as="select"
             value={rank}
             onChange={setRank}
@@ -234,27 +236,27 @@ function Profile() {
               htmlFor="profile-bio"
               className="regular text-[10px] md:text-[11px] tracking-widest uppercase text-neutral-500 font-bold"
             >
-              Operational Bio
+              {t("fields.bio")}
             </label>
             <textarea
               id="profile-bio"
               rows={4}
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              placeholder="Input operational overview..."
+              placeholder={t("fields.bioPlaceholder")}
               className="regular text-[12px] md:text-[13px] tracking-widest text-neutral-800 border-l-2 border-l-primary-500 border border-neutral-300 bg-white px-4 py-3 w-full placeholder:text-neutral-400 outline-none focus:border-primary-500 transition-colors resize-none"
             />
           </div>
         </FormSection>
 
-        <FormSection icon={<ShieldIcon />} title="Security Keys">
+        <FormSection icon={<ShieldIcon />} title={t("sections.securityKeys")}>
           <div className="border border-neutral-200 bg-neutral-50 px-4 py-3 flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
               <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                2FA Status
+                {t("security.twoFaStatus")}
               </span>
               <span className="header text-[16px] md:text-[20px] font-bold tracking-widest text-primary-700 uppercase">
-                Enforced
+                {t("security.enforced")}
               </span>
             </div>
             <svg
@@ -284,7 +286,7 @@ function Profile() {
               htmlFor="profile-api-token"
               className="regular text-[10px] md:text-[11px] tracking-widest uppercase text-neutral-500 font-bold"
             >
-              Hardware Token
+              {t("security.hardwareToken")}
             </label>
             <div className="relative flex items-center border border-neutral-300 bg-white">
               <input
@@ -298,7 +300,7 @@ function Profile() {
                 <button
                   type="button"
                   onClick={() => setShowToken((v) => !v)}
-                  title={showToken ? "Hide token" : "Show token"}
+                  title={showToken ? t("security.hideToken") : t("security.showToken")}
                   className="flex items-center justify-center w-9 h-full text-neutral-500 hover:text-neutral-800 transition-colors cursor-pointer"
                 >
                   <EyeOffIcon />
@@ -306,7 +308,7 @@ function Profile() {
                 <button
                   type="button"
                   onClick={handleCopyToken}
-                  title="Copy token"
+                  title={t("security.copyToken")}
                   className="flex items-center justify-center w-9 h-full text-neutral-500 hover:text-primary-600 transition-colors cursor-pointer"
                 >
                   {tokenCopied ? (
@@ -335,33 +337,33 @@ function Profile() {
             className="w-full border border-neutral-300 bg-white hover:bg-neutral-50 active:bg-neutral-100 py-3 transition-colors cursor-pointer"
           >
             <span className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-700 font-bold">
-              Change Master Passkey
+              {t("security.changePasskey")}
             </span>
           </button>
         </FormSection>
 
-        <FormSection icon={<SlidersIcon />} title="System Protocols">
+        <FormSection icon={<SlidersIcon />} title={t("sections.systemProtocols")}>
           <div>
             <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-400 font-bold block mb-1">
-              Notifications
+              {t("notifications.title")}
             </span>
             <div className="border border-neutral-200">
               <div className="px-4">
                 <ToggleSwitch
                   id="toggle-critical-stock"
-                  label="Critical Stock Alerts"
+                  label={t("notifications.criticalStock")}
                   checked={criticalStockAlerts}
                   onChange={setCriticalStockAlerts}
                 />
                 <ToggleSwitch
                   id="toggle-order-late"
-                  label="Order Late Arrivals"
+                  label={t("notifications.orderLate")}
                   checked={orderLateArrivals}
                   onChange={setOrderLateArrivals}
                 />
                 <ToggleSwitch
                   id="toggle-system-maintenance"
-                  label="System Maintenance"
+                  label={t("notifications.systemMaintenance")}
                   checked={systemMaintenance}
                   onChange={setSystemMaintenance}
                 />
@@ -371,25 +373,25 @@ function Profile() {
 
           <div>
             <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-400 font-bold block mb-1">
-              UI Preferences
+              {t("uiPreferences.title")}
             </span>
             <div className="border border-neutral-200">
               <div className="px-4">
                 <ToggleSwitch
                   id="toggle-high-contrast"
-                  label="High Contrast Mode"
+                  label={t("uiPreferences.highContrast")}
                   checked={highContrastMode}
                   onChange={setHighContrastMode}
                 />
                 <ToggleSwitch
                   id="toggle-realtime-telemetry"
-                  label="Real-Time Telemetry"
+                  label={t("uiPreferences.realtimeTelemetry")}
                   checked={realtimeTelemetry}
                   onChange={setRealtimeTelemetry}
                 />
                 <ToggleSwitch
                   id="toggle-dense-viewport"
-                  label="Dense Viewport"
+                  label={t("uiPreferences.denseViewport")}
                   checked={denseViewport}
                   onChange={setDenseViewport}
                 />
@@ -404,7 +406,7 @@ function Profile() {
           className="w-full bg-primary-800 hover:bg-primary-700 active:bg-primary-900 text-white flex items-center justify-center gap-3 py-7 transition-colors cursor-pointer group"
         >
           <span className="header text-[16px] md:text-[20px] tracking-[0.2em] uppercase font-bold leading-tight text-center">
-            Update Profile
+            {t("buttons.updateProfile")}
           </span>
           <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
             <SaveIcon />
@@ -415,7 +417,6 @@ function Profile() {
       {(user as any)?.role === "Owner" ? <LocationManager /> : <StoreTab />}
 
       <div
-
         className="mt-5 relative overflow-hidden"
         style={{ height: "160px" }}
       >
@@ -427,7 +428,7 @@ function Profile() {
         <div className="absolute inset-0 bg-white/80" />
         <div className="absolute bottom-0 left-0 p-4 flex flex-col gap-1.5">
           <span className="regular text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-black font-bold leading-none drop-shadow-sm">
-            Encryption Protocol: AES-256-GCM Active
+            {t("footer.encryption")}
           </span>
           <div className="flex items-center gap-[4px] mt-0.5">
             <span className="block h-[4px] w-[48px] bg-black" />

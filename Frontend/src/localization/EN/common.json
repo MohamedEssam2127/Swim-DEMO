@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "home": "HOME",
+    "pricing": "PRICING",
+    "signUp": "SIGN UP",
+    "login": "LOGIN",
+    "statistics": "STATISTICS",
+    "inventory": "INVENTORY",
+    "history": "HISTORY",
+    "order": "ORDER",
+    "profile": "PROFILE",
+    "logout": "LOGOUT",
+    "stats": "STATS",
+    "inv": "INV"
+  },
+  "footer": {
+    "company": "COMPANY",
+    "socials": "SOCIALS",
+    "support": "SUPPORT",
+    "home": "home",
+    "aboutUs": "about us",
+    "pricing": "pricing",
+    "instagram": "instagram",
+    "facebook": "facebook",
+    "tiktok": "tiktok"
+  },
+  "loading": "Loading...",
+  "error": "Error",
+  "save": "Save",
+  "cancel": "Cancel",
+  "submit": "Submit",
+  "delete": "Delete",
+  "edit": "Edit",
+  "add": "Add",
+  "close": "Close",
+  "confirm": "Confirm",
+  "back": "Back",
+  "next": "Next",
+  "search": "Search",
+  "noResults": "No results found",
+  "seeMore": "See More",
+  "seeAll": "See All",
+  "items": "Items",
+  "total": "Total",
+  "of": "of",
+  "loggedOut": "Logged out securely.",
+  "unknownItem": "Unknown Item",
+  "unknownCategory": "General",
+  "statuses": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "confirmed": "Confirmed"
+  },
+  "languageSwitcher": {
+    "switchTo": "عربي",
+    "label": "Switch Language"
+  },
+  "toast": {
+    "newRequest": "New request from {{requester}} for {{store}}",
+    "requestApproved": "Request approved! \"{{items}}\" is on its way to {{store}}.",
+    "requestRejected": "Request rejected for {{store}}.",
+    "reason": "Reason: {{note}}"
+  }
+}

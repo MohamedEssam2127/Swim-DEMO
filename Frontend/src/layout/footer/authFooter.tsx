@@ -1,6 +1,10 @@
+import { useTranslation } from "../../localization/i18n";
+
 const noiseBg = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
 
 export default function AuthFooter() {
+  const { t } = useTranslation("common");
+
   return (
     <footer className="hidden lg:block relative w-full bg-neutral-900 overflow-hidden py-8 md:py-12">
       {/* Background Noise overlay */}
@@ -50,7 +54,7 @@ export default function AuthFooter() {
                 fill="white"
               />
               <path
-                d="M11.0656 7.20898C11.6365 7.5467 12.3 7.74002 13.0098 7.74002C13.7195 7.74002 14.383 7.5467 14.9539 7.20898C16.0934 6.53832 16.8601 5.29486 16.8601 3.86882C16.8601 1.73273 15.1367 0 13.0098 0C10.8828 0 9.15942 1.73273 9.15942 3.86882C9.15942 5.29486 9.92498 6.53832 11.0656 7.20898ZM13.0098 1.93083H13.0109C14.0732 1.93083 14.9385 2.80078 14.9385 3.86882C14.9385 4.93686 14.0732 5.808 13.0109 5.808H13.0098C11.9463 5.80681 11.081 4.93805 11.081 3.86882C11.081 2.79958 11.9463 1.93202 13.0098 1.93083Z"
+                d="M11.0656 7.20898C11.6365 7.5467 12.3 7.74002 13.0098 7.74002C13.7195 7.74002 14.383 7.5467 14.9539 7.20898C16.0934 6.53832 16.8601 5.29486 16.8601 3.86882C16.8601 1.73273 15.1367 0 13.0098 0C10.8828 0 9.15942 1.73273 9.15942 3.86882C9.15942 5.29486 9.92498 6.53832 11.0656 7.20898ZM13.0098 1.93083H13.0109C14.0732 1.93083 14.9385 2.80078 14.9385 3.86882C14.9385 4.93686 14.0732 5.808 13.0109 5.808H13.0098C11.9463 5.80681 11.081 4.93805 11.081 3.86882C11.081 2.79958 11.9463 1.93083 13.0098 1.93083Z"
                 fill="white"
               />
               <path
@@ -118,11 +122,11 @@ export default function AuthFooter() {
                 fill="white"
               />
               <path
-                d="M26.0207 27.1772C26.0207 32.2107 21.8166 34.1284 13.6222 34.1284C13.4157 34.1284 13.2115 34.1272 13.0098 34.1236V29.7798C13.1498 29.781 13.2946 29.7834 13.4418 29.7834C18.39 29.7834 19.8808 29.065 19.8808 27.386C19.8808 26.2177 19.2838 25.6771 17.4654 25.3788C16.542 25.2296 15.1106 25.1091 13.1142 24.9599L13.0098 24.9551V20.4407L14.1575 20.5255C17.0476 20.7355 19.2826 21.035 20.8932 21.3942C22.473 21.7534 23.724 22.3835 24.6486 23.2523C25.572 24.152 26.0207 25.4695 26.0207 27.1783V27.1772Z"
+                d="M26.0207 27.1772C26.0207 32.2107 21.8166 34.1284 13.6222 34.1284C13.4157 34.1284 13.2115 34.1272 13.0098 34.1236V29.7798C13.1498 29.781 13.2946 29.7834 13.4418 29.7834C18.39 29.7834 19.8808 29.065 19.8808 27.386C19.8808 26.2177 19.2838 25.6771 17.4654 25.3788C16.542 25.2296 15.1106 25.1091 13.1142 24.9599L13.0098 24.9551V20.4407L14.1575 20.5255C17.0476 20.7355 19.2826 21.035 20.8932 21.3942C22.473 21.7534 23.724 22.3835 24.6486 23.2523C25.572 24.152 26.0207 25.4695 26.0207 27.1783V27.1783Z"
                 fill="white"
               />
               <path
-                d="M25.2373 32.5639C24.4979 34.0508 23.3145 35.8611 21.4914 37.3946C18.2417 40.1273 14.5753 41.0712 13.011 41.397H13.0098V38.7406H13.011C16.0981 37.7179 18.6678 36.4984 20.2677 34.9148C22.1858 34.4852 23.946 33.7632 25.2373 32.5639Z"
+                d="M25.2373 32.5639C24.4979 34.0508 23.3145 35.8611 21.4914 37.3946C18.2417 40.125 14.5753 41.0712 13.011 41.397H13.0098V38.7406H13.011C16.0981 37.7179 18.6678 36.4984 20.2677 34.9148C22.1858 34.4852 23.946 33.7632 25.2373 32.5639Z"
                 fill="white"
               />
               <path
@@ -224,17 +228,17 @@ export default function AuthFooter() {
           {/* Company */}
           <div className="flex gap-4 items-center">
             <h4 className="text-white text-lg font-bold uppercase w-[100px] tracking-wide inter">
-              COMPANY
+              {t("footer.company")}
             </h4>
             <div className="flex gap-4 text-[#e2e8f0] text-sm tracking-widest font-mono lowercase">
               <a href="#" className="hover:text-white transition-colors">
-                home
+                {t("footer.home")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                about us
+                {t("footer.aboutUs")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                pricing
+                {t("footer.pricing")}
               </a>
             </div>
           </div>
@@ -242,17 +246,17 @@ export default function AuthFooter() {
           {/* Socials */}
           <div className="flex gap-4 items-center">
             <h4 className="text-white text-lg font-bold uppercase w-[100px] tracking-wide inter">
-              SOCIALS
+              {t("footer.socials")}
             </h4>
             <div className="flex gap-4 text-[#e2e8f0] text-sm tracking-widest font-mono lowercase">
               <a href="#" className="hover:text-white transition-colors">
-                instagram
+                {t("footer.instagram")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                facebook
+                {t("footer.facebook")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                tiktok
+                {t("footer.tiktok")}
               </a>
             </div>
           </div>
@@ -260,7 +264,7 @@ export default function AuthFooter() {
           {/* Support */}
           <div className="flex gap-4 items-center">
             <h4 className="text-white text-lg font-bold uppercase w-[100px] tracking-wide inter">
-              SUPPORT
+              {t("footer.support")}
             </h4>
             <div className="flex gap-4 text-[#e2e8f0] text-sm tracking-widest font-mono lowercase">
               <a

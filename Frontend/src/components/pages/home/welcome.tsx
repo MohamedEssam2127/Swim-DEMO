@@ -1,7 +1,10 @@
 import Button from "../../button/button";
 import whalePic from "../../../assets/images/whale-pic 1.png";
+import { useTranslation } from "../../../localization/i18n";
 
 function Welcome() {
+  const { t } = useTranslation("home");
+
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
       <div className="w-full mx-auto px-4 md:px-8 py-10  relative">
@@ -78,7 +81,7 @@ function Welcome() {
         </div>
 
         <h1 className="uppercase text-center text-3xl md:text-4xl lg:text-5xl xl:text-7xl lg:whitespace-nowrap text-primary-600 mb-10 md:mb-[60px] tracking-[1px] header transition-transform hover:scale-105 duration-500 relative z-20">
-          Take Full Control of Your Inventory
+          {t("welcome.headline")}
         </h1>
 
         <div className="relative w-full">
@@ -92,7 +95,7 @@ function Welcome() {
             </div>
 
             {/* Right Panel */}
-            <div className="pointer-events-auto z-20 flex flex-col items-start mt-[40px] mr-4">
+            <div className="pointer-events-auto z-20 flex flex-col items-start mt-[40px] mr-4 rtl:mr-0 rtl:ml-4">
               <a
                 href="#pricing"
                 className="block w-full max-w-[250px] mb-[40px]"
@@ -101,7 +104,7 @@ function Welcome() {
                   variant="primary"
                   className="w-full transition-transform hover:scale-105"
                 >
-                  CREATE SHIPMENT
+                  {t("welcome.createShipment")}
                 </Button>
               </a>
 
@@ -117,16 +120,16 @@ function Welcome() {
 
               <div className="flex flex-col gap-3 text-primary-500 text-[1.3rem] inter">
                 <div className="hover:text-primary-300 transition-colors cursor-pointer">
-                  Software
+                  {t("welcome.software")}
                 </div>
                 <div className="hover:text-primary-300 transition-colors cursor-pointer">
-                  Warehouse
+                  {t("welcome.warehouse")}
                 </div>
                 <div className="hover:text-primary-300 transition-colors cursor-pointer">
-                  Inventory
+                  {t("welcome.inventory")}
                 </div>
                 <div className="hover:text-primary-300 transition-colors cursor-pointer">
-                  Management
+                  {t("welcome.management")}
                 </div>
               </div>
             </div>
@@ -145,22 +148,22 @@ function Welcome() {
 
             {/* Base Navy Text */}
             <div className="absolute top-[280px] left-0 flex flex-col z-[15] pointer-events-none w-full animate-float">
-              <div className="text-[6.5rem] text-primary-500 leading-[1.1] whitespace-nowrap header ml-[20px]">
-                DEEP SCALE
+              <div className="text-[6.5rem] text-primary-500 leading-[1.1] whitespace-nowrap header ml-[20px] rtl:ml-0 rtl:mr-[20px]">
+                {t("welcome.deepScale")}
               </div>
-              <div className="text-[6.5rem] text-primary-500 leading-[1.1] whitespace-nowrap header ml-[200px] mt-[5px]">
-                LIGHT FOOTPRINT
+              <div className="text-[6.5rem] text-primary-500 leading-[1.1] whitespace-nowrap header ml-[200px] mt-[5px] rtl:ml-0 rtl:mr-[200px]">
+                {t("welcome.lightFootprint")}
               </div>
             </div>
 
             {/* Masked Light Blue Text */}
             <div className="absolute inset-0 z-[30] pointer-events-none whale-mask animate-float transition-all duration-700 group-hover:opacity-80">
               <div className="absolute top-[280px] left-0 flex flex-col w-full">
-                <div className="text-[6.5rem] text-primary-100 leading-[1.1] whitespace-nowrap header ml-[20px] transition-colors duration-700 group-hover:text-white">
-                  DEEP SCALE
+                <div className="text-[6.5rem] text-primary-100 leading-[1.1] whitespace-nowrap header ml-[20px] rtl:ml-0 rtl:mr-[20px] transition-colors duration-700 group-hover:text-white">
+                  {t("welcome.deepScale")}
                 </div>
-                <div className="text-[6.5rem] text-primary-100 leading-[1.1] whitespace-nowrap header ml-[200px] mt-[5px] transition-colors duration-700 group-hover:text-white">
-                  LIGHT FOOTPRINT
+                <div className="text-[6.5rem] text-primary-100 leading-[1.1] whitespace-nowrap header ml-[200px] mt-[5px] rtl:ml-0 rtl:mr-[200px] transition-colors duration-700 group-hover:text-white">
+                  {t("welcome.lightFootprint")}
                 </div>
               </div>
             </div>
@@ -182,7 +185,7 @@ function Welcome() {
                 variant="primary"
                 className="w-full transition-transform active:scale-95"
               >
-                CREATE SHIPMENT
+                {t("welcome.createShipment")}
               </Button>
             </a>
 
@@ -192,28 +195,28 @@ function Welcome() {
                   className="w-6 h-6 bg-primary-800 rounded-full shrink-0 animate-pulse-dot"
                   style={{ animationDelay: "0s" }}
                 ></div>
-                Software
+                {t("welcome.software")}
               </div>
               <div className="flex items-center gap-4">
                 <div
                   className="w-6 h-6 bg-primary-800 rounded-full shrink-0 animate-pulse-dot"
                   style={{ animationDelay: "0.2s" }}
                 ></div>
-                Warehouse
+                {t("welcome.warehouse")}
               </div>
               <div className="flex items-center gap-4">
                 <div
                   className="w-6 h-6 bg-primary-800 rounded-full shrink-0 animate-pulse-dot"
                   style={{ animationDelay: "0.4s" }}
                 ></div>
-                Inventory
+                {t("welcome.inventory")}
               </div>
               <div className="flex items-center gap-4">
                 <div
                   className="w-6 h-6 bg-primary-800 rounded-full shrink-0 animate-pulse-dot"
                   style={{ animationDelay: "0.6s" }}
                 ></div>
-                Management
+                {t("welcome.management")}
               </div>
             </div>
 
@@ -231,10 +234,10 @@ function Welcome() {
               {/* Mobile Base Navy Text */}
               <div className="absolute top-[35%] left-0 flex flex-col z-[15] pointer-events-none w-full animate-float-mobile">
                 <div className="text-[13vw] sm:text-[4rem] text-primary-500 leading-[1.1] header whitespace-nowrap">
-                  DEEP SCALE
+                  {t("welcome.deepScale")}
                 </div>
-                <div className="text-[13vw] sm:text-[4rem] text-primary-500 leading-[1.1] header ml-[10%] mt-2 whitespace-nowrap">
-                  LIGHT FOOTPRINT
+                <div className="text-[13vw] sm:text-[4rem] text-primary-500 leading-[1.1] header ml-[10%] rtl:ml-0 rtl:mr-[10%] mt-2 whitespace-nowrap">
+                  {t("welcome.lightFootprint")}
                 </div>
               </div>
 
@@ -242,10 +245,10 @@ function Welcome() {
               <div className="absolute inset-0 z-[30] pointer-events-none whale-mask-mobile animate-float-mobile">
                 <div className="absolute top-[35%] left-0 flex flex-col w-full">
                   <div className="text-[13vw] sm:text-[4rem] text-primary-100 leading-[1.1] header whitespace-nowrap transition-colors duration-700 group-hover:text-white">
-                    DEEP SCALE
+                    {t("welcome.deepScale")}
                   </div>
-                  <div className="text-[13vw] sm:text-[4rem] text-primary-100 leading-[1.1] header ml-[10%] mt-2 whitespace-nowrap transition-colors duration-700 group-hover:text-white">
-                    LIGHT FOOTPRINT
+                  <div className="text-[13vw] sm:text-[4rem] text-primary-100 leading-[1.1] header ml-[10%] rtl:ml-0 rtl:mr-[10%] mt-2 whitespace-nowrap transition-colors duration-700 group-hover:text-white">
+                    {t("welcome.lightFootprint")}
                   </div>
                 </div>
               </div>
@@ -254,12 +257,12 @@ function Welcome() {
         </div>
 
         <p className="text-center text-primary-500 text-[0.9rem] md:text-[1.1rem] mt-8 lg:mt-[20px] font-bold italic inter pb-10 lg:pb-0 z-20 relative transition-opacity hover:opacity-75">
-          A powerful{" "}
+          {t("welcome.tagline")}{" "}
           <span className="text-primary-100">
-            store and warehouse management
+            {t("welcome.taglineHighlight")}
           </span>{" "}
-          system built for g<span className="text-primary-100">rowing</span>{" "}
-          businesses.
+          {t("welcome.taglineMiddle")}<span className="text-primary-100">{t("welcome.taglineHighlight2")}</span>{" "}
+          {t("welcome.taglineEnd")}
         </p>
       </div>
     </div>

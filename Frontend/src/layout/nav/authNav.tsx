@@ -5,13 +5,15 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/slices/authSlice";
 import type { AppDispatch } from "../../store";
 import { showSuccessToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 export default function AuthNav() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation("common");
 
   const handleLogout = () => {
     dispatch(logout());
-    showSuccessToast("Logged out securely.", 3000);
+    showSuccessToast(t("loggedOut"), 3000);
     navigate("/signin");
   };
 
@@ -154,7 +156,7 @@ export default function AuthNav() {
                 <path d="M3 3v18h18" />
                 <path d="m19 9-5 5-4-4-3 3" />
               </svg>
-              STATISTICS
+              {t("nav.statistics")}
             </Button>
           </Link>
           <Link to="/inventory">
@@ -177,7 +179,7 @@ export default function AuthNav() {
                 <polyline points="3.29 7 12 12 20.71 7" />
                 <line x1="12" y1="22" x2="12" y2="12" />
               </svg>
-              INVENTORY
+              {t("nav.inventory")}
             </Button>
           </Link>
           <Link to="/history">
@@ -207,7 +209,7 @@ export default function AuthNav() {
                 <path d="M12 18h.01" />
                 <path d="M16 18h.01" />
               </svg>
-              HISTORY
+              {t("nav.history")}
             </Button>
           </Link>
           <Link to="/order">
@@ -232,7 +234,7 @@ export default function AuthNav() {
                 <line x1="16" y1="17" x2="8" y2="17" />
                 <polyline points="10 9 9 9 8 9" />
               </svg>
-              ORDER
+              {t("nav.order")}
             </Button>
           </Link>
         </div>
@@ -244,7 +246,7 @@ export default function AuthNav() {
               variant="primary"
               className="!bg-primary-400 hover:!bg-primary-500 !px-8 text-sm font-bold border-none text-white"
             >
-              PROFILE
+              {t("nav.profile")}
             </Button>
           </Link>
 
@@ -254,7 +256,7 @@ export default function AuthNav() {
               variant="primary"
               className="!bg-white !text-neutral-900 hover:!bg-gray-200 !px-8 text-sm font-bold border-none"
             >
-              LOGOUT
+              {t("nav.logout")}
             </Button>
           </Link>
         </div>

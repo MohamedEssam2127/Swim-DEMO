@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../button/button';
+import { useTranslation } from '../../localization/i18n';
 
 interface PriceCardProps {
   title: string;
@@ -11,11 +12,13 @@ interface PriceCardProps {
 }
 
 const PriceCard: React.FC<PriceCardProps> = ({ title, price, period, subtitle, buttonVariant, isRecommended }) => {
+  const { t } = useTranslation("home");
+
   return (
     <div className={`relative w-full max-w-[340px] bg-white border-[2px] p-8 flex flex-col justify-between h-[280px] shadow-sm ${isRecommended ? 'border-[#0a2342]' : 'border-gray-300'}`}>
       {isRecommended && (
-        <div className="absolute -top-4 right-8 bg-[#ff6b35] text-white text-[0.65rem] font-bold px-3 py-1 uppercase tracking-widest shadow-md">
-          RECOMMENDED
+        <div className="absolute -top-4 right-8 rtl:right-auto rtl:left-8 bg-[#ff6b35] text-white text-[0.65rem] font-bold px-3 py-1 uppercase tracking-widest shadow-md">
+          {t("pricing.recommended")}
         </div>
       )}
       
@@ -32,7 +35,7 @@ const PriceCard: React.FC<PriceCardProps> = ({ title, price, period, subtitle, b
         variant={buttonVariant} 
         className={`w-full mt-6 py-3 font-bold tracking-widest text-[0.75rem] ${!isRecommended ? '!border-gray-300 !text-gray-700 hover:!bg-gray-100' : ''}`}
       >
-        CREATE SHIPMENT
+        {t("pricing.createShipment")}
       </Button>
     </div>
   );

@@ -1,6 +1,7 @@
 import StatsCard from "../../StatsCard/StatsCard";
 import arrowInventoryIcon from '../../../assets/icons/arrow inventory.svg';
 import moneyInventoryIcon from '../../../assets/icons/money inventory.svg';
+import { useTranslation } from "../../../localization/i18n";
 
 interface InventoryStatsProps {
   totalValue: number;
@@ -20,16 +21,17 @@ export default function InventoryStats({
   totalItemsCount = 0,
 }: InventoryStatsProps) {
   const isOwner = userRole === 'Owner';
+  const { t } = useTranslation("inventory");
 
   return (
     <div className="flex flex-col gap-4 mb-8">
       <StatsCard
-        title="Total Inventory Value"
+        title={t("stats.totalValue")}
         value={`${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} EGP`}
         subtext={
           <span className="flex items-center justify-center md:justify-start gap-1.5">
             <img src={arrowInventoryIcon} alt="Arrow Up" className="w-3 h-2" />
-            <span>+2.4% VS LAST QUARTER</span>
+            <span>{t("stats.vsLastQuarter")}</span>
           </span>
         }
         variant="dark"
@@ -38,23 +40,23 @@ export default function InventoryStats({
       {isOwner ? (
         <div className="grid grid-cols-2 gap-4">
           <StatsCard
-            title="Total Warehouses"
+            title={t("stats.totalWarehouses")}
             value={totalWarehousesCount.toString()}
-            subtext="Remaining 1"
+            subtext={`${t("stats.remaining")} 1`}
             variant="light"
           />
           <StatsCard
-            title="Total Stores"
+            title={t("stats.totalStores")}
             value={totalStoresCount.toString()}
-            subtext="Remaining 2"
+            subtext={`${t("stats.remaining")} 2`}
             variant="light"
           />
         </div>
       ) : (
         <StatsCard
-          title="Active Store Details"
-          value={selectedLocationName || "No Store Selected"}
-          subtext={`Total Items In Store: ${totalItemsCount} | Total Stores Available: ${totalStoresCount}`}
+          title={t("stats.activeStoreDetails")}
+          value={selectedLocationName || t("stats.noStoreSelected")}
+          subtext={`${t("stats.totalItemsInStore")}: ${totalItemsCount} | ${t("stats.totalStoresAvailable")}: ${totalStoresCount}`}
           variant="light"
         />
       )}

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+Arabic:wght@100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -124,4 +124,20 @@
 
 .animate-slide-down {
   animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── RTL / Arabic support ────────────────────────────────────────────── */
+[dir="rtl"] .inter,
+[dir="rtl"] .header,
+[dir="rtl"] .subheader,
+[dir="rtl"] .regular {
+  font-family: "Noto Sans Arabic", "Inter", sans-serif;
+}
+
+[dir="rtl"] .regular {
+  font-family: "Noto Sans Arabic", "JetBrains Mono", monospace;
+}
+
+[dir="rtl"] body {
+  font-family: "Noto Sans Arabic", "Inter", sans-serif;
 }

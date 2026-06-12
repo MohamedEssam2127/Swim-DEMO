@@ -1,0 +1,33 @@
+{
+  "title": "إدارة السجل",
+  "activeQueue": "قائمة اللوجستيات النشطة —",
+  "total": "الإجمالي",
+  "filterByStore": "تصفية حسب المتجر",
+  "allStores": "جميع المتاجر",
+  "unknownStore": "متجر غير معروف",
+  "unknownCustomer": "عميل غير معروف",
+  "editOrder": "تعديل\nالطلب",
+  "createReceipt": "إنشاء\nالإيصال",
+  "sort": {
+    "byDate": "ترتيب حسب التاريخ",
+    "byCustomerName": "ترتيب حسب اسم العميل",
+    "byOrderId": "ترتيب حسب رقم الطلب"
+  },
+  "searchPlaceholder": "ابحث باسم العميل أو التاريخ أو رقم الطلب",
+  "table": {
+    "store": "المتجر",
+    "orderId": "رقم الطلب",
+    "orderCreatedWhen": "تاريخ إنشاء الطلب",
+    "quantity": "الكمية",
+    "customer": "العميل",
+    "status": "الحالة",
+    "actions": "الإجراءات"
+  },
+  "states": {
+    "loading": "جارٍ تحميل السجل...",
+    "failed": "فشل في جلب السجل.",
+    "noItems": "لا توجد عناصر في السجل."
+  },
+  "orders": "طلبات",
+  "seeMore": "عرض المزيد"
+}

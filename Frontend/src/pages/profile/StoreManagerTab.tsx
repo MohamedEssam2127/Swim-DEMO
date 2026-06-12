@@ -7,10 +7,11 @@ import {
   selectStoreManagers,
   selectStoreManagerStatus,
 } from "../../store/slices/storeManagerSlice";
-import { selectTotalStores } from "../../store/slices/InventorySclice";
+import { selectTotalStores, fetchAllLocations } from "../../store/slices/InventorySclice";
 import FormField from "../../components/FormField/FormField";
 import FormSection from "../../components/FormSection/FormSection";
 import { showErrorToast, showSuccessToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 function UserPlusIcon() {
   return (
@@ -50,11 +51,13 @@ function SaveIcon() {
     </svg>
   );
 }
+
 export default function StoreManagerTab() {
   const dispatch = useDispatch<AppDispatch>();
   const managers = useSelector(selectStoreManagers);
   const status = useSelector(selectStoreManagerStatus);
   const stores = useSelector(selectTotalStores);
+  const { t } = useTranslation("profile");
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -66,22 +69,25 @@ export default function StoreManagerTab() {
     if (status === "idle") {
       dispatch(fetchStoreManagers());
     }
+    dispatch(fetchAllLocations());
   }, [dispatch, status]);
 
   // Find store IDs that already have a manager assigned
-  const assignedStoreIds = managers.map((mgr) =>
-    typeof mgr.assignedLocation === "object"
-      ? mgr.assignedLocation?._id
-      : mgr.assignedLocation
-  );
+  const assignedStoreIds = managers
+    .map((mgr) =>
+      typeof mgr.assignedLocation === "object"
+        ? mgr.assignedLocation?._id
+        : mgr.assignedLocation
+    )
+    .filter(Boolean);
 
   const availableStores = stores.filter(
-    (s) => !assignedStoreIds.includes(s._id) && !s.name.toLowerCase().includes("downtown")
+    (s) => !assignedStoreIds.includes(s._id)
   );
 
   const storeOptions = availableStores.map((s) => ({ value: s._id, label: s.name }));
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName.trim() || !email.trim() || !password.trim() || !storeId)
       return;
@@ -101,9 +107,9 @@ export default function StoreManagerTab() {
       setEmail("");
       setPassword("");
       setStoreId("");
-      showSuccessToast("Store manager is created successfully");
+      showSuccessToast(t("storeManagerTab.createSuccess"));
     } catch (err) {
-      showErrorToast(`Failed to create a store manager due to ${err}`);
+      showErrorToast(t("storeManagerTab.createFailed").replace("{{error}}", String(err)));
     } finally {
       setIsSubmitting(false);
     }
@@ -115,22 +121,22 @@ export default function StoreManagerTab() {
   return (
     <div className="flex flex-col gap-5">
       {/* ── Manager List ── */}
-      <FormSection icon={<UserPlusIcon />} title="Store Managers">
+      <FormSection icon={<UserPlusIcon />} title={t("storeManagerTab.title")}>
         <div className="mb-6">
-          <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-3">
-            Current Managers
+          <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-3 rtl:text-right">
+            {t("storeManagerTab.currentManagers")}
           </h3>
 
           {status === "loading" ? (
             <div className="flex items-center gap-2 py-4">
               <div className="w-4 h-4 border-2 border-primary-600 border-t-transparent rounded-full animate-spin" />
               <span className="regular text-[11px] tracking-widest uppercase text-neutral-400">
-                Loading...
+                {t("loading", "common")}
               </span>
             </div>
           ) : managers.length === 0 ? (
-            <p className="regular text-[12px] text-neutral-400 italic py-2">
-              No store managers assigned yet.
+            <p className="regular text-[12px] text-neutral-400 italic py-2 rtl:text-right">
+              {t("storeManagerTab.noManagers")}
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
@@ -139,7 +145,7 @@ export default function StoreManagerTab() {
                   key={mgr._id}
                   className="border border-neutral-200 bg-neutral-50 px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1"
                 >
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col gap-0.5 text-left rtl:text-right">
                     <span className="font-bold text-primary-800 uppercase tracking-wider text-sm">
                       {mgr.fullName}
                     </span>
@@ -175,7 +181,7 @@ export default function StoreManagerTab() {
                     </div>
                     {/* Role badge */}
                     <span className="regular text-[9px] tracking-widest uppercase text-emerald-700 font-bold border border-emerald-200 bg-emerald-50 px-2 py-1">
-                      Manager
+                      {t("storeManagerTab.manager")}
                     </span>
                   </div>
                 </li>
@@ -186,41 +192,41 @@ export default function StoreManagerTab() {
 
         {/* ── Create Form ── */}
         <div className="border-t border-neutral-200 pt-5 mt-5">
-          <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-4">
-            Assign New Store Manager
+          <h3 className="regular text-[11px] md:text-[12px] tracking-widest uppercase text-neutral-500 font-bold mb-4 rtl:text-right">
+            {t("storeManagerTab.assignTitle")}
           </h3>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <FormField
               id="new-manager-name"
-              label="Full Name"
+              label={t("storeManagerTab.fullName")}
               value={fullName}
               onChange={setFullName}
-              placeholder="e.g. John Doe"
+              placeholder={t("storeManagerTab.fullNamePlaceholder")}
             />
             <FormField
               id="new-manager-email"
-              label="Authentication Email"
+              label={t("storeManagerTab.email")}
               type="email"
               value={email}
               onChange={setEmail}
-              placeholder="e.g. j.doe@swim-hq.io"
+              placeholder={t("storeManagerTab.emailPlaceholder")}
             />
             <FormField
               id="new-manager-password"
-              label="Initial Password"
+              label={t("storeManagerTab.password")}
               type="password"
               value={password}
               onChange={setPassword}
-              placeholder="Minimum 8 characters"
+              placeholder={t("storeManagerTab.passwordPlaceholder")}
             />
 
             {/* Store selector */}
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="new-manager-store"
-                className="regular text-[10px] md:text-[11px] tracking-widest uppercase text-neutral-500 font-bold"
+                className="regular text-[10px] md:text-[11px] tracking-widest uppercase text-neutral-500 font-bold rtl:text-right"
               >
-                Assigned Store
+                {t("storeManagerTab.assignedStore")}
               </label>
               <select
                 id="new-manager-store"
@@ -228,9 +234,9 @@ export default function StoreManagerTab() {
                 onChange={(e) => setStoreId(e.target.value)}
                 className="regular text-[12px] md:text-[13px] tracking-widest text-neutral-800 border-l-2 border-l-primary-500 border border-neutral-300 bg-white px-4 py-3 w-full outline-none focus:border-primary-500 transition-colors appearance-none cursor-pointer"
               >
-                <option value="">— Select a store —</option>
+                <option value="">{t("storeManagerTab.selectStore")}</option>
                 {storeOptions.length === 0 ? (
-                  <option disabled>No stores available</option>
+                  <option disabled>{t("storeManagerTab.noStoresAvailable")}</option>
                 ) : (
                   storeOptions.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -240,8 +246,8 @@ export default function StoreManagerTab() {
                 )}
               </select>
               {stores.length === 0 && (
-                <p className="regular text-[10px] tracking-widest text-amber-600 uppercase">
-                  ⚠ Create a store first before assigning a manager.
+                <p className="regular text-[10px] tracking-widest text-amber-600 uppercase rtl:text-right">
+                  {t("storeManagerTab.createStoreFirst")}
                 </p>
               )}
             </div>
@@ -256,9 +262,9 @@ export default function StoreManagerTab() {
               ) : (
                 <>
                   <span className="regular text-[11px] md:text-[12px] tracking-widest uppercase font-bold">
-                    Assign Manager
+                    {t("storeManagerTab.assignButton")}
                   </span>
-                  <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                  <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform rtl:group-hover:-translate-x-0.5">
                     <SaveIcon />
                   </span>
                 </>

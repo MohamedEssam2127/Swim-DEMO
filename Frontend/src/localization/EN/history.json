@@ -1,0 +1,33 @@
+{
+  "title": "History Management",
+  "activeQueue": "Active Logistics Queue —",
+  "total": "Total",
+  "filterByStore": "Filter by Store",
+  "allStores": "All Stores",
+  "unknownStore": "Unknown Store",
+  "unknownCustomer": "Unknown Customer",
+  "editOrder": "EDIT\nORDER",
+  "createReceipt": "CREATE\nRECEIPT",
+  "sort": {
+    "byDate": "Sort By Date",
+    "byCustomerName": "Sort By Customer Name",
+    "byOrderId": "Sort By Order ID"
+  },
+  "searchPlaceholder": "Search With Customer Name, Date, or Order ID",
+  "table": {
+    "store": "Store",
+    "orderId": "Order ID",
+    "orderCreatedWhen": "Order Created When",
+    "quantity": "Quantity",
+    "customer": "Customer",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "states": {
+    "loading": "Loading History...",
+    "failed": "Failed to fetch history.",
+    "noItems": "No history items found."
+  },
+  "orders": "Orders",
+  "seeMore": "See More"
+}

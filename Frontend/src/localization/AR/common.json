@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "pricing": "الأسعار",
+    "signUp": "إنشاء حساب",
+    "login": "تسجيل الدخول",
+    "statistics": "الإحصائيات",
+    "inventory": "المخزون",
+    "history": "السجل",
+    "order": "الطلبات",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج",
+    "stats": "إحصائيات",
+    "inv": "مخزون"
+  },
+  "footer": {
+    "company": "الشركة",
+    "socials": "التواصل",
+    "support": "الدعم",
+    "home": "الرئيسية",
+    "aboutUs": "من نحن",
+    "pricing": "الأسعار",
+    "instagram": "انستغرام",
+    "facebook": "فيسبوك",
+    "tiktok": "تيك توك"
+  },
+  "loading": "جارٍ التحميل...",
+  "error": "خطأ",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+  "submit": "إرسال",
+  "delete": "حذف",
+  "edit": "تعديل",
+  "add": "إضافة",
+  "close": "إغلاق",
+  "confirm": "تأكيد",
+  "back": "رجوع",
+  "next": "التالي",
+  "search": "بحث",
+  "noResults": "لا توجد نتائج",
+  "seeMore": "عرض المزيد",
+  "seeAll": "عرض الكل",
+  "items": "عناصر",
+  "total": "الإجمالي",
+  "of": "من",
+  "loggedOut": "تم تسجيل الخروج بنجاح.",
+  "unknownItem": "عنصر غير معروف",
+  "unknownCategory": "عام",
+  "statuses": {
+    "pending": "قيد الانتظار",
+    "completed": "مكتمل",
+    "confirmed": "مؤكد"
+  },
+  "languageSwitcher": {
+    "switchTo": "EN",
+    "label": "تبديل اللغة"
+  },
+  "toast": {
+    "newRequest": "طلب جديد من {{requester}} لـ {{store}}",
+    "requestApproved": "تمت الموافقة على الطلب! \"{{items}}\" في طريقها إلى {{store}}.",
+    "requestRejected": "تم رفض الطلب لـ {{store}}.",
+    "reason": "السبب: {{note}}"
+  }
+}

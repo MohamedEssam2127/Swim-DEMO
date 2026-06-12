@@ -1,0 +1,133 @@
+{
+  "title": "Swim Inventory",
+  "switchTo": "switch to",
+  "store": "Store",
+  "warehouse": "WareHouse",
+  "management": "Management",
+  "select": "Select",
+  "stats": {
+    "totalValue": "Total Inventory Value",
+    "vsLastQuarter": "+2.4% VS LAST QUARTER",
+    "totalWarehouses": "Total Warehouses",
+    "totalStores": "Total Stores",
+    "remaining": "Remaining",
+    "activeStoreDetails": "Active Store Details",
+    "noStoreSelected": "No Store Selected",
+    "totalItemsInStore": "Total Items In Store",
+    "totalStoresAvailable": "Total Stores Available"
+  },
+  "search": {
+    "placeholder": "Search With Item Name, Category, or ID",
+    "sortByQuantity": "Sort By Quantity",
+    "sortByPrice": "Sort By Price",
+    "sortByName": "Sort By Name",
+    "sortById": "Sort By ID"
+  },
+  "table": {
+    "item": "Item",
+    "quantity": "Quantity",
+    "price": "Price",
+    "loading": "Loading Inventory...",
+    "error": "Failed to fetch inventory items",
+    "noItems": "no items for now"
+  },
+  "alert": {
+    "itemsFoundTitle": "ITEMS FOUND IN OTHER LOCATIONS",
+    "searchQueryMatches": "THE SEARCH QUERY",
+    "matchesItems": "MATCHES ITEMS THAT DO NOT EXIST AT",
+    "butAvailable": "BUT ARE AVAILABLE ELSEWHERE:",
+    "category": "CATEGORY",
+    "availableOn": "AVAILABLE ON",
+    "unit": "UNIT",
+    "units": "UNITS",
+    "request": "Request",
+    "cancelClear": "Cancel & Clear",
+    "notFoundTitle": "ITEM NOT FOUND ANYWHERE",
+    "notFoundDesc": "NO ACTIVE ITEMS MATCHING",
+    "notFoundSuffix": "WERE FOUND IN ANY OF YOUR WAREHOUSES OR STORES.",
+    "thisWarehouse": "THIS WAREHOUSE"
+  },
+  "operations": {
+    "warehouseTitle": "WAREHOUSE OPERATIONS",
+    "storeTitle": "STORES OPERATIONS",
+    "addNewItem": "ADD NEW ITEM",
+    "exportToStore": "EXPORT TO STORE",
+    "importFromWarehouse": "IMPORT FROM WAREHOUSE",
+    "moveBetweenWarehouses": "MOVE BETWEEN WAREHOUSES",
+    "moveBetweenStores": "MOVE BETWEEN STORES"
+  },
+  "popups": {
+    "addNewItem": {
+      "title": "ADD NEW ITEM",
+      "skuIdentifier": "sku identifier",
+      "skuPlaceholder": "e.g., SWIM-9982-AX",
+      "storageZone": "storage zone",
+      "zoneCold": "ALPHA-01 (COLD)",
+      "zoneDry": "BETA-02 (DRY)",
+      "zoneHazmat": "GAMMA-03 (HAZMAT)",
+      "description": "item description",
+      "descriptionPlaceholder": "Enter technical specifications and physical properties...",
+      "quantity": "quantity (units)",
+      "price": "unit price ($)",
+      "trackingProtocol": "tracking protocol",
+      "rfid": "RFID",
+      "printTag": "PRINT TAG",
+      "initializeEntry": "initialize entry",
+      "systemLogIdle": "system log: idle — awaiting operator input",
+      "successToast": "item added successfully"
+    },
+    "exportToStore": {
+      "subtitle": "warehouse operation v4.2",
+      "title": "export to store",
+      "chooseItem": "choose item",
+      "chooseItemPlaceholder": "CHOOSE ITEM",
+      "destinationStore": "destination store",
+      "chooseDestinationPlaceholder": "CHOOSE DESTINATION",
+      "enterQuantity": "enter quantity",
+      "quantityPlaceholder": "0000",
+      "currentStock": "current stock",
+      "transitLead": "transit lead",
+      "transitLeadValue": "48 HOURS",
+      "executeExport": "execute export",
+      "successToast": "item moved successfully"
+    },
+    "importFromWarehouse": {
+      "subtitle": "store operation v4.2",
+      "title": "import from warehouse",
+      "chooseItem": "choose item",
+      "chooseItemPlaceholder": "CHOOSE ITEM",
+      "sourceWarehouse": "source warehouse",
+      "chooseSourcePlaceholder": "CHOOSE SOURCE",
+      "enterQuantity": "enter quantity",
+      "quantityPlaceholder": "0000",
+      "executeImport": "execute import",
+      "successToast": "item moved successfully"
+    },
+    "moveBetween": {
+      "opSubtitle": "operation id: trns-991284",
+      "titleWarehouses": "move between warehouses",
+      "titleStores": "move between stores",
+      "sourceFacility": "source facility",
+      "chooseSourcePlaceholder": "CHOOSE SOURCE",
+      "targetFacility": "target facility",
+      "chooseTargetPlaceholder": "CHOOSE TARGET",
+      "itemSelection": "item selection",
+      "chooseItemPlaceholder": "CHOOSE ITEM",
+      "quantity": "quantity",
+      "quantityPlaceholder": "ENTER QUANTITY",
+      "initiateTransfer": "initiate transfer",
+      "systemLogLedger": "logging to system transaction ledger ...",
+      "successToast": "item moved successfully"
+    },
+    "orderConfirmation": {
+      "title": "order confirmation",
+      "orderId": "order id",
+      "printReceipt": "print receipt",
+      "returnToHistory": "return to history",
+      "summaryDetails": "summary details",
+      "customerName": "customer name",
+      "itemCount": "item count",
+      "totalAmount": "total amount"
+    }
+  }
+}

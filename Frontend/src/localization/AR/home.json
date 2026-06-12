@@ -1,0 +1,69 @@
+{
+  "welcome": {
+    "headline": "تحكم كامل في مخزونك",
+    "createShipment": "إنشاء شحنة",
+    "software": "برمجيات",
+    "warehouse": "مستودع",
+    "inventory": "مخزون",
+    "management": "إدارة",
+    "deepScale": "نطاق واسع",
+    "lightFootprint": "بصمة خفيفة",
+    "tagline": "نظام قوي",
+    "taglineHighlight": "لإدارة المتاجر والمستودعات",
+    "taglineMiddle": "مصمم للأع",
+    "taglineHighlight2": "مال",
+    "taglineEnd": "المتنامية."
+  },
+  "problems": {
+    "title": "أخطاء المخزون تكلف الشركات أموالاً.",
+    "subtitle": "أمر فظيع أليس كذلك؟",
+    "card1Title": "بيانات مخزون غير دقيقة",
+    "card1Value": "حاسمة لاتخاذ القرارات",
+    "card1Subtext": "خسارة -12% في الإيرادات العام الماضي",
+    "card2Title": "نقص المخزون",
+    "card2Value": "12 عنصر",
+    "card2Subtext": "-1000 عنصر الأسبوع الماضي",
+    "card3Title": "تتبع الأخطاء يدوياً",
+    "card3Value": "يومان متبقيان للموعد النهائي",
+    "card3Subtext": "400 ساعة مهدرة",
+    "card4Title": "لا رؤية آنية",
+    "card4Value": "حاسمة لاتخاذ القرارات",
+    "card4Subtext": "+12 رصيف معلق"
+  },
+  "solution1": {
+    "title": "والمزيد والمزيد ... SWIM يحل هذا",
+    "sign1": "إدارة متعددة الفروع",
+    "sign2": "تتبع المخزون آنياً"
+  },
+  "whoWeAre": {
+    "title": "من نحن",
+    "storyTitle": "القصة",
+    "storyDesc": "اكتشف أصولنا ومعالمنا والأفكار التي شكلت SWIM.",
+    "missionTitle": "المهمة",
+    "missionDesc": "تبسيط عمليات المخزون وتمكين الفرق بالتحكم الآني.",
+    "valuesTitle": "القيم",
+    "valuesDesc": "نعطي الأولوية للابتكار والشفافية والموثوقية في كل إصدار.",
+    "teamTitle": "الفريق",
+    "teamDesc": "مجموعة متخصصة من خبراء اللوجستيات والمهندسين يبنون حلولاً عملية."
+  },
+  "solution2": {
+    "title": "المزيد من المميزات؟!!!",
+    "sign1": "نظام الطلبات جاهز",
+    "sign2": "تخصيص الشعار"
+  },
+  "pricing": {
+    "title": "بروتوكولات التسعير",
+    "core": "أساسي",
+    "pro": "احترافي",
+    "fixed": "ثابت",
+    "fleet": "أسطول",
+    "standardAccess": "وصول قياسي",
+    "unlimitedAccess": "وصول غير محدود",
+    "enterprise": "مؤسسات",
+    "custom": "مخصص",
+    "apiAccess": "وصول API ومتعدد المواقع",
+    "customized": "مخصص",
+    "recommended": "موصى به",
+    "createShipment": "إنشاء شحنة"
+  }
+}

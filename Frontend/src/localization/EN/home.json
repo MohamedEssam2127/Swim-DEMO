@@ -1,0 +1,69 @@
+{
+  "welcome": {
+    "headline": "Take Full Control of Your Inventory",
+    "createShipment": "CREATE SHIPMENT",
+    "software": "Software",
+    "warehouse": "Warehouse",
+    "inventory": "Inventory",
+    "management": "Management",
+    "deepScale": "DEEP SCALE",
+    "lightFootprint": "LIGHT FOOTPRINT",
+    "tagline": "A powerful",
+    "taglineHighlight": "store and warehouse management",
+    "taglineMiddle": "system built for g",
+    "taglineHighlight2": "rowing",
+    "taglineEnd": "businesses."
+  },
+  "problems": {
+    "title": "Inventory mistakes cost businesses money.",
+    "subtitle": "Awful thing right ?",
+    "card1Title": "inaccurate inventory data",
+    "card1Value": "Critical for decision making",
+    "card1Subtext": "-12% revenue loss last year",
+    "card2Title": "stock shortage",
+    "card2Value": "12 item",
+    "card2Subtext": "-1000 item last week",
+    "card3Title": "manual error tracking",
+    "card3Value": "2 days remaining for deadline",
+    "card3Subtext": "400 hours wasted",
+    "card4Title": "No real-time visibility",
+    "card4Value": "Critical for decision making",
+    "card4Subtext": "+12 pending dock"
+  },
+  "solution1": {
+    "title": "AND MUCH MUCH MORE ... SWIM SOLVES THIS",
+    "sign1": "MULTI-BRANCH MANAGEMENT",
+    "sign2": "REAL-TIME STOCK TRACKING"
+  },
+  "whoWeAre": {
+    "title": "Who We Are",
+    "storyTitle": "Story",
+    "storyDesc": "Explore our origin, milestones, and the ideas that shaped SWIM.",
+    "missionTitle": "Mission",
+    "missionDesc": "Streamline inventory operations and empower teams with real-time control.",
+    "valuesTitle": "Values",
+    "valuesDesc": "We prioritize innovation, transparency, and reliability in every release.",
+    "teamTitle": "Team",
+    "teamDesc": "A dedicated group of logistics experts and engineers building practical solutions."
+  },
+  "solution2": {
+    "title": "EVEN MORE FEATURES ?!!!",
+    "sign1": "ORDERING SYSTEM READY",
+    "sign2": "LOGO CUSTOMIZATION"
+  },
+  "pricing": {
+    "title": "PRICING PROTOCOLS",
+    "core": "CORE",
+    "pro": "PRO",
+    "fixed": "FIXED",
+    "fleet": "FLEET",
+    "standardAccess": "STANDARD ACCESS",
+    "unlimitedAccess": "UNLIMITED ACCESS",
+    "enterprise": "ENTERPRISE",
+    "custom": "CUSTOM",
+    "apiAccess": "API ACCESS & MULTI-SITE",
+    "customized": "CUSTOMIZED",
+    "recommended": "RECOMMENDED",
+    "createShipment": "CREATE SHIPMENT"
+  }
+}

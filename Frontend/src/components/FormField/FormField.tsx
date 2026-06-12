@@ -71,7 +71,7 @@ function FormField(props: FormFieldProps) {
             id={id}
             value={props.value}
             onChange={(e) => props.onChange(e.target.value)}
-            className={`${inputBase} appearance-none cursor-pointer pr-10 uppercase`}
+            className={`${inputBase} appearance-none cursor-pointer pr-10 rtl:pr-4 rtl:pl-10 uppercase`}
           >
             {props.placeholder && (
               <option value="" disabled>
@@ -84,7 +84,7 @@ function FormField(props: FormFieldProps) {
               </option>
             ))}
           </select>
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="absolute right-3 rtl:right-auto rtl:left-3 top-1/2 -translate-y-1/2 pointer-events-none">
             <svg
               className="w-4 h-4 text-neutral-500"
               fill="none"

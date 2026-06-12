@@ -5,6 +5,7 @@ import { loginUser } from "../../store/slices/authSlice";
 import type { AppDispatch, RootState } from "../../store";
 import Button from "../../components/button/button";
 import { showSuccessToast, showErrorToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -15,6 +16,7 @@ function SignIn() {
   const navigate = useNavigate();
 
   const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation("signin");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,12 +24,12 @@ function SignIn() {
     const resultAction = await dispatch(loginUser({ email, password }));
 
     if (loginUser.fulfilled.match(resultAction)) {
-      showSuccessToast("Access Granted! Welcome to SWIM Protocol.");
+      showSuccessToast(t("messages.success"));
       navigate("/statistics");
     } else {
       const errorMsg = typeof resultAction.payload === "string" 
         ? resultAction.payload 
-        : "Invalid email or password.";
+        : t("messages.error");
       showErrorToast(errorMsg);
     }
   };
@@ -38,25 +40,23 @@ function SignIn() {
         <div className="w-full max-w-5xl flex flex-col">
           <div className="mb-10">
             <h1 className="header text-6xl md:text-8xl text-primary-900 tracking-tight mb-4">
-              ACCESS SYSTEM
+              {t("title")}
             </h1>
             <p className="inter text-base md:text-lg text-neutral-800 max-w-2xl leading-relaxed">
-              SWIM Protocol v4.02. Secure terminal for Industrial Store and
-              Warehouse Inventory Management. Unauthorized access is logged and
-              prosecuted.
+              {t("subtitle")}
             </p>
           </div>
 
           <div className="w-full border border-neutral-300 p-8 md:p-12 bg-white">
             <div className="mb-8 inline-block">
               <h2 className="header text-base tracking-widest text-primary-900 uppercase leading-tight">
-                AUTHENTICATION
+                {t("authTitle")}
                 <br />
                 <span className="border-b-[3px] border-primary-900 pb-1 inline-block">
-                  REQ
+                  {t("authRequired1")}
                 </span>
                 <span className=" border-primary-900 pb-1 inline-block">
-                  UIRED
+                  {t("authRequired2")}
                 </span>
               </h2>
             </div>
@@ -64,13 +64,13 @@ function SignIn() {
             <form onSubmit={handleLogin} className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                  Email
+                  {t("labels.email")}
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="operator@iti.gov.eg"
+                  placeholder={t("placeholders.email")}
                   className="regular w-full border border-neutral-200 p-4 text-primary-900 placeholder-neutral-400 focus:outline-none focus:border-primary-400 transition-colors"
                   required
                 />
@@ -78,14 +78,14 @@ function SignIn() {
 
               <div className="flex flex-col gap-2">
                 <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                  Password
+                  {t("labels.password")}
                 </label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="******"
+                    placeholder={t("placeholders.password")}
                     className="regular w-full border border-neutral-200 p-4 pr-12 text-primary-900 placeholder-neutral-400 focus:outline-none focus:border-primary-400 transition-colors"
                     required
                   />
@@ -109,7 +109,7 @@ function SignIn() {
                 className={`w-full mt-4 ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
                 disabled={isLoading}
               >
-                {isLoading ? "Authenticating..." : "Authenticate"}
+                {isLoading ? t("buttons.authenticating") : t("buttons.authenticate")}
               </Button>
             </form>
 
@@ -118,15 +118,15 @@ function SignIn() {
                 to="/forgot-password" 
                 className="regular text-xs text-neutral-600 hover:text-primary-900 underline decoration-neutral-400 hover:decoration-primary-900 underline-offset-4 transition-colors"
               >
-                FORGOT PASSKEY?
+                {t("links.forgotPasskey")}
               </Link>
               <p className="regular text-xs text-neutral-600">
-                NEW TO SWIM?
+                {t("links.newToSwim")}
                 <Link
                   to="/signup"
-                  className="text-primary-900 hover:underline underline-offset-4 font-bold ml-1"
+                  className="text-primary-900 hover:underline underline-offset-4 font-bold ms-1"
                 >
-                  SIGN UP
+                  {t("links.signUp")}
                 </Link>
               </p>
             </div>

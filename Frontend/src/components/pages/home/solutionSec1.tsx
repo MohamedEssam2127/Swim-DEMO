@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { MouseEvent, ReactNode } from "react";
+import { useTranslation } from "../../../localization/i18n";
 
 import Sign from "../../sign/sign";
 import anchorPic from "../../../assets/images/anchor 1.png";
@@ -66,6 +67,7 @@ function ScrollReveal({
 }
 
 function SolutionSec1() {
+  const { t, dir } = useTranslation("home");
   const containerRef = useRef<HTMLDivElement>(null);
   const [tiltStyle, setTiltStyle] = useState({
     transform:
@@ -104,13 +106,13 @@ function SolutionSec1() {
 
       <div className="container mx-auto relative h-full z-10">
         {/* Title */}
-        <h2 className="text-center md:text-left text-white text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold tracking-wide mb-12 header uppercase  leading-snug drop-shadow-lg">
-          AND MUCH MUCH MORE ... SWIM SOLVES THIS
+        <h2 className="text-center md:text-left rtl:md:text-right text-white text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold tracking-wide mb-12 header uppercase  leading-snug drop-shadow-lg">
+          {t("solution1.title")}
         </h2>
 
         <div className="relative w-full min-h-[600px] flex justify-center items-center mt-10">
           {/* SWIM Background Letters (S W, I M) */}
-          <div className="absolute left-0 lg:-left-10 tp-1/2 lg:top-1/3 transform -translate-y-1/2 grid grid-cols-2 gap-x-12 gap-y-8 text-[#051426] text-[6rem] md:text-[8rem] lg:text-[10rem] font-black leading-none select-none z-0 mix-blend-multiply opacity-80">
+          <div className="absolute left-0 lg:-left-10 rtl:left-auto rtl:right-0 rtl:lg:-right-10 top-1/2 lg:top-1/3 transform -translate-y-1/2 grid grid-cols-2 gap-x-12 gap-y-8 text-[#051426] text-[6rem] md:text-[8rem] lg:text-[10rem] font-black leading-none select-none z-0 mix-blend-multiply opacity-80">
             <span className="header font-bold">S</span>
             <span className="header font-bold">W</span>
             <span className="header font-bold">I</span>
@@ -135,31 +137,31 @@ function SolutionSec1() {
 
           {/* Floating Sign 1: Multi-Branch Management */}
           <ScrollReveal
-            direction="left"
+            direction={dir === "rtl" ? "right" : "left"}
             delay={0.2}
-            className="absolute top-[5%] md:-top-10 right-0 md:-right-5 z-20 pointer-events-none"
+            className="absolute top-[5%] md:-top-10 right-0 md:-right-5 rtl:right-auto rtl:left-0 rtl:md:-left-5 z-20 pointer-events-none"
           >
             <div className="bg-[#f8f8f8] py-6 px-8 shadow-2xl relative">
               <div
                 className="absolute inset-0 opacity-20 pointer-events-none"
                 style={{ backgroundImage: noiseBg }}
               ></div>
-              <Sign title="MULTI-BRANCH MANAGEMENT" />
+              <Sign title={t("solution1.sign1")} />
             </div>
           </ScrollReveal>
 
           {/* Floating Sign 2: Real-time stock tracking */}
           <ScrollReveal
-            direction="right"
+            direction={dir === "rtl" ? "left" : "right"}
             delay={0.4}
-            className="absolute bottom-[5%] md:-bottom-10 left-0 md:left-5 z-20 pointer-events-none"
+            className="absolute bottom-[5%] md:-bottom-10 left-0 md:left-5 rtl:left-auto rtl:right-0 rtl:md:right-5 z-20 pointer-events-none"
           >
             <div className="bg-[#f8f8f8] py-6 px-8 shadow-2xl relative">
               <div
                 className="absolute inset-0 opacity-20 pointer-events-none"
                 style={{ backgroundImage: noiseBg }}
               ></div>
-              <Sign title="REAL-TIME STOCK TRACKING" />
+              <Sign title={t("solution1.sign2")} />
             </div>
           </ScrollReveal>
 
@@ -176,7 +178,7 @@ function SolutionSec1() {
           {/* Anchor Image */}
           <img
             src={anchorPic}
-            className="absolute -bottom-20 -right-10 md:-right-20 w-[250px] md:w-[350px] object-contain z-30 drop-shadow-2xl pointer-events-none"
+            className="absolute -bottom-20 -right-10 md:-right-20 rtl:right-auto rtl:-left-10 rtl:md:-left-20 w-[250px] md:w-[350px] object-contain z-30 drop-shadow-2xl pointer-events-none rtl:scale-x-[-1]"
             alt="Anchor"
           />
         </div>
