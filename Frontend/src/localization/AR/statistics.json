@@ -1,0 +1,24 @@
+{
+  "title": "نظرة عامة على تحليلات المستودع",
+  "subtitle": "القياسات الآنية ومقاييس السعة.",
+  "totalStockValue": "إجمالي قيمة المخزون",
+  "capacity": "السعة",
+  "activeFleets": "الأساطيل النشطة",
+  "enRoute": "في الطريق",
+  "systemPerformance": "مقاييس أداء النظام",
+  "realtime": "آني",
+  "history24h": "سجل 24 ساعة",
+  "metrics": {
+    "latency": "زمن الاستجابة",
+    "throughput": "الإنتاجية",
+    "errorRate": "معدل الأخطاء",
+    "uptime": "وقت التشغيل"
+  },
+  "stockVelocity": "سرعة المخزون",
+  "dockActivity": "نشاط المرسى",
+  "logisticsPerformance": "أداء اللوجستيات",
+  "realtimeThroughput": "الإنتاجية الآنية",
+  "lnFreight": "LN-FREIGHT",
+  "systemAlerts": "تنبيهات النظام",
+  "warehouseInterior": "داخل المستودع"
+}

@@ -1,17 +1,20 @@
 import IntroductionCard from "../../introduction card/introductionCard";
 import building from "../../../assets/icons/building-02.svg";
 import date from "../../../assets/icons/date-time.svg";
+import { useTranslation } from "../../../localization/i18n";
 
 function WhoWeAre() {
+  const { t } = useTranslation("home");
+
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 py-16 overflow-hidden">
       <h2 className="text-center text-3xl md:text-4xl lg:text-5xl xl:text-7xl text-primary-900 mb-10 md:mb-[60px] tracking-[1px] header transition-transform hover:scale-105 duration-500">
-        Who We Are
+        {t("whoWeAre.title")}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <IntroductionCard
-          title="Story"
-          description="Explore our origin, milestones, and the ideas that shaped SWIM."
+          title={t("whoWeAre.storyTitle")}
+          description={t("whoWeAre.storyDesc")}
           icon={
             <svg
               width="44"
@@ -39,14 +42,14 @@ function WhoWeAre() {
           type="primary"
         />
         <IntroductionCard
-          title="Mission"
-          description="Streamline inventory operations and empower teams with real-time control."
+          title={t("whoWeAre.missionTitle")}
+          description={t("whoWeAre.missionDesc")}
           icon={building}
           type="secondary"
         />
         <IntroductionCard
-          title="Values"
-          description="We prioritize innovation, transparency, and reliability in every release."
+          title={t("whoWeAre.valuesTitle")}
+          description={t("whoWeAre.valuesDesc")}
           icon={
             <svg
               width="46"
@@ -56,7 +59,7 @@ function WhoWeAre() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M11.3375 33.5327H9.78413C4.76228 33.5327 2.25134 33.5327 1.18106 31.8749C0.110777 30.2174 1.13056 27.9078 3.17013 23.2889L9.30183 9.4026C11.1562 5.20299 12.0834 3.10317 13.8822 1.92659C15.6809 0.75 17.9638 0.75 22.53 0.75H29.6018C35.1485 0.75 37.9218 0.75 38.9677 2.56424C40.0139 4.37848 38.638 6.80214 35.886 11.6494L32.258 18.0397C30.89 20.4494 30.2059 21.6543 30.2154 22.6406C30.2279 23.9223 30.9086 25.1032 32.0082 25.7498C32.8544 26.2476 34.2329 26.2476 36.9904 26.2476C40.4762 26.2476 42.2193 26.2476 43.127 26.8519C44.3062 27.6367 44.9236 29.0411 44.7073 30.4475C44.5408 31.5299 43.3683 32.8278 41.0235 35.424L22.2893 56.166C18.6096 60.2402 16.7697 62.2772 15.5342 61.6327C14.2987 60.9878 14.892 58.3007 16.0786 52.9259L18.4031 42.398C19.3065 38.3056 19.7583 36.2594 18.6719 34.8961C17.5854 33.5327 15.5027 33.5327 11.3375 33.5327Z"
+                d="M11.3375 33.5327H9.78413C4.76228 33.5327 2.25134 33.5327 1.18106 31.8749C0.110777 30.2174 1.13056 27.9078 3.17013 23.2889L9.30183 9.4026C11.1562 5.20299 12.0834 3.10317 13.8822 1.92659C15.6809 0.75 17.9638 0.75 22.53 0.75H29.6018C35.1485 0.75 37.9218 0.75 38.9677 2.56424C40.0139 4.37848 38.638 6.80214 35.886 11.6494L32.258 18.0397C30.89 20.4494 30.2059 21.6543 30.2154 22.6406C30.2279 23.9223 30.9086 25.1032 32.0082 25.7498C32.8544 26.2476 34.2329 26.2476 36.9904 26.2476C40.4762 26.2476 42.2193 26.2476 43.127 26.8519C44.3062 27.6367 44.9236 29.0411 44.7073 30.4475C44.7073 30.4475 44.7073 30.4475 44.7073 30.4475C44.5408 31.5299 43.3683 32.8278 41.0235 35.424L22.2893 56.166C18.6096 60.2402 16.7697 62.2772 15.5342 61.6327C14.2987 60.9878 14.892 58.3007 16.0786 52.9259L18.4031 42.398C19.3065 38.3056 19.7583 36.2594 18.6719 34.8961C17.5854 33.5327 15.5027 33.5327 11.3375 33.5327Z"
                 stroke="white"
                 strokeWidth="1.5"
                 strokeLinejoin="round"
@@ -66,8 +69,8 @@ function WhoWeAre() {
           type="primary"
         />
         <IntroductionCard
-          title="Team"
-          description="A dedicated group of logistics experts and engineers building practical solutions."
+          title={t("whoWeAre.teamTitle")}
+          description={t("whoWeAre.teamDesc")}
           icon={date}
           type="secondary"
         />

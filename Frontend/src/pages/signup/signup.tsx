@@ -6,6 +6,7 @@ import type { AppDispatch, RootState } from "../../store";
 import { showSuccessToast, showErrorToast } from "../../utils/toast";
 import octopusImg from "../../assets/images/octupus.svg";
 import Button from "../../components/button/button";
+import { useTranslation } from "../../localization/i18n";
 
 function SignUp() {
   const [step, setStep] = useState<number>(1);
@@ -28,6 +29,7 @@ function SignUp() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation("signup");
 
   const validateField = (field: string, value: string) => {
     let newErrors = { ...errors };
@@ -35,31 +37,31 @@ function SignUp() {
     switch (field) {
       case "fullName":
         if (value.trim().length < 3)
-          newErrors.fullName = "Name must be at least 3 characters.";
+          newErrors.fullName = t("validation.nameTooShort");
         else delete newErrors.fullName;
         break;
       case "email":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value))
-          newErrors.email = "Please enter a valid email address.";
+          newErrors.email = t("validation.invalidEmail");
         else delete newErrors.email;
         break;
       case "password":
         if (value.length < 6)
-          newErrors.password = "Password must be at least 6 characters.";
+          newErrors.password = t("validation.passwordTooShort");
         else delete newErrors.password;
         if (confirmPassword && value !== confirmPassword)
-          newErrors.confirmPassword = "Passwords do not match.";
+          newErrors.confirmPassword = t("validation.passwordMismatch");
         else delete newErrors.confirmPassword;
         break;
       case "confirmPassword":
         if (value !== password)
-          newErrors.confirmPassword = "Passwords do not match.";
+          newErrors.confirmPassword = t("validation.passwordMismatch");
         else delete newErrors.confirmPassword;
         break;
       case "orgName":
         if (value.trim().length < 2)
-          newErrors.orgName = "Organization name is required.";
+          newErrors.orgName = t("validation.orgNameRequired");
         else delete newErrors.orgName;
         break;
       default:
@@ -85,7 +87,7 @@ function SignUp() {
     ) {
       setStep(2);
     } else {
-      showErrorToast("Please fix the errors before proceeding.");
+      showErrorToast(t("validation.fixErrors"));
     }
   };
 
@@ -94,7 +96,7 @@ function SignUp() {
 
     validateField("orgName", orgName);
     if (Object.keys(errors).length > 0 || !orgName) {
-      showErrorToast("Please fix the errors before submitting.");
+      showErrorToast(t("validation.fixErrorsSubmit"));
       return;
     }
 
@@ -111,7 +113,7 @@ function SignUp() {
     const resultAction = await dispatch(registerUser(userData));
 
     if (registerUser.fulfilled.match(resultAction)) {
-      showSuccessToast("Account created successfully! Welcome to the Core.");
+      showSuccessToast(t("messages.success"));
       navigate("/home");
     } else {
       showErrorToast(resultAction.payload as string, 5000);
@@ -127,10 +129,10 @@ function SignUp() {
               <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-4 border-b border-transparent">
                 <div>
                   <h1 className="header text-6xl md:text-8xl text-primary-900 tracking-tight mb-0 uppercase">
-                    Join The Core
+                    {t("step1.title")}
                   </h1>
                   <h2 className="inter text-xl md:text-2xl text-primary-900 uppercase tracking-widest mt-1">
-                    Personal Information
+                    {t("step1.subtitle")}
                   </h2>
                 </div>
                 <div className="flex items-center gap-4 mt-6 md:mt-0">
@@ -138,7 +140,7 @@ function SignUp() {
                     <span className="w-5 h-5 rounded-full bg-primary-700"></span>
                     <span className="w-5 h-5 rounded-full bg-primary-200"></span>
                   </div>
-                  <span className="inter text-3xl text-primary-900">1/2</span>
+                  <span className="inter text-3xl text-primary-900">{t("step1.stepIndicator")}</span>
                 </div>
               </div>
 
@@ -146,7 +148,7 @@ function SignUp() {
                 <div className="flex flex-col md:flex-row gap-3 md:gap-6">
                   <div className="flex flex-col gap-2 w-full">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                      Full Name
+                      {t("labels.fullName")}
                     </label>
                     <input
                       type="text"
@@ -156,7 +158,7 @@ function SignUp() {
                         validateField("fullName", e.target.value);
                       }}
                       onBlur={(e) => validateField("fullName", e.target.value)}
-                      placeholder="OPERATOR NAME"
+                      placeholder={t("placeholders.fullName")}
                       className={`regular w-full border p-4 text-primary-900 focus:outline-none transition-colors ${errors.fullName ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
                       required
                     />
@@ -168,7 +170,7 @@ function SignUp() {
                   </div>
                   <div className="flex flex-col gap-2 w-full">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                      Work Email Address
+                      {t("labels.workEmail")}
                     </label>
                     <input
                       type="email"
@@ -178,7 +180,7 @@ function SignUp() {
                         validateField("email", e.target.value);
                       }}
                       onBlur={(e) => validateField("email", e.target.value)}
-                      placeholder="operator@iti.gov.eg"
+                      placeholder={t("placeholders.email")}
                       className={`regular w-full border p-4 text-primary-900 focus:outline-none transition-colors ${errors.email ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
                       required
                     />
@@ -193,7 +195,7 @@ function SignUp() {
                 <div className="flex flex-col md:flex-row gap-3 md:gap-6">
                   <div className="flex flex-col gap-2 w-full">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                      Password
+                      {t("labels.password")}
                     </label>
                     <div className="relative">
                       <input
@@ -204,7 +206,7 @@ function SignUp() {
                           validateField("password", e.target.value);
                         }}
                         onBlur={(e) => validateField("password", e.target.value)}
-                        placeholder="******"
+                        placeholder={t("placeholders.password")}
                         className={`regular w-full border p-4 pr-12 text-primary-900 focus:outline-none transition-colors ${errors.password ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
                         required
                       />
@@ -229,7 +231,7 @@ function SignUp() {
 
                   <div className="flex flex-col gap-2 w-full">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                      Confirm Password
+                      {t("labels.confirmPassword")}
                     </label>
                     <div className="relative">
                       <input
@@ -242,7 +244,7 @@ function SignUp() {
                         onBlur={(e) =>
                           validateField("confirmPassword", e.target.value)
                         }
-                        placeholder="******"
+                        placeholder={t("placeholders.confirmPassword")}
                         className={`regular w-full border p-4 pr-12 text-primary-900 focus:outline-none transition-colors ${errors.confirmPassword ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
                         required
                       />
@@ -267,7 +269,7 @@ function SignUp() {
                 </div>
 
                 <Button type="submit" variant="primary" className="w-full mt-2">
-                  Next Step
+                  {t("buttons.nextStep")}
                 </Button>
               </form>
             </div>
@@ -292,7 +294,7 @@ function SignUp() {
                 >
                   <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
-                BACK TO PERSONAL INFO
+                {t("step2.backButton")}
               </button>
 
               <div className="flex justify-center mb-2 mt-4 md:mt-0">
@@ -306,10 +308,10 @@ function SignUp() {
               <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-4 border-b border-transparent">
                 <div>
                   <h1 className="header text-6xl md:text-8xl text-primary-900 tracking-tight mb-0 uppercase">
-                    Set Up Your Dock
+                    {t("step2.title")}
                   </h1>
                   <h2 className="inter text-xl md:text-2xl text-primary-900 uppercase tracking-widest mt-1">
-                    Organization Information
+                    {t("step2.subtitle")}
                   </h2>
                 </div>
                 <div className="flex items-center gap-4 mt-6 md:mt-0">
@@ -317,7 +319,7 @@ function SignUp() {
                     <span className="w-5 h-5 rounded-full bg-primary-700"></span>
                     <span className="w-5 h-5 rounded-full bg-primary-700"></span>
                   </div>
-                  <span className="inter text-3xl text-primary-900">2/2</span>
+                  <span className="inter text-3xl text-primary-900">{t("step2.stepIndicator")}</span>
                 </div>
               </div>
 
@@ -328,7 +330,7 @@ function SignUp() {
                 <div className="flex flex-col md:flex-row gap-3 md:gap-6">
                   <div className="flex flex-col gap-2 w-full">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                      Company/Organization Name
+                      {t("labels.orgName")}
                     </label>
                     <input
                       type="text"
@@ -338,7 +340,7 @@ function SignUp() {
                         validateField("orgName", e.target.value);
                       }}
                       onBlur={(e) => validateField("orgName", e.target.value)}
-                      placeholder="ITI Core Systems"
+                      placeholder={t("placeholders.orgName")}
                       className={`regular w-full border p-4 text-primary-900 focus:outline-none transition-colors ${errors.orgName ? "border-red-500 focus:border-red-500 bg-red-50" : "border-neutral-200 focus:border-primary-400"}`}
                       required
                     />
@@ -350,7 +352,7 @@ function SignUp() {
                   </div>
                   <div className="flex flex-col gap-2 w-full relative">
                     <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                      Primary Warehouse
+                      {t("labels.primaryWarehouse")}
                     </label>
                     <select
                       value={warehouse}
@@ -359,10 +361,10 @@ function SignUp() {
                       required
                     >
                       <option value="" disabled>
-                        Select Location
+                        {t("options.selectLocation")}
                       </option>
-                      <option value="smart-village">Smart Village</option>
-                      <option value="cairo">Cairo</option>
+                      <option value="smart-village">{t("options.smartVillage")}</option>
+                      <option value="cairo">{t("options.cairo")}</option>
                     </select>
                     <div className="absolute right-4 top-[2.75rem] pointer-events-none text-neutral-500">
                       ▼
@@ -372,7 +374,7 @@ function SignUp() {
 
                 <div className="flex flex-col gap-2 w-full relative">
                   <label className="regular text-xs text-neutral-700 uppercase tracking-widest">
-                    Industry/Sector (Optional)
+                    {t("labels.industry")}
                   </label>
                   <select
                     value={industry}
@@ -380,10 +382,10 @@ function SignUp() {
                     className="regular appearance-none w-full border border-neutral-200 p-4 text-primary-900 focus:border-primary-400 bg-white"
                   >
                     <option value="">
-                      None (Select Industry)
+                      {t("options.noneIndustry")}
                     </option>
-                    <option value="retail">Retail</option>
-                    <option value="manufacturing">Manufacturing</option>
+                    <option value="retail">{t("options.retail")}</option>
+                    <option value="manufacturing">{t("options.manufacturing")}</option>
                   </select>
                   <div className="absolute right-4 top-[2.75rem] pointer-events-none text-neutral-500">
                     ▼
@@ -403,7 +405,7 @@ function SignUp() {
                     htmlFor="protocol"
                     className="regular text-xs text-neutral-700 uppercase tracking-widest cursor-pointer mt-[2px]"
                   >
-                    I agree to the protocol
+                    {t("labels.agreeProtocol")}
                   </label>
                 </div>
 
@@ -413,7 +415,7 @@ function SignUp() {
                   className={`w-full mt-2 ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                  {isLoading ? t("buttons.creatingAccount") : t("buttons.createAccount")}
                 </Button>
               </form>
             </div>

@@ -12,6 +12,7 @@ import type { StockRequest } from "../../interfaces/RequestTypes/request";
 import FormSection from "../../components/FormSection/FormSection";
 import type { RequestStatus } from "../../types/requestStatus";
 import { showSuccessToast, showErrorToast } from "../../utils/toast";
+import { useTranslation } from "../../localization/i18n";
 
 function InboxIcon() {
   return (
@@ -102,17 +103,18 @@ function FilterIcon() {
 }
 
 function StatusBadge({ status }: { status: RequestStatus }) {
+  const { t } = useTranslation("profile");
   const config: Record<RequestStatus, { label: string; classes: string }> = {
     pending: {
-      label: "Pending",
+      label: t("requestsTab.statusPending"),
       classes: "text-amber-700 bg-amber-50 border-amber-200",
     },
     approved: {
-      label: "Approved",
+      label: t("requestsTab.statusApproved"),
       classes: "text-emerald-700 bg-emerald-50 border-emerald-200",
     },
     rejected: {
-      label: "Declined",
+      label: t("requestsTab.statusDeclined"),
       classes: "text-red-700 bg-red-50 border-red-200",
     },
   };
@@ -140,11 +142,12 @@ function EditApproveRow({
   isLoading: boolean;
 }) {
   const [qty, setQty] = useState<number>(request.items[0]?.quantity ?? 1);
+  const { t } = useTranslation("profile");
 
   return (
     <div className="mt-3 border border-primary-200 bg-primary-50 px-4 py-3 flex flex-col gap-3">
       <p className="regular text-[10px] tracking-widest uppercase text-primary-700 font-bold">
-        Edit quantity before approving
+        {t("requestsTab.editQtyBeforeApprove")}
       </p>
       <div className="flex items-center gap-3">
         <div className="flex items-center border border-neutral-300 bg-white overflow-hidden">
@@ -171,7 +174,7 @@ function EditApproveRow({
           </button>
         </div>
         <span className="regular text-[10px] text-neutral-400 tracking-widest uppercase">
-          (requested: {request.items[0]?.quantity ?? 0})
+          {t("requestsTab.requestedQty").replace("{{qty}}", String(request.items[0]?.quantity ?? 0))}
         </span>
       </div>
       <div className="flex gap-2">
@@ -187,7 +190,7 @@ function EditApproveRow({
             <CheckIcon />
           )}
           <span className="regular text-[10px] tracking-widest uppercase font-bold">
-            Confirm & Approve
+            {t("requestsTab.confirmApprove")}
           </span>
         </button>
         <button
@@ -196,7 +199,7 @@ function EditApproveRow({
           className="flex items-center gap-1.5 px-4 py-2 border border-neutral-300 text-neutral-600 hover:bg-neutral-100 transition-colors cursor-pointer"
         >
           <span className="regular text-[10px] tracking-widest uppercase font-bold">
-            Cancel
+            {t("requestsTab.cancel")}
           </span>
         </button>
       </div>
@@ -206,6 +209,7 @@ function EditApproveRow({
 
 function RequestCard({ request }: { request: StockRequest }) {
   const dispatch = useDispatch<AppDispatch>();
+  const { t, language } = useTranslation("profile");
   const [editMode, setEditMode] = useState(false);
   const [actionLoading, setActionLoading] = useState<
     "approve" | "decline" | "editApprove" | null
@@ -217,12 +221,12 @@ function RequestCard({ request }: { request: StockRequest }) {
     setActionLoading("approve");
     try {
       await dispatch(approveRequest({ id: request._id })).unwrap();
-      showSuccessToast("Request approved successfully.");
+      showSuccessToast(t("requestsTab.approveSuccess"));
     } catch (error: any) {
       showErrorToast(
         typeof error === "string"
           ? error
-          : error?.message || "Failed to approve request.",
+          : error?.message || t("requestsTab.approveFailed"),
       );
     } finally {
       setActionLoading(null);
@@ -233,12 +237,12 @@ function RequestCard({ request }: { request: StockRequest }) {
     setActionLoading("decline");
     try {
       await dispatch(declineRequest({ id: request._id })).unwrap();
-      showSuccessToast("Request declined successfully.");
+      showSuccessToast(t("requestsTab.declineSuccess"));
     } catch (error: any) {
       showErrorToast(
         typeof error === "string"
           ? error
-          : error?.message || "Failed to decline request.",
+          : error?.message || t("requestsTab.declineFailed"),
       );
     } finally {
       setActionLoading(null);
@@ -251,13 +255,13 @@ function RequestCard({ request }: { request: StockRequest }) {
       await dispatch(
         approveRequest({ id: request._id, approvedQuantity: qty }),
       ).unwrap();
-      showSuccessToast("Request approved with updated quantity.");
+      showSuccessToast(t("requestsTab.approveSuccessQty"));
       setEditMode(false);
     } catch (error: any) {
       showErrorToast(
         typeof error === "string"
           ? error
-          : error?.message || "Failed to approve request.",
+          : error?.message || t("requestsTab.approveFailed"),
       );
     } finally {
       setActionLoading(null);
@@ -265,7 +269,7 @@ function RequestCard({ request }: { request: StockRequest }) {
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString("en-GB", {
+    return new Date(dateStr).toLocaleDateString(language === "ar" ? "ar-EG" : "en-GB", {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -317,7 +321,7 @@ function RequestCard({ request }: { request: StockRequest }) {
       <div className="flex items-center gap-4 border-t border-neutral-100 pt-3">
         <div className="flex flex-col gap-0.5">
           <span className="regular text-[9px] tracking-widest uppercase text-neutral-400 font-bold">
-            Requested
+            {t("requestsTab.requested")}
           </span>
           <span className="header text-[20px] font-bold text-neutral-800 leading-none">
             {request.items[0]?.quantity ?? 0}
@@ -330,7 +334,7 @@ function RequestCard({ request }: { request: StockRequest }) {
               <span
                 className={`regular text-[9px] tracking-widest uppercase font-bold ${request.status === "approved" ? "text-emerald-600" : "text-red-600"}`}
               >
-                {request.status === "approved" ? "Approved" : "Rejected"}
+                {request.status === "approved" ? t("requestsTab.approved") : t("requestsTab.rejected")}
               </span>
               <span
                 className={`header text-[20px] font-bold leading-none ${request.status === "approved" ? "text-emerald-700" : "text-red-700"}`}
@@ -365,7 +369,7 @@ function RequestCard({ request }: { request: StockRequest }) {
               <CheckIcon />
             )}
             <span className="regular text-[10px] tracking-widest uppercase font-bold">
-              Approve
+              {t("requestsTab.actionApprove")}
             </span>
           </button>
 
@@ -378,7 +382,7 @@ function RequestCard({ request }: { request: StockRequest }) {
           >
             <EditIcon />
             <span className="regular text-[10px] tracking-widest uppercase font-bold">
-              Edit & Approve
+              {t("requestsTab.actionEditApprove")}
             </span>
           </button>
 
@@ -395,7 +399,7 @@ function RequestCard({ request }: { request: StockRequest }) {
               <XIcon />
             )}
             <span className="regular text-[10px] tracking-widest uppercase font-bold">
-              Decline
+              {t("requestsTab.actionDecline")}
             </span>
           </button>
         </div>
@@ -422,6 +426,7 @@ export default function RequestsTab() {
   const dispatch = useDispatch<AppDispatch>();
   const allRequests = useSelector(selectAllRequests);
   const status = useSelector(selectRequestsStatus);
+  const { t } = useTranslation("profile");
 
   const [filter, setFilter] = useState<FilterType>("All");
 
@@ -450,6 +455,13 @@ export default function RequestsTab() {
     "rejected",
   ];
 
+  const filterLabelMap: Record<string, string> = {
+    All: t("requestsTab.filterAll"),
+    pending: t("requestsTab.statusPending"),
+    approved: t("requestsTab.statusApproved"),
+    rejected: t("requestsTab.statusDeclined"),
+  };
+
   const filterBtnClass = (f: FilterType) => {
     const base =
       "flex items-center gap-1.5 px-3 py-1.5 regular text-[10px] tracking-widest uppercase font-bold transition-colors cursor-pointer border";
@@ -467,13 +479,13 @@ export default function RequestsTab() {
 
   return (
     <div className="flex flex-col gap-5">
-      <FormSection icon={<InboxIcon />} title="Stock Requests">
+      <FormSection icon={<InboxIcon />} title={t("requestsTab.title")}>
         {/* Filter bar */}
         <div className="flex items-center gap-2 flex-wrap mb-4">
           <div className="flex items-center gap-1 text-neutral-400">
             <FilterIcon />
             <span className="regular text-[9px] tracking-widest uppercase font-bold">
-              Filter:
+              {t("requestsTab.filter")}
             </span>
           </div>
           {filterOptions.map((f) => (
@@ -483,7 +495,7 @@ export default function RequestsTab() {
               onClick={() => setFilter(f)}
               className={filterBtnClass(f)}
             >
-              {f}
+              {filterLabelMap[f]}
               <span className="ml-1 text-[9px] opacity-70">({counts[f]})</span>
             </button>
           ))}
@@ -494,8 +506,9 @@ export default function RequestsTab() {
           <div className="flex items-center gap-2 border border-amber-200 bg-amber-50 px-4 py-2.5 mb-4">
             <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
             <span className="regular text-[10px] tracking-widest uppercase text-amber-700 font-bold">
-              {counts.pending} request{counts.pending > 1 ? "s" : ""} awaiting
-              your decision
+              {counts.pending === 1
+                ? t("requestsTab.awaitingDecision").replace("{{count}}", "1")
+                : t("requestsTab.awaitingDecisionPlural").replace("{{count}}", String(counts.pending))}
             </span>
           </div>
         )}
@@ -505,7 +518,7 @@ export default function RequestsTab() {
           <div className="flex items-center gap-2 py-6 justify-center">
             <div className="w-5 h-5 border-2 border-primary-600 border-t-transparent rounded-full animate-spin" />
             <span className="regular text-[11px] tracking-widest uppercase text-neutral-400">
-              Loading requests...
+              {t("requestsTab.loadingRequests")}
             </span>
           </div>
         ) : filteredRequests.length === 0 ? (
@@ -525,8 +538,9 @@ export default function RequestsTab() {
               <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
             </svg>
             <p className="regular text-[11px] tracking-widest uppercase text-neutral-400">
-              No {filter !== "All" ? filter.toLowerCase() + " " : ""}requests
-              found.
+              {filter === "All"
+                ? t("requestsTab.noRequestsFound")
+                : t("requestsTab.noFilteredRequestsFound").replace("{{filter}}", filterLabelMap[filter])}
             </p>
           </div>
         ) : (

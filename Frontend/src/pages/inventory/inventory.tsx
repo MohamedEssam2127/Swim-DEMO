@@ -12,8 +12,10 @@ import GlobalSearchFilters from "../../components/pages/inventory/GlobalSearchFi
 import ExternalStockAlert from "../../components/pages/inventory/ExternalStockAlert";
 import ImportFromWarehouse from "../../components/importFromWarehouse/importFromWarehouse";
 import MoveBetweenStoresPopup from "../../components/moveBetweenStores/moveBetweenStores";
+import { useTranslation } from "../../localization/i18n";
 
 function Inventory() {
+  const { t } = useTranslation("inventory");
   const {
     userRole,
     isOwner,
@@ -57,18 +59,18 @@ function Inventory() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
-      <PageTitle title="Swim Inventory" />
+      <PageTitle title={t("title")} />
 
       {isOwner && (
         <div className="regular flex flex-col gap-4 justify-between md:flex-row md:justify-between text-[14px] md:text-[18px] text-center md:text-left text-tertiary-500 tracking-widest uppercase mb-6 leading-relaxed">
           <span className="block md:inline ">
-            switch to {currentView ? "store" : "WareHouse"} →
+            {t("switchTo")} {currentView ? t("store") : t("warehouse")} →
           </span>
           <button
             className="regular text-[14px] w-full md:w-auto tracking-widest bg-primary-700 text-white px-16 py-1.5 uppercase hover:bg-primary-800 active:bg-primary-900 transition-colors cursor-pointer"
             onClick={changeCurrentView}
           >
-            {currentView ? "Store" : "WareHouse"}
+            {currentView ? t("store") : t("warehouse")}
           </button>
         </div>
       )}

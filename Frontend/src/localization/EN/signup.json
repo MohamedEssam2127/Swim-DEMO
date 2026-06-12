@@ -1,0 +1,55 @@
+{
+  "step1": {
+    "title": "Join The Core",
+    "subtitle": "Personal Information",
+    "stepIndicator": "1/2"
+  },
+  "step2": {
+    "title": "Set Up Your Dock",
+    "subtitle": "Organization Information",
+    "stepIndicator": "2/2",
+    "backButton": "BACK TO PERSONAL INFO"
+  },
+  "labels": {
+    "fullName": "Full Name",
+    "workEmail": "Work Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "orgName": "Company/Organization Name",
+    "primaryWarehouse": "Primary Warehouse",
+    "industry": "Industry/Sector (Optional)",
+    "agreeProtocol": "I agree to the protocol"
+  },
+  "placeholders": {
+    "fullName": "OPERATOR NAME",
+    "email": "operator@iti.gov.eg",
+    "password": "******",
+    "confirmPassword": "******",
+    "orgName": "ITI Core Systems"
+  },
+  "options": {
+    "selectLocation": "Select Location",
+    "smartVillage": "Smart Village",
+    "cairo": "Cairo",
+    "noneIndustry": "None (Select Industry)",
+    "retail": "Retail",
+    "manufacturing": "Manufacturing"
+  },
+  "buttons": {
+    "nextStep": "Next Step",
+    "createAccount": "Create Account",
+    "creatingAccount": "Creating Account..."
+  },
+  "validation": {
+    "nameTooShort": "Name must be at least 3 characters.",
+    "invalidEmail": "Please enter a valid email address.",
+    "passwordTooShort": "Password must be at least 6 characters.",
+    "passwordMismatch": "Passwords do not match.",
+    "orgNameRequired": "Organization name is required.",
+    "fixErrors": "Please fix the errors before proceeding.",
+    "fixErrorsSubmit": "Please fix the errors before submitting."
+  },
+  "messages": {
+    "success": "Account created successfully! Welcome to the Core."
+  }
+}

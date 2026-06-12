@@ -1,0 +1,54 @@
+{
+  "title": "إدارة الطلبات",
+  "systemProvision": "تزويد النظام",
+  "moduleLabel": "الوحدة: Order_Initialization_V4",
+  "loadingCatalogue": "جارٍ تحميل بيانات الكتالوج…",
+  "sections": {
+    "customerData": "بيانات العميل",
+    "storeLocation": "موقع المتجر",
+    "itemSelection": "اختيار العناصر"
+  },
+  "customer": {
+    "selectLabel": "اختر العميل",
+    "selectPlaceholder": "اختر عميلاً",
+    "addNew": "+ إضافة عميل جديد",
+    "newDetails": "تفاصيل العميل الجديد",
+    "fullName": "الاسم الكامل *",
+    "fullNamePlaceholder": "مثال: أحمد محمد",
+    "phone": "الهاتف (اختياري)",
+    "phonePlaceholder": "+201234567890",
+    "email": "البريد الإلكتروني (اختياري)",
+    "emailPlaceholder": "ahmed@example.com",
+    "saving": "جارٍ الحفظ...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "nameRequired": "اسم العميل مطلوب",
+    "addedSuccess": "تمت إضافة العميل بنجاح",
+    "createFailed": "فشل في إنشاء العميل"
+  },
+  "store": {
+    "label": "المتجر",
+    "placeholder": "اختر متجراً",
+    "preSelected": "تم الاختيار مسبقاً بناءً على متجرك المعين"
+  },
+  "items": {
+    "chooseItem": "اختر العنصر",
+    "selectPlaceholder": "اختر وحدة الأجهزة",
+    "unitPrice": "سعر الوحدة",
+    "enterQuantity": "أدخل الكمية",
+    "enterQuantityMax": "أدخل الكمية (الحد الأقصى: {{max}})",
+    "addMore": "+ إضافة عنصر آخر",
+    "removeItem": "إزالة العنصر"
+  },
+  "totals": {
+    "estimatedTotal": "الإجمالي المقدر",
+    "usd": "دولار"
+  },
+  "submit": {
+    "initializeOrder": "بدء الطلب",
+    "processing": "جارٍ المعالجة…",
+    "fillRequired": "يرجى ملء جميع الحقول المطلوبة",
+    "success": "تم تقديم الطلب وتأكيد الدفع!",
+    "failed": "فشل الطلب. يرجى المحاولة مرة أخرى."
+  }
+}

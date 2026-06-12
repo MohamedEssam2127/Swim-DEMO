@@ -1,0 +1,24 @@
+{
+  "title": "Warehouse Analytics Overview",
+  "subtitle": "Real-time telemetry and capacity metrics.",
+  "totalStockValue": "TOTAL STOCK VALUE",
+  "capacity": "CAPACITY",
+  "activeFleets": "ACTIVE FLEETS",
+  "enRoute": "EN ROUTE",
+  "systemPerformance": "SYSTEM PERFORMANCE METRICS",
+  "realtime": "REAL-TIME",
+  "history24h": "24H HISTORY",
+  "metrics": {
+    "latency": "LATENCY",
+    "throughput": "THROUGHPUT",
+    "errorRate": "ERROR RATE",
+    "uptime": "UPTIME"
+  },
+  "stockVelocity": "STOCK VELOCITY",
+  "dockActivity": "Dock Activity",
+  "logisticsPerformance": "LOGISTICS PERFORMANCE",
+  "realtimeThroughput": "REAL-TIME THROUGHPUT",
+  "lnFreight": "LN-FREIGHT",
+  "systemAlerts": "SYSTEM ALERTS",
+  "warehouseInterior": "Warehouse Interior"
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import { useTranslation } from "../../localization/i18n";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -22,17 +23,17 @@ interface AlertItem {
 }
 
 const REAL_TIME_METRICS: PerformanceMetric[] = [
-  { label: "LATENCY", value: "14ms" },
-  { label: "THROUGHPUT", value: "8.2k/hr" },
-  { label: "ERROR RATE", value: "0.02%" },
-  { label: "UPTIME", value: "99.99%" },
+  { label: "latency", value: "14ms" },
+  { label: "throughput", value: "8.2k/hr" },
+  { label: "errorRate", value: "0.02%" },
+  { label: "uptime", value: "99.99%" },
 ];
 
 const HISTORY_METRICS: PerformanceMetric[] = [
-  { label: "LATENCY", value: "18ms" },
-  { label: "THROUGHPUT", value: "7.6k/hr" },
-  { label: "ERROR RATE", value: "0.08%" },
-  { label: "UPTIME", value: "99.91%" },
+  { label: "latency", value: "18ms" },
+  { label: "throughput", value: "7.6k/hr" },
+  { label: "errorRate", value: "0.08%" },
+  { label: "uptime", value: "99.91%" },
 ];
 
 const DOCK_ACTIVITIES: DockActivity[] = [
@@ -150,6 +151,7 @@ function BarChart({
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 function Statistics() {
+  const { t } = useTranslation("statistics");
   const [activeTab, setActiveTab] = useState<"realtime" | "history">(
     "realtime",
   );
@@ -159,15 +161,15 @@ function Statistics() {
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
       {/* ── Page Title ── */}
-      <PageTitle title="Warehouse Analytics Overview" />
+      <PageTitle title={t("title")} />
       <p className="regular text-[12px] md:text-[13px] tracking-widest text-tertiary-400 uppercase mb-8 mt-1">
-        Real-time telemetry and capacity metrics.
+        {t("subtitle")}
       </p>
 
       {/* ── Total Stock Value Banner ── */}
       <div className="bg-neutral-900 border border-neutral-800 px-8 py-6 mb-6 flex flex-col items-center justify-center text-center">
         <span className="regular text-[10px] tracking-[0.2em] text-neutral-400 uppercase mb-2">
-          TOTAL STOCK VALUE
+          {t("totalStockValue")}
         </span>
         <span className="header text-[48px] md:text-[56px] font-bold text-[#FFE6B3] tracking-tight leading-none">
           $1.2M
@@ -179,7 +181,7 @@ function Statistics() {
         {/* Capacity */}
         <div className="border border-neutral-300 bg-white p-5">
           <span className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold block mb-3">
-            CAPACITY
+            {t("capacity")}
           </span>
           {/* Progress bar */}
           <div className="w-full bg-neutral-200 h-1 mb-3">
@@ -196,13 +198,13 @@ function Statistics() {
         {/* Active Fleets */}
         <div className="border border-neutral-300 bg-white p-5">
           <span className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold block mb-3">
-            ACTIVE FLEETS
+            {t("activeFleets")}
           </span>
           <span className="header text-[32px] md:text-[40px] font-bold text-neutral-900 leading-none block mb-1">
             14
           </span>
           <span className="regular text-[9px] tracking-widest uppercase text-[#0C3E75] font-bold">
-            2 EN ROUTE
+            2 {t("enRoute")}
           </span>
         </div>
       </div>
@@ -211,7 +213,7 @@ function Statistics() {
       <div className="border border-neutral-300 bg-white p-5 mb-6">
         <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
           <span className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-            SYSTEM PERFORMANCE METRICS
+            {t("systemPerformance")}
           </span>
           {/* Toggle tabs */}
           <div className="flex border border-neutral-300 overflow-hidden">
@@ -224,7 +226,7 @@ function Statistics() {
                   : "bg-white text-neutral-500 hover:bg-neutral-50"
               }`}
             >
-              REAL-TIME
+              {t("realtime")}
             </button>
             <button
               id="tab-history"
@@ -235,7 +237,7 @@ function Statistics() {
                   : "bg-white text-neutral-500 hover:bg-neutral-50"
               }`}
             >
-              24H HISTORY
+              {t("history24h")}
             </button>
           </div>
         </div>
@@ -247,7 +249,7 @@ function Statistics() {
               className="bg-neutral-900 border border-neutral-800 px-5 py-4 flex flex-col gap-2 hover:border-[#0C3E75] transition-colors duration-300"
             >
               <span className="regular text-[9px] tracking-widest uppercase text-neutral-400 font-bold">
-                {metric.label}
+                {t(`metrics.${metric.label}`)}
               </span>
               <span className="header text-[22px] md:text-[28px] font-bold text-[#FFE6B3] leading-none">
                 {metric.value}
@@ -260,7 +262,7 @@ function Statistics() {
       {/* ── Stock Velocity Chart ── */}
       <div className="border border-neutral-300 bg-white p-5 mb-6">
         <span className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold block mb-4">
-          STOCK VELOCITY
+          {t("stockVelocity")}
         </span>
         <BarChart bars={VELOCITY_BARS} showTimeLabels height={100} />
       </div>
@@ -269,7 +271,7 @@ function Statistics() {
       <div className="border border-neutral-300 bg-white mb-6">
         <div className="px-5 pt-5 pb-3 border-b border-neutral-200">
           <span className="header text-[16px] md:text-[18px] font-bold text-neutral-900 uppercase tracking-wide">
-            Dock Activity
+            {t("dockActivity")}
           </span>
         </div>
         <div className="divide-y divide-neutral-200">
@@ -303,18 +305,18 @@ function Statistics() {
         <div className="border border-neutral-300 bg-white p-5">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <span className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-              LOGISTICS PERFORMANCE
+              {t("logisticsPerformance")}
             </span>
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 bg-[#0C3E75] rounded-full" />
               <span className="regular text-[8px] tracking-widest uppercase text-neutral-400">
-                REAL-TIME THROUGHPUT
+                {t("realtimeThroughput")}
               </span>
             </div>
           </div>
           <div className="mb-2">
             <span className="regular text-[8px] tracking-widest uppercase text-neutral-300 block mb-3">
-              LN-FREIGHT
+              {t("lnFreight")}
             </span>
             <BarChart bars={LOGISTICS_BARS} height={90} />
           </div>
@@ -323,7 +325,7 @@ function Statistics() {
         {/* System Alerts */}
         <div className="border border-neutral-300 bg-white p-5">
           <span className="regular text-[10px] tracking-widest uppercase text-neutral-500 font-bold block mb-4">
-            SYSTEM ALERTS
+            {t("systemAlerts")}
           </span>
           <div className="flex flex-col gap-3 mb-4">
             {ALERTS.map((alert, i) => (
@@ -406,7 +408,7 @@ function Statistics() {
           <div className="w-full h-[110px] bg-[#1A1A1B] border border-neutral-800 overflow-hidden">
             <img
               src="/warehouse.png"
-              alt="Warehouse Interior"
+              alt={t("warehouseInterior")}
               className="w-full h-full object-cover opacity-80"
             />
           </div>

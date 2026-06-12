@@ -1,6 +1,7 @@
 import plusIcon from "../../assets/icons/plus-icon.svg";
 import uploadIcon from "../../assets/icons/upload-icon.svg";
 import arrowRightLeftIcon from "../../assets/icons/arrow-right-left-icon.svg";
+import { useTranslation } from "../../localization/i18n";
 
 interface props {
   isOpen: boolean;
@@ -23,6 +24,7 @@ function WarehouseOperationsPopup({
   onImportFromWarehouse,
   onMoveBetweenStores,
 }: props) {
+  const { t } = useTranslation("inventory");
   if (!isOpen) return null;
 
   return (
@@ -32,7 +34,7 @@ function WarehouseOperationsPopup({
         {/* Header */}
         <div className="relative z-20 flex h-[64px] items-center justify-between bg-light-800 px-6 text-[16px] tracking-[2px] regular text-white">
           <span className="uppercase font-bold">
-            {isWarehouse ? "WAREHOUSE OPERATIONS" : "STORES OPERATIONS"}
+            {isWarehouse ? t("operations.warehouseTitle") : t("operations.storeTitle")}
           </span>
           <button onClick={onClose} className="text-white hover:text-white-400 transition-colors cursor-pointer">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -60,9 +62,9 @@ function WarehouseOperationsPopup({
           >
             <div className="flex items-center gap-8">
               <img src={plusIcon} alt="add" className="w-6 h-6 filter brightness-0 invert" />
-              <span className="regular text-white tracking-[0.15em] uppercase text-[14px]">ADD NEW ITEM</span>
+              <span className="regular text-white tracking-[0.15em] uppercase text-[14px]">{t("operations.addNewItem")}</span>
             </div>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg className="rtl:rotate-180" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
 
           <button
@@ -72,10 +74,10 @@ function WarehouseOperationsPopup({
             <div className="flex items-center gap-8">
               <img src={uploadIcon} alt="export/import" className="w-6 h-6 filter brightness-0 invert" />
               <span className="regular text-white tracking-[0.15em] uppercase text-[14px]">
-                {isWarehouse ? "export to store" : "import from warehouse"}
+                {isWarehouse ? t("operations.exportToStore") : t("operations.importFromWarehouse")}
               </span>
             </div>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg className="rtl:rotate-180" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
 
           <button
@@ -85,10 +87,10 @@ function WarehouseOperationsPopup({
             <div className="flex items-center gap-8">
               <img src={arrowRightLeftIcon} alt="move" className="w-6 h-6 filter brightness-0 invert" />
               <span className="regular text-white tracking-[0.15em] uppercase text-[14px]">
-                {isWarehouse ? "move between warehouses" : "move between stores"}
+                {isWarehouse ? t("operations.moveBetweenWarehouses") : t("operations.moveBetweenStores")}
               </span>
             </div>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg className="rtl:rotate-180" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         </div>
       </div>

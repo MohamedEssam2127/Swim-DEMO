@@ -9,6 +9,7 @@ import { selectPendingRequests } from "../../store/slices/requestsSlice";
 import StoreManagerTab from "./StoreManagerTab";
 import RequestsTab from "./RequestsTab";
 import LocationTab from "./LocationTap";
+import { useTranslation } from "../../localization/i18n";
 
 type ActiveTab = "store" | "warehouse" | "storeManager" | "requests";
 
@@ -18,6 +19,7 @@ export default function LocationManager() {
   const stores = useSelector(selectTotalStores);
   const warehouses = useSelector(selectTotalWarehouses);
   const pendingRequests = useSelector(selectPendingRequests);
+  const { t } = useTranslation("profile");
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("store");
 
@@ -27,10 +29,10 @@ export default function LocationManager() {
     label: string;
     badge?: number;
   }[] = [
-    { id: "store", label: `Stores`, badge: stores.length },
-    { id: "warehouse", label: `Warehouses`, badge: warehouses.length },
-    { id: "storeManager", label: `Store Managers` },
-    { id: "requests", label: `Requests`, badge: pendingRequests.length },
+    { id: "store", label: t("tabs.stores"), badge: stores.length },
+    { id: "warehouse", label: t("tabs.warehouses"), badge: warehouses.length },
+    { id: "storeManager", label: t("tabs.storeManagers") },
+    { id: "requests", label: t("tabs.requests"), badge: pendingRequests.length },
   ];
 
   return (
@@ -69,7 +71,7 @@ export default function LocationManager() {
               )}
               {/* Pulse dot on requests if there are pending */}
               {isRequests && hasBadge && !isActive && (
-                <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                <span className="absolute top-2 right-2 rtl:left-2 rtl:right-auto w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
               )}
             </button>
           );

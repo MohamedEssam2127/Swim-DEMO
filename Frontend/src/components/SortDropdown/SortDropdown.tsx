@@ -47,7 +47,7 @@ function SortDropdown({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 z-50 w-full mt-1 bg-white border border-neutral-300 shadow-lg animate-slide-down">
+        <div className="absolute right-0 rtl:right-auto rtl:left-0 z-50 w-full mt-1 bg-white border border-neutral-300 shadow-lg animate-slide-down">
           {options.map((opt) => {
             const isSelected = opt === value;
             return (
@@ -57,7 +57,7 @@ function SortDropdown({
                   onChange(opt);
                   setIsOpen(false);
                 }}
-                className={`flex items-center justify-between w-full px-4 py-3 text-left regular text-[11px] tracking-widest uppercase transition-all duration-150 cursor-pointer ${
+                className={`flex items-center justify-between w-full px-4 py-3 text-left rtl:text-right regular text-[11px] tracking-widest uppercase transition-all duration-150 cursor-pointer ${
                   isSelected 
                     ? 'bg-neutral-100 text-primary-700 font-bold' 
                     : 'text-tertiary-500 hover:bg-neutral-50 hover:text-primary-700'

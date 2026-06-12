@@ -37,6 +37,7 @@ import { selectTotalStores } from "../../store/slices/InventorySclice";
 
 import type { AppDispatch } from "../../store";
 import type { RootState } from "../../store";
+import { useTranslation } from "../../localization/i18n";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
@@ -58,6 +59,7 @@ function UserIcon() {
   );
 }
 
+// BoxIcon helper
 function BoxIcon() {
   return (
     <svg
@@ -140,6 +142,7 @@ function Spinner() {
 
 function Order() {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation("order");
 
   // ── Redux selectors ──────────────────────────────────────────────────────────
   const items = useSelector(selectItems);
@@ -148,6 +151,7 @@ function Order() {
   const customersStatus = useSelector(selectCustomersStatus);
   const storeInventory = useSelector(selectStoreInventory);
   const orderSubmitStatus = useSelector(selectOrderSubmitStatus);
+  const orderError = useSelector((state: RootState) => state.order.error);
   const lastCreatedOrder = useSelector(selectLastCreatedOrder);
   const lastTransaction = useSelector(selectLastTransaction);
   const stores = useSelector(selectTotalStores);
@@ -205,19 +209,19 @@ function Order() {
   useEffect(() => {
     if (orderSubmitStatus === "succeeded" && lastCreatedOrder) {
       setIsConfirmationOpen(true);
-      toast.success("Order placed and payment confirmed!");
+      toast.success(t("submit.success"));
     }
     if (orderSubmitStatus === "failed") {
-      toast.error("Order failed. Please try again.");
+      toast.error(orderError || t("submit.failed"));
     }
-  }, [orderSubmitStatus, lastCreatedOrder]);
+  }, [orderSubmitStatus, lastCreatedOrder, orderError, t]);
 
   // ── Submit handler ────────────────────────────────────────────────────────────
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validItems = orderItems.filter((row) => row.itemId);
     if (validItems.length === 0 || !selectedCustomerId || !selectedStoreId) {
-      toast.error("Please fill in all required fields");
+      toast.error(t("submit.fillRequired"));
       return;
     }
 
@@ -254,7 +258,7 @@ function Order() {
   // ── Save New Customer ─────────────────────────────────────────────────────────
   const handleSaveCustomer = async () => {
     if (!newCustomerName.trim()) {
-      toast.error("Customer name is required");
+      toast.error(t("customer.nameRequired"));
       return;
     }
 
@@ -267,14 +271,14 @@ function Order() {
         })
       ).unwrap();
 
-      toast.success("Customer added successfully");
+      toast.success(t("customer.addedSuccess"));
       setIsAddingCustomer(false);
       setNewCustomerName("");
       setNewCustomerPhone("");
       setNewCustomerEmail("");
       setSelectedCustomerId(newCustomer._id);
     } catch (err: any) {
-      toast.error(err || "Failed to create customer");
+      toast.error(err || t("customer.createFailed"));
     }
   };
 
@@ -310,33 +314,33 @@ function Order() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
-      <PageTitle title="Order Management" />
+      <PageTitle title={t("title")} />
 
       <div className="regular text-[11px] md:text-[13px] tracking-widest text-tertiary-500 uppercase mb-1 mt-1">
-        System Provision
+        {t("systemProvision")}
       </div>
       <div className="regular text-[9px] md:text-[10px] tracking-widest text-neutral-400 uppercase mb-8">
-        Module: Order_Initialization_V4
+        {t("moduleLabel")}
       </div>
 
       {isDataLoading && (
         <div className="flex items-center gap-2 text-neutral-400 regular text-[11px] tracking-widest uppercase mb-4">
           <Spinner />
-          Loading catalogue data…
+          {t("loadingCatalogue")}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         {/* ── Customer Data ── */}
-        <FormSection icon={<UserIcon />} title="Customer Data">
+        <FormSection icon={<UserIcon />} title={t("sections.customerData")}>
           {/* Customer selector — linked to backend */}
           <FormField
             id="order-customer-select"
-            label="Select Customer"
+            label={t("customer.selectLabel")}
             as="select"
             value={selectedCustomerId}
             onChange={setSelectedCustomerId}
-            placeholder="Choose a Customer"
+            placeholder={t("customer.selectPlaceholder")}
             options={customerOptions}
           />
 
@@ -346,34 +350,34 @@ function Order() {
               onClick={() => setIsAddingCustomer(true)}
               className="text-left text-primary-500 regular text-[11px] font-bold tracking-widest uppercase hover:underline mt-1"
             >
-              + Add new customer
+              {t("customer.addNew")}
             </button>
           ) : (
             <div className="border border-neutral-300 bg-neutral-50 p-4 flex flex-col gap-4 mt-2">
               <span className="header text-[14px] font-bold text-neutral-800 uppercase tracking-widest">
-                New Customer Details
+                {t("customer.newDetails")}
               </span>
               <FormField
                 id="new-customer-name"
-                label="Full Name *"
+                label={t("customer.fullName")}
                 value={newCustomerName}
                 onChange={setNewCustomerName}
-                placeholder="E.g. Jane Doe"
+                placeholder={t("customer.fullNamePlaceholder")}
               />
               <FormField
                 id="new-customer-phone"
-                label="Phone (Optional)"
+                label={t("customer.phone")}
                 value={newCustomerPhone}
                 onChange={setNewCustomerPhone}
-                placeholder="+1234567890"
+                placeholder={t("customer.phonePlaceholder")}
               />
               <FormField
                 id="new-customer-email"
-                label="Email (Optional)"
+                label={t("customer.email")}
                 type="email"
                 value={newCustomerEmail}
                 onChange={setNewCustomerEmail}
-                placeholder="jane@example.com"
+                placeholder={t("customer.emailPlaceholder")}
               />
               <div className="flex gap-3 mt-2">
                 <button
@@ -382,14 +386,14 @@ function Order() {
                   disabled={isCreatingCustomer}
                   className="bg-primary-800 text-white px-5 py-2 uppercase regular text-[11px] tracking-widest font-bold hover:bg-primary-700 disabled:opacity-50"
                 >
-                  {isCreatingCustomer ? "Saving..." : "Save"}
+                  {isCreatingCustomer ? t("customer.saving") : t("customer.save")}
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsAddingCustomer(false)}
                   className="bg-white border border-neutral-300 text-neutral-800 px-5 py-2 uppercase regular text-[11px] tracking-widest font-bold hover:bg-neutral-100"
                 >
-                  Cancel
+                  {t("customer.cancel")}
                 </button>
               </div>
             </div>
@@ -397,13 +401,13 @@ function Order() {
         </FormSection>
 
         {/* ── Store Selection ── */}
-        <FormSection icon={<StoreIcon />} title="Store Location">
+        <FormSection icon={<StoreIcon />} title={t("sections.storeLocation")}>
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="order-store-select"
               className="regular text-[10px] md:text-[11px] tracking-widest uppercase text-neutral-500 font-bold"
             >
-              Store
+              {t("store.label")}
             </label>
             <div className="relative w-full">
               <select
@@ -414,7 +418,7 @@ function Order() {
                 className="regular text-[12px] md:text-[13px] tracking-widest text-neutral-800 border border-neutral-300 bg-white px-4 py-3 w-full placeholder:text-neutral-400 outline-none focus:border-primary-500 transition-colors resize-none appearance-none cursor-pointer pr-10 uppercase disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <option value="" disabled>
-                  Choose a Store
+                  {t("store.placeholder")}
                 </option>
                 {storeOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -440,14 +444,14 @@ function Order() {
             </div>
             {isStoreManager && (
               <span className="regular text-[9px] tracking-widest text-neutral-400 uppercase">
-                Pre-selected based on your assigned store
+                {t("store.preSelected")}
               </span>
             )}
           </div>
         </FormSection>
 
         {/* ── Item Selection ── */}
-        <FormSection icon={<BoxIcon />} title="Item Selection">
+        <FormSection icon={<BoxIcon />} title={t("sections.itemSelection")}>
           {orderItems.map((row, index) => {
             const selectedItem = items.find((i) => i._id === row.itemId);
             const inventoryItem = storeInventory.find((inv) => inv.itemId._id === row.itemId);
@@ -460,7 +464,7 @@ function Order() {
                     type="button"
                     onClick={() => setOrderItems(prev => prev.filter(r => r.id !== row.id))}
                     className="absolute top-4 right-4 text-neutral-400 hover:text-red-500"
-                    title="Remove Item"
+                    title={t("items.removeItem")}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -469,7 +473,7 @@ function Order() {
                 )}
                 <FormField
                   id={`order-item-select-${row.id}`}
-                  label={`Choose Item ${index + 1}`}
+                  label={`${t("items.chooseItem")} ${index + 1}`}
                   as="select"
                   value={row.itemId}
                   onChange={(val) => {
@@ -477,14 +481,14 @@ function Order() {
                       prev.map((r) => (r.id === row.id ? { ...r, itemId: val } : r))
                     );
                   }}
-                  placeholder="Select Hardware Module"
+                  placeholder={t("items.selectPlaceholder")}
                   options={itemOptions}
                 />
 
                 {selectedItem && (
                   <div className="border border-neutral-200 bg-neutral-50 px-4 py-3 flex items-center justify-between">
                     <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-500 font-bold">
-                      Unit Price
+                      {t("items.unitPrice")}
                     </span>
                     <span className="header text-[16px] font-bold text-primary-500">
                       ${selectedItem.price.toFixed(2)}
@@ -494,7 +498,7 @@ function Order() {
 
                 <QuantityStepper
                   id={`order-quantity-${row.id}`}
-                  label={row.itemId ? `Enter Quantity (Max: ${maxQuantity})` : "Enter Quantity"}
+                  label={row.itemId ? t("items.enterQuantityMax").replace("{{max}}", maxQuantity.toString()) : t("items.enterQuantity")}
                   value={row.quantity}
                   onChange={(val) => {
                     setOrderItems((prev) =>
@@ -513,16 +517,16 @@ function Order() {
             onClick={() => setOrderItems(prev => [...prev, { id: Date.now().toString(), itemId: "", quantity: 1 }])}
             className="text-left text-primary-500 regular text-[11px] font-bold tracking-widest uppercase hover:underline mt-1"
           >
-            + Add more item
+            {t("items.addMore")}
           </button>
 
           <div className="border border-neutral-200 bg-neutral-50 px-5 py-4 flex flex-col gap-1 mt-4">
             <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-400 font-bold">
-              Estimated Total
+              {t("totals.estimatedTotal")}
             </span>
             <div className="flex items-end justify-between">
               <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-400">
-                USD
+                {t("totals.usd")}
               </span>
               <span className="header text-[22px] md:text-[28px] font-bold tracking-tight text-primary-500 leading-none">
                 ${estimatedTotal.toFixed(2)}
@@ -540,13 +544,13 @@ function Order() {
             <>
               <Spinner />
               <span className="header text-[16px] md:text-[20px] tracking-[0.2em] uppercase font-bold leading-tight text-center">
-                Processing…
+                {t("submit.processing")}
               </span>
             </>
           ) : (
             <>
               <span className="header text-[16px] md:text-[20px] tracking-[0.2em] uppercase font-bold leading-tight text-center">
-                Initialize{"\n"}Order
+                {t("submit.initializeOrder")}
               </span>
               <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                 <RocketIcon />

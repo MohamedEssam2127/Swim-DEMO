@@ -1,6 +1,9 @@
+import { useTranslation } from "../../localization/i18n";
+
 const noiseBg = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
 
 export default function Footer() {
+  const { t } = useTranslation("common");
   return (
     <footer className="hidden lg:block relative w-full bg-[#0a2342] overflow-hidden py-8 md:py-12">
       <div
@@ -223,17 +226,17 @@ export default function Footer() {
           {/* Company */}
           <div className="flex gap-4 items-center">
             <h4 className="text-white text-lg font-bold uppercase w-[100px] tracking-wide inter">
-              COMPANY
+              {t("footer.company")}
             </h4>
             <div className="flex gap-4 text-[#e2e8f0] text-sm tracking-widest font-mono lowercase">
               <a href="#" className="hover:text-white transition-colors">
-                home
+                {t("footer.home")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                about us
+                {t("footer.aboutUs")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                pricing
+                {t("footer.pricing")}
               </a>
             </div>
           </div>
@@ -241,17 +244,17 @@ export default function Footer() {
           {/* Socials */}
           <div className="flex gap-4 items-center">
             <h4 className="text-white text-lg font-bold uppercase w-[100px] tracking-wide inter">
-              SOCIALS
+              {t("footer.socials")}
             </h4>
             <div className="flex gap-4 text-[#e2e8f0] text-sm tracking-widest font-mono lowercase">
               <a href="#" className="hover:text-white transition-colors">
-                instagram
+                {t("footer.instagram")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                facebook
+                {t("footer.facebook")}
               </a>
               <a href="#" className="hover:text-white transition-colors">
-                tiktok
+                {t("footer.tiktok")}
               </a>
             </div>
           </div>
@@ -259,7 +262,7 @@ export default function Footer() {
           {/* Support */}
           <div className="flex gap-4 items-center">
             <h4 className="text-white text-lg font-bold uppercase w-[100px] tracking-wide inter">
-              SUPPORT
+              {t("footer.support")}
             </h4>
             <div className="flex gap-4 text-[#e2e8f0] text-sm tracking-widest font-mono lowercase">
               <a

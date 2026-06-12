@@ -1,4 +1,5 @@
 import { type Location } from "../../../interfaces/InventoryTypes/inventory";
+import { useTranslation } from "../../../localization/i18n";
 
 interface ExternalStockAlertProps {
   isOwner: boolean;
@@ -36,6 +37,7 @@ export default function ExternalStockAlert({
   selectedLocation,
   handleRequestStockForItem,
 }: ExternalStockAlertProps) {
+  const { t } = useTranslation("inventory");
 
   return (
     <>
@@ -91,13 +93,12 @@ export default function ExternalStockAlert({
               </div>
               <div className="flex-1 min-w-0 w-full">
                 <h3 className="header text-[14px] md:text-[20px] font-bold text-neutral-900 uppercase tracking-widest mb-1.5 leading-tight">
-                  ITEMS FOUND IN OTHER LOCATIONS
+                  {t("alert.itemsFoundTitle")}
                 </h3>
                 <p className="regular text-[10px] md:text-[13px] text-neutral-500 uppercase tracking-widest mb-4">
-                  THE SEARCH QUERY "{searchQuery.toUpperCase()}" MATCHES ITEMS
-                  THAT DO NOT EXIST AT{" "}
-                  {selectedLocation?.name.toUpperCase() || "THIS WAREHOUSE"},
-                  BUT ARE AVAILABLE ELSEWHERE:
+                  {t("alert.searchQueryMatches")} "{searchQuery.toUpperCase()}" {t("alert.matchesItems")}{" "}
+                  {selectedLocation?.name.toUpperCase() || t("alert.thisWarehouse")},{" "}
+                  {t("alert.butAvailable")}
                 </p>
 
                 <div className="flex flex-col gap-3 w-full bg-white border border-neutral-200 p-4 mb-2">
@@ -122,8 +123,8 @@ export default function ExternalStockAlert({
                       const locsText = locationsForItem
                         .map(
                           (l) =>
-                            `${l.location.name} (${l.quantity} UNIT${
-                              l.quantity > 1 ? "S" : ""
+                            `${l.location.name} (${l.quantity} ${
+                              l.quantity > 1 ? t("alert.units") : t("alert.unit")
                             })`
                         )
                         .join(", ");
@@ -137,29 +138,31 @@ export default function ExternalStockAlert({
                               {item.name.toUpperCase()}
                             </span>
                             <span className="regular text-[9px] md:text-[11px] text-neutral-400 block tracking-widest uppercase mt-0.5">
-                              CATEGORY: {item.category.toUpperCase()} |
-                              AVAILABLE ON: {locsText.toUpperCase()}
+                              {t("alert.category")}: {item.category.toUpperCase()} |{" "}
+                              {t("alert.availableOn")}: {locsText.toUpperCase()}
                             </span>
                           </div>
-                           { ! isOwner && (<button
-                            onClick={() => {
-                              const locationsForItem = otherLocationsInfo.otherLocations.filter(
-                                (loc) => loc.itemId === item._id
-                              );
-                              const primarySource = locationsForItem[0];
-                              if (primarySource) {
-                                handleRequestStockForItem(
-                                  item._id,
-                                  item.name,
-                                  primarySource.location._id,
-                                  primarySource.location.name
+                          {!isOwner && (
+                            <button
+                              onClick={() => {
+                                const locationsForItem = otherLocationsInfo.otherLocations.filter(
+                                  (loc) => loc.itemId === item._id
                                 );
-                              }
-                            }}
-                            className="flex-shrink-0 self-start sm:self-center bg-secondary-500 hover:bg-neutral-900 text-white font-bold tracking-widest text-[9px] md:text-[10px] px-3.5 py-2 uppercase transition-all duration-200 cursor-pointer focus:outline-none"
-                          >
-                            Request
-                          </button> )}
+                                const primarySource = locationsForItem[0];
+                                if (primarySource) {
+                                  handleRequestStockForItem(
+                                    item._id,
+                                    item.name,
+                                    primarySource.location._id,
+                                    primarySource.location.name
+                                  );
+                                }
+                              }}
+                              className="flex-shrink-0 self-start sm:self-center bg-secondary-500 hover:bg-neutral-900 text-white font-bold tracking-widest text-[9px] md:text-[10px] px-3.5 py-2 uppercase transition-all duration-200 cursor-pointer focus:outline-none"
+                            >
+                              {t("alert.request")}
+                            </button>
+                          )}
                         </div>
                       );
                     })}
@@ -172,9 +175,9 @@ export default function ExternalStockAlert({
                 setSearchQuery("");
               }}
               className="flex items-center justify-center border border-neutral-300 bg-white text-neutral-500 hover:text-neutral-955 font-bold uppercase tracking-widest text-[11px] px-4 py-2.5 transition-all duration-200 cursor-pointer focus:outline-none"
-              title="Dismiss Alert"
+              title={t("alert.cancelClear")}
             >
-              Cancel & Clear
+              {t("alert.cancelClear")}
             </button>
           </div>
         )}
@@ -201,11 +204,10 @@ export default function ExternalStockAlert({
               </div>
               <div>
                 <h3 className="header text-[14px] md:text-[20px] font-bold text-neutral-900 uppercase tracking-widest mb-1.5 leading-tight">
-                  ITEM NOT FOUND ANYWHERE
+                  {t("alert.notFoundTitle")}
                 </h3>
                 <p className="regular text-[10px] md:text-[13px] font-bold tracking-widest text-neutral-500 uppercase leading-relaxed">
-                  NO ACTIVE ITEMS MATCHING "{searchQuery}" WERE FOUND IN ANY OF
-                  YOUR WAREHOUSES OR STORES.
+                  {t("alert.notFoundDesc")} "{searchQuery}" {t("alert.notFoundSuffix")}
                 </p>
               </div>
             </div>
@@ -215,8 +217,8 @@ export default function ExternalStockAlert({
                 setSearchQuery("");
               }}
               className="flex items-center justify-center border border-neutral-300 bg-white text-neutral-500 hover:text-neutral-955 font-bold uppercase tracking-widest text-[11px] p-3 transition-all duration-200 cursor-pointer focus:outline-none"
-              title="Dismiss Alert"
-              aria-label="Dismiss Alert"
+              title={t("alert.cancelClear")}
+              aria-label={t("alert.cancelClear")}
             >
               <svg
                 className="w-5 h-5"

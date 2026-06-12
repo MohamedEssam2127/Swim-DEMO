@@ -5,6 +5,7 @@ import ReceiptLineItem, {
   type ReceiptLineItemData,
 } from "../../components/ReceiptLineItem/ReceiptLineItem";
 import apiClient from "../../core/apiClient";
+import { useTranslation } from "../../localization/i18n";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────
 
@@ -158,8 +159,8 @@ function QrCode() {
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleString("en-US", {
+function formatDate(iso: string, lang: string) {
+  return new Date(iso).toLocaleString(lang === "ar" ? "ar-EG" : "en-US", {
     year: "numeric",
     month: "short",
     day: "2-digit",
@@ -173,6 +174,7 @@ function formatDate(iso: string) {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 function Reciept() {
+  const { t, language } = useTranslation("receipt");
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("orderId");
   const transactionId = searchParams.get("transactionId");
@@ -198,14 +200,14 @@ function Reciept() {
         if (orderRes) setOrder(orderRes.data.data);
         if (txRes) setTransaction(txRes.data.data);
       } catch (err: any) {
-        setError(err.response?.data?.message || "Failed to load receipt data.");
+        setError(err.response?.data?.message || t("failedToLoad"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [orderId, transactionId]);
+  }, [orderId, transactionId, t]);
 
   const handlePrint = () => {
     setPrinted(true);
@@ -217,7 +219,7 @@ function Reciept() {
   const isLive = !!(orderId || transactionId);
   const ledgerId = order ? `ORDER-${order._id.slice(-8).toUpperCase()}` : "LEDGER_7729-01";
   const transId = transaction ? transaction.stripePaymentIntentId : "882931-XA";
-  const timestamp = order ? formatDate(order.createdAt) : "2023-10-24 14:22:09 UTC";
+  const timestamp = order ? formatDate(order.createdAt, language) : `2023-10-24 14:22:09 ${language === 'ar' ? 'توقيت عالمي' : 'UTC'}`;
   const storeName = order?.storeId?.name ?? "W-DIST-CENTRAL-04";
   const customerName = order?.customerId?.name ?? "—";
 
@@ -226,7 +228,7 @@ function Reciept() {
     ? order.items.map((oi, idx) => ({
         itemNo: String(idx + 1).padStart(3, "0"),
         skuIdentifier: oi.itemId?._id?.slice(-8).toUpperCase() ?? `ITEM-${idx + 1}`,
-        description: oi.itemId?.name ?? "Unknown Item",
+        description: oi.itemId?.name ?? t("unknownItem"),
         qty: oi.quantity,
         unitVal: oi.itemId?.price ?? 0,
       }))
@@ -246,11 +248,11 @@ function Reciept() {
 
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8 p-section-mobile md:p-section-desktop">
-      <PageTitle title="Reciept Generation" />
+      <PageTitle title={t("title")} />
 
       <div className="mt-1 mb-1">
         <span className="regular text-[9px] md:text-[10px] tracking-widest text-tertiary-500 uppercase">
-          Digital Ledger / Transaction Ledger
+          {t("ledgerSubtitle")}
         </span>
       </div>
       <div className="mb-5">
@@ -265,7 +267,7 @@ function Reciept() {
           className="regular text-[9px] md:text-[10px] tracking-widest uppercase flex items-center gap-2 px-4 py-2.5 border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer"
         >
           <ExportIcon />
-          Export{"\n"}CSV
+          {t("buttons.exportCsv")}
         </button>
 
         <button
@@ -275,7 +277,7 @@ function Reciept() {
           className="regular text-[9px] md:text-[10px] tracking-widest uppercase flex items-center gap-2 px-4 py-2.5 bg-primary-700 hover:bg-primary-600 active:bg-primary-800 text-white transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <GenerateIcon />
-          {printed ? "Generating…" : "Generate\nPDF"}
+          {printed ? t("buttons.generating") : t("buttons.generatePdf")}
         </button>
       </div>
 
@@ -283,7 +285,7 @@ function Reciept() {
       {loading && (
         <div className="flex items-center justify-center gap-3 py-16 text-neutral-400">
           <Spinner />
-          <span className="regular text-[11px] tracking-widest uppercase">Loading receipt data…</span>
+          <span className="regular text-[11px] tracking-widest uppercase">{t("loadingReceipt")}</span>
         </div>
       )}
 
@@ -298,24 +300,24 @@ function Reciept() {
           {/* ── Header ── */}
           <div className="px-5 pt-5 pb-5">
             <span className="header text-[18px] md:text-[22px] font-bold tracking-widest uppercase text-neutral-900 block">
-              Swim Corp.
+              {t("header.companyName")}
             </span>
             <span className="regular text-[8px] md:text-[9px] tracking-widest uppercase text-neutral-400 block mt-1">
-              Industrial Logistics Division
+              {t("header.division")}
             </span>
             <span className="regular text-[9px] md:text-[10px] tracking-widest uppercase text-neutral-700 font-bold block mt-0.5">
-              TRANS_ID: {transId}
+              {t("header.transId")}: {transId}
             </span>
 
             <div className="flex flex-col items-start gap-1 mt-4">
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 font-bold text-center">
-                Timestamp
+                {t("header.timestamp")}
               </span>
               <span className="header text-[13px] md:text-[15px] font-bold tracking-wide text-neutral-900 text-center">
                 {timestamp}
               </span>
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 font-bold text-center mt-1">
-                Location
+                {t("header.location")}
               </span>
               <span className="header text-[13px] md:text-[15px] font-bold tracking-wide text-neutral-900 uppercase text-center">
                 {storeName}
@@ -329,7 +331,7 @@ function Reciept() {
           <div className="flex flex-col gap-3 p-4">
             <div className="bg-neutral-100/30 rounded-sm px-4 py-4">
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 font-bold block mb-2">
-                Customer
+                {t("party.customer")}
               </span>
               <span className="header text-[13px] md:text-[14px] font-bold tracking-wide text-neutral-900 block">
                 {customerName}
@@ -338,7 +340,7 @@ function Reciept() {
 
             <div className="bg-neutral-100/30 rounded-sm px-4 py-4">
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 font-bold block mb-2">
-                Store / Location
+                {t("party.storeLocation")}
               </span>
               <span className="header text-[13px] md:text-[14px] font-bold tracking-wide text-neutral-900 block">
                 {storeName}
@@ -348,7 +350,7 @@ function Reciept() {
             {order?.status && (
               <div className="bg-neutral-100/30 rounded-sm px-4 py-4">
                 <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 font-bold block mb-2">
-                  Order Status
+                  {t("party.orderStatus")}
                 </span>
                 <span className="header text-[13px] md:text-[14px] font-bold tracking-wide text-neutral-900 uppercase block">
                   {order.status}
@@ -361,19 +363,19 @@ function Reciept() {
           <div className="mx-4">
             <div className="grid grid-cols-[60px_110px_1fr_60px_110px] md:grid-cols-[80px_140px_1fr_80px_130px] px-4 py-3 bg-primary-800">
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-white font-bold text-right pr-3">
-                Item #
+                {t("table.itemNo")}
               </span>
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-white font-bold text-left pl-2">
-                SKU Identifier
+                {t("table.skuIdentifier")}
               </span>
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-white font-bold text-left">
-                Description
+                {t("table.description")}
               </span>
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-white font-bold text-left pl-1">
-                QTY
+                {t("table.qty")}
               </span>
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-white font-bold text-left pl-1">
-                Unit Val
+                {t("table.unitVal")}
               </span>
             </div>
 
@@ -392,7 +394,7 @@ function Reciept() {
             <div className="flex items-start gap-2 px-5 py-3">
               <span className="block w-[8px] h-[8px] mt-[2px] bg-secondary-500 shrink-0" />
               <span className="regular text-[8px] md:text-[9px] tracking-widest uppercase text-neutral-700 font-bold leading-snug">
-                Note: {order.notes}
+                {t("notes.label")}: {order.notes}
               </span>
             </div>
           )}
@@ -401,7 +403,7 @@ function Reciept() {
             <div className="flex items-start gap-2 px-5 py-3">
               <span className="block w-[8px] h-[8px] mt-[2px] bg-secondary-500 shrink-0" />
               <span className="regular text-[8px] md:text-[9px] tracking-widest uppercase text-neutral-700 font-bold leading-snug">
-                Priority Shipment: Manual Verification Required
+                {t("notes.priorityShipment")}
               </span>
             </div>
           )}
@@ -410,11 +412,10 @@ function Reciept() {
           <div className="relative border border-neutral-300 mx-4 mb-0 overflow-hidden">
             <div className="px-4 py-4">
               <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 font-bold block mb-2">
-                Internal Memo
+                {t("notes.internalMemo")}
               </span>
               <p className="regular text-[10px] md:text-[11px] tracking-wide text-neutral-700 leading-relaxed">
-                {order?.notes ||
-                  "Shipment includes hazardous materials. Ensure all Type-C protocols are strictly followed at Destination Outlet 42. Verify temperature logs upon arrival."}
+                {order?.notes || t("notes.defaultMemo")}
               </p>
             </div>
             <div className="absolute bottom-3 right-4 opacity-10 pointer-events-none select-none">
@@ -425,7 +426,7 @@ function Reciept() {
           {/* ── Totals ── */}
           <div className="flex justify-between items-center px-5 py-3 border-b border-neutral-200 mt-0">
             <span className="regular text-[8px] md:text-[9px] tracking-widest uppercase text-neutral-500">
-              Subtotal
+              {t("totals.subtotal")}
             </span>
             <span className="regular text-[9px] md:text-[10px] tracking-widest text-neutral-800 font-bold">
               ${totalAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -434,7 +435,7 @@ function Reciept() {
 
           <div className="flex justify-between items-center bg-primary-800 px-5 py-4 mx-4 mb-4">
             <span className="regular text-[9px] md:text-[11px] tracking-widest uppercase text-white font-bold">
-              Total Ledger Val
+              {t("totals.totalLedgerVal")}
             </span>
             <span className="header text-[22px] md:text-[28px] font-bold tracking-tight text-white leading-none">
               ${totalAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -447,14 +448,13 @@ function Reciept() {
           <div className="flex flex-col items-center gap-2 px-5 py-6">
             <QrCode />
             <span className="regular text-[8px] md:text-[9px] tracking-widest uppercase text-neutral-800 font-bold text-center">
-              Auth Code: {transaction?.stripePaymentIntentId?.slice(-10).toUpperCase() ?? "ZX-99-ALPHA"}
+              {t("footer.authCode")}: {transaction?.stripePaymentIntentId?.slice(-10).toUpperCase() ?? "ZX-99-ALPHA"}
             </span>
             <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-500 text-center">
-              Validated by Swim Central Ledger Engine v4.2.0
+              {t("footer.validatedBy")}
             </span>
             <span className="regular text-[7px] md:text-[8px] tracking-widest uppercase text-neutral-400 text-center leading-relaxed max-w-xs">
-              This is a legally binding digital record. Physical copies must
-              retain the authentication hash for audit compliance.
+              {t("footer.legalNotice")}
             </span>
           </div>
         </div>
@@ -467,7 +467,7 @@ function Reciept() {
         className="w-full bg-primary-800 hover:bg-primary-700 active:bg-primary-900 text-white flex items-center justify-center gap-3 py-6 transition-colors cursor-pointer group disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span className="header text-[16px] md:text-[18px] tracking-[0.3em] uppercase font-bold">
-          {printed ? "Sending…" : "Print"}
+          {printed ? t("buttons.sending") : t("buttons.print")}
         </span>
         <span className="group-hover:translate-y-0.5 transition-transform">
           <PrinterIcon />

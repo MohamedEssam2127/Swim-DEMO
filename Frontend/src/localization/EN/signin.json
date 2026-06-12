@@ -1,0 +1,28 @@
+{
+  "title": "ACCESS SYSTEM",
+  "subtitle": "SWIM Protocol v4.02. Secure terminal for Industrial Store and Warehouse Inventory Management. Unauthorized access is logged and prosecuted.",
+  "authTitle": "AUTHENTICATION",
+  "authRequired1": "REQ",
+  "authRequired2": "UIRED",
+  "labels": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "placeholders": {
+    "email": "operator@iti.gov.eg",
+    "password": "******"
+  },
+  "buttons": {
+    "authenticate": "Authenticate",
+    "authenticating": "Authenticating..."
+  },
+  "links": {
+    "forgotPasskey": "FORGOT PASSKEY?",
+    "newToSwim": "NEW TO SWIM?",
+    "signUp": "SIGN UP"
+  },
+  "messages": {
+    "success": "Access Granted! Welcome to SWIM Protocol.",
+    "error": "Invalid email or password."
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "title": "إعدادات المشغل",
+  "subtitle1": "تحديث تفاصيل المصادقة الأساسية و",
+  "subtitle2": "بروتوكولات التفاعل مع النظام للعقدة 34.",
+  "tabs": {
+    "stores": "المتاجر",
+    "warehouses": "المستودعات",
+    "storeManagers": "مدراء المتاجر",
+    "requests": "الطلبات",
+    "storeRequest": "طلب متجر",
+    "myRequests": "طلباتي"
+  },
+  "locationTab": {
+    "manageStores": "إدارة المتاجر",
+    "manageWarehouses": "إدارة المستودعات",
+    "currentStores": "المتاجر الحالية",
+    "currentWarehouses": "المستودعات الحالية",
+    "noLocations": "لم يتم العثور على مواقع.",
+    "createNewStore": "إنشاء متجر جديد",
+    "createNewWarehouse": "إنشاء مستودع جديد",
+    "storeName": "اسم المتجر",
+    "warehouseName": "اسم المستودع",
+    "locationDetails": "تفاصيل الموقع (اختياري)",
+    "storeNamePlaceholder": "مثال: Node-Alpha",
+    "warehouseNamePlaceholder": "مثال: Node-Beta",
+    "locationDetailsPlaceholder": "مثال: Sector 7G",
+    "createStore": "إنشاء متجر",
+    "createWarehouse": "إنشاء مستودع",
+    "duplicateError": "يوجد بالفعل {{type}} باسم \"{{name}}\".",
+    "createSuccess": "تم إنشاء {{type}} بنجاح!",
+    "createFailed": "فشل إنشاء {{type}}"
+  },
+  "requestsTab": {
+    "title": "طلبات المخزون",
+    "statusPending": "قيد الانتظار",
+    "statusApproved": "تمت الموافقة",
+    "statusDeclined": "تم الرفض",
+    "editQtyBeforeApprove": "تعديل الكمية قبل الموافقة",
+    "requestedQty": "(المطلوب: {{qty}})",
+    "confirmApprove": "تأكيد وموافقة",
+    "cancel": "إلغاء",
+    "approveSuccess": "تمت الموافقة على الطلب بنجاح.",
+    "approveFailed": "فشل في الموافقة على الطلب.",
+    "declineSuccess": "تم رفض الطلب بنجاح.",
+    "declineFailed": "فشل في رفض الطلب.",
+    "approveSuccessQty": "تمت الموافقة على الطلب بالكمية المحدثة.",
+    "requested": "المطلوب",
+    "approved": "تمت الموافقة",
+    "rejected": "مرفوض",
+    "actionApprove": "موافقة",
+    "actionEditApprove": "تعديل وموافقة",
+    "actionDecline": "رفض",
+    "filter": "تصفية:",
+    "filterAll": "الكل",
+    "awaitingDecision": "طلب واحد في انتظار قرارك",
+    "awaitingDecisionPlural": "{{count}} طلب في انتظار قرارك",
+    "loadingRequests": "جارٍ تحميل الطلبات...",
+    "noRequestsFound": "لم يتم العثور على طلبات.",
+    "noFilteredRequestsFound": "لم يتم العثور على طلبات {{filter}}.",
+    "myTitle": "طلبات المخزون الخاصة بي",
+    "adminNote": "ملاحظة المسؤول"
+  },
+  "storeManagerTab": {
+    "title": "مدراء المتاجر",
+    "currentManagers": "المدراء الحاليون",
+    "noManagers": "لم يتم تعيين مدراء متاجر بعد.",
+    "manager": "مدير",
+    "assignTitle": "تعيين مدير متجر جديد",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "مثال: John Doe",
+    "email": "بريد المصادقة الإلكتروني",
+    "emailPlaceholder": "مثال: j.doe@swim-hq.io",
+    "password": "كلمة المرور الأولية",
+    "passwordPlaceholder": "8 أحرف كحد أدنى",
+    "assignedStore": "المتجر المعين",
+    "selectStore": "— اختر متجراً —",
+    "noStoresAvailable": "لا توجد متاجر متاحة",
+    "createStoreFirst": "⚠ قم بإنشاء متجر أولاً قبل تعيين مدير له.",
+    "assignButton": "تعيين مدير",
+    "createSuccess": "تم إنشاء مدير المتجر بنجاح",
+    "createFailed": "فشل إنشاء مدير المتجر بسبب {{error}}"
+  },
+  "storeRequest": {
+    "title": "إنشاء طلب إعادة تخزين",
+    "loadingFormData": "جارٍ تحميل بيانات النموذج...",
+    "selectStore": "اختر المتجر",
+    "noAssignedStore": "-- لا يوجد متجر معين --",
+    "selectWarehouse": "اختر المستودع",
+    "selectWarehousePlaceholder": "-- اختر مستودعاً --",
+    "selectItem": "اختر العنصر",
+    "selectItemPlaceholder": "-- اختر عنصراً --",
+    "quantity": "الكمية",
+    "notes": "ملاحظات / السبب",
+    "notesPlaceholder": "مثال: عاجل — نقص في لوحات المفاتيح",
+    "sendRequest": "إرسال الطلب",
+    "requestSuccess": "تم إرسال طلب إعادة التخزين بنجاح!",
+    "requestFailed": "فشل إرسال الطلب."
+  },
+  "sections": {
+    "operatorProfile": "ملف المشغل",
+    "securityKeys": "مفاتيح الأمان",
+    "systemProtocols": "بروتوكولات النظام"
+  },
+  "fields": {
+    "fullName": "الاسم القانوني الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "email": "بريد المصادقة الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "role": "الرتبة / الدور المعين",
+    "bio": "السيرة التشغيلية",
+    "bioPlaceholder": "أدخل نظرة عامة تشغيلية..."
+  },
+  "roles": {
+    "seniorLogistics": "منسق لوجستيات أول",
+    "inventoryManager": "مدير مخزون",
+    "operationsLead": "قائد العمليات",
+    "systemAdmin": "مدير النظام",
+    "analyst": "محلل بيانات"
+  },
+  "security": {
+    "twoFaStatus": "حالة المصادقة الثنائية",
+    "enforced": "مفعّلة",
+    "hardwareToken": "رمز الأجهزة",
+    "hideToken": "إخفاء الرمز",
+    "showToken": "إظهار الرمز",
+    "copyToken": "نسخ الرمز",
+    "changePasskey": "تغيير كلمة المرور الرئيسية"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "criticalStock": "تنبيهات المخزون الحرجة",
+    "orderLate": "تأخر وصول الطلبات",
+    "systemMaintenance": "صيانة النظام"
+  },
+  "uiPreferences": {
+    "title": "تفضيلات الواجهة",
+    "highContrast": "وضع التباين العالي",
+    "realtimeTelemetry": "القياسات الآنية",
+    "denseViewport": "عرض مكثف"
+  },
+  "buttons": {
+    "updateProfile": "تحديث الملف الشخصي"
+  },
+  "footer": {
+    "encryption": "بروتوكول التشفير: AES-256-GCM نشط"
+  },
+  "messages": {
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح!",
+    "updateFailed": "فشل في تحديث الملف الشخصي.",
+    "fetchFailed": "فشل في جلب بيانات المستخدم."
+  }
+}

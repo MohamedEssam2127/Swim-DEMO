@@ -1,0 +1,48 @@
+{
+  "title": "Reciept Generation",
+  "ledgerSubtitle": "Digital Ledger / Transaction Ledger",
+  "buttons": {
+    "exportCsv": "Export CSV",
+    "generatePdf": "Generate PDF",
+    "generating": "Generating…",
+    "print": "Print",
+    "sending": "Sending…"
+  },
+  "loadingReceipt": "Loading receipt data…",
+  "header": {
+    "companyName": "Swim Corp.",
+    "division": "Industrial Logistics Division",
+    "transId": "TRANS_ID",
+    "timestamp": "Timestamp",
+    "location": "Location"
+  },
+  "party": {
+    "customer": "Customer",
+    "storeLocation": "Store / Location",
+    "orderStatus": "Order Status"
+  },
+  "table": {
+    "itemNo": "Item #",
+    "skuIdentifier": "SKU Identifier",
+    "description": "Description",
+    "qty": "QTY",
+    "unitVal": "Unit Val"
+  },
+  "notes": {
+    "label": "Note",
+    "priorityShipment": "Priority Shipment: Manual Verification Required",
+    "internalMemo": "Internal Memo",
+    "defaultMemo": "Shipment includes hazardous materials. Ensure all Type-C protocols are strictly followed at Destination Outlet 42. Verify temperature logs upon arrival."
+  },
+  "totals": {
+    "subtotal": "Subtotal",
+    "totalLedgerVal": "Total Ledger Val"
+  },
+  "footer": {
+    "authCode": "Auth Code",
+    "validatedBy": "Validated by Swim Central Ledger Engine v4.2.0",
+    "legalNotice": "This is a legally binding digital record. Physical copies must retain the authentication hash for audit compliance."
+  },
+  "unknownItem": "Unknown Item",
+  "failedToLoad": "Failed to load receipt data."
+}

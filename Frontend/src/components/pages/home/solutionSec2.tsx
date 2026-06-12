@@ -1,3 +1,4 @@
+import { useTranslation } from "../../../localization/i18n";
 import Sign from "../../sign/sign";
 import mobileMockup from "../../../assets/images/iphone-15-pro-mockup-v1-front-view 3.png";
 import whalePic from "../../../assets/images/whale-tale.png";
@@ -5,6 +6,8 @@ import whalePic from "../../../assets/images/whale-tale.png";
 const noiseBg = `url("../../../assets/images/noise.jpg")`;
 
 function SolutionSec2() {
+  const { t } = useTranslation("home");
+
   return (
     <div className="relative w-full bg-[#0a2342] overflow-hidden py-16 md:py-24 px-4 md:px-6 lg:px-8 min-h-[800px]">
       {/* Background Noise overlay */}
@@ -15,8 +18,8 @@ function SolutionSec2() {
 
       <div className="container mx-auto relative h-full z-10">
         {/* Title */}
-        <h2 className="uppercase text-center md:text-left md:inline text-3xl md:text-4xl lg:text-5xl xl:text-7xl text-white mb-10 md:mb-[60px] tracking-[1px] header transition-transform hover:scale-105 duration-500 relative z-20">
-          EVEN MORE FEATURES ?!!!
+        <h2 className="uppercase text-center md:text-left rtl:md:text-right md:inline text-3xl md:text-4xl lg:text-5xl xl:text-7xl text-white mb-10 md:mb-[60px] tracking-[1px] header transition-transform hover:scale-105 duration-500 relative z-20">
+          {t("solution2.title")}
         </h2>
 
         <style>{`
@@ -32,7 +35,7 @@ function SolutionSec2() {
 
         <div className="relative w-full min-h-[700px] flex justify-center items-center mt-10">
           {/* Background Letters (THE BEST SERVICE) */}
-          <div className="absolute right-4 lg:right-10 top-1/2 transform -translate-y-1/2 flex gap-x-8 md:gap-x-12 text-[#051426] text-[4rem] md:text-[6rem] lg:text-[8rem] header uppercase leading-none select-none z-0 mix-blend-multiply opacity-80">
+          <div className="absolute right-4 lg:right-10 rtl:right-auto rtl:left-4 rtl:lg:left-10 top-1/2 transform -translate-y-1/2 flex gap-x-8 md:gap-x-12 text-[#051426] text-[4rem] md:text-[6rem] lg:text-[8rem] header uppercase leading-none select-none z-0 mix-blend-multiply opacity-80">
             <div className="flex flex-col gap-4">
               <span>T</span>
               <span>H</span>
@@ -58,7 +61,7 @@ function SolutionSec2() {
           {/* Whale Tail Image (Bottom Left) */}
           <img
             src={whalePic}
-            className="absolute  w-75 md:w-[519px] -bottom-20 -left-10 md:-bottom-50 md:-left-50  object-contain z-10 "
+            className="absolute w-75 md:w-[519px] -bottom-20 -left-10 md:-bottom-50 md:-left-50 rtl:left-auto rtl:-right-10 rtl:md:-right-50 object-contain z-10 rtl:scale-x-[-1]"
             alt="Whale tail"
           />
 
@@ -70,9 +73,9 @@ function SolutionSec2() {
           />
 
           {/* Floating Sign 1: ORDERING SYSTEM READY */}
-          <div className="absolute top-[10%] left-0 md:left-[5%] z-30 pointer-events-none">
+          <div className="absolute top-[10%] left-0 md:left-[5%] rtl:left-auto rtl:right-0 rtl:md:right-[5%] z-30 pointer-events-none">
             <div className="relative inline-block bg-[#f8f8f8] py-6 px-8 shadow-2xl">
-              <Sign title="ORDERING SYSTEM READY" />
+              <Sign title={t("solution2.sign1")} />
               <div
                 className="absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none rounded-sm"
                 style={{ backgroundImage: noiseBg }}
@@ -81,9 +84,9 @@ function SolutionSec2() {
           </div>
 
           {/* Floating Sign 2: LOGO CUSTOMIZATION */}
-          <div className="absolute bottom-[10%] right-0 md:right-[5%] z-30 pointer-events-none">
+          <div className="absolute bottom-[10%] right-0 md:right-[5%] rtl:right-auto rtl:left-0 rtl:md:left-[5%] z-30 pointer-events-none">
             <div className="relative inline-block bg-[#f8f8f8] py-6 px-8 shadow-2xl">
-              <Sign title="LOGO CUSTOMIZATION" />
+              <Sign title={t("solution2.sign2")} />
             </div>
           </div>
         </div>

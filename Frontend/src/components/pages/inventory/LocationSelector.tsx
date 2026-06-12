@@ -1,4 +1,5 @@
 import { type Location } from "../../../interfaces/InventoryTypes/inventory";
+import { useTranslation } from "../../../localization/i18n";
 
 interface LocationSelectorProps {
   currentView: boolean;
@@ -19,10 +20,14 @@ export default function LocationSelector({
   setIsDropdownOpen,
   setSelectedLocationId,
 }: LocationSelectorProps) {
+  const { t, language } = useTranslation("inventory");
+
   return (
     <div className="mb-6 custom-dropdown-container relative">
-      <h2 className="header font-bold text-[20px] md:text-[40px] tracking-widest uppercase mb-3 text-left">
-        {currentView ? "WareHouse" : "Store"} Management
+      <h2 className="header font-bold text-[20px] md:text-[40px] tracking-widest uppercase mb-3 text-left rtl:text-right">
+        {language === "ar"
+          ? `${t("management")} ${t(currentView ? "warehouse" : "store")}`
+          : `${t(currentView ? "warehouse" : "store")} ${t("management")}`}
       </h2>
       <div className="relative w-full">
         <button
@@ -31,7 +36,7 @@ export default function LocationSelector({
         >
           <span>
             {selectedLocation?.name ||
-              `Select ${currentView ? "Warehouse" : "Store"}`}
+              `${t("select")} ${t(currentView ? "warehouse" : "store")}`}
           </span>
           <svg
             className={`w-6 h-6 text-neutral-600 transition-transform duration-300 ${
@@ -62,7 +67,7 @@ export default function LocationSelector({
                       setSelectedLocationId(item._id);
                       setIsDropdownOpen(false);
                     }}
-                    className={`flex items-center justify-between w-full px-6 py-4 text-left header font-bold text-[18px] md:text-[24px] tracking-wide uppercase transition-all duration-200 cursor-pointer ${
+                    className={`flex items-center justify-between w-full px-6 py-4 text-left rtl:text-right header font-bold text-[18px] md:text-[24px] tracking-wide uppercase transition-all duration-200 cursor-pointer ${
                       isSelected
                         ? "bg-neutral-100 text-primary-700 font-extrabold"
                         : "text-neutral-700 hover:bg-neutral-50 hover:text-primary-700"

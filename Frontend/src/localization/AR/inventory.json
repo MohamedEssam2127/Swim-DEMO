@@ -1,0 +1,133 @@
+{
+  "title": "مخزون Swim",
+  "switchTo": "التبديل إلى",
+  "store": "متجر",
+  "warehouse": "مستودع",
+  "management": "إدارة",
+  "select": "اختر",
+  "stats": {
+    "totalValue": "إجمالي قيمة المخزون",
+    "vsLastQuarter": "+2.4% مقارنة بالربع السابق",
+    "totalWarehouses": "إجمالي المستودعات",
+    "totalStores": "إجمالي المتاجر",
+    "remaining": "المتبقي",
+    "activeStoreDetails": "تفاصيل المتجر النشط",
+    "noStoreSelected": "لم يتم اختيار متجر",
+    "totalItemsInStore": "إجمالي العناصر في المتجر",
+    "totalStoresAvailable": "إجمالي المتاجر المتاحة"
+  },
+  "search": {
+    "placeholder": "ابحث باسم العنصر أو الفئة أو المعرف",
+    "sortByQuantity": "ترتيب حسب الكمية",
+    "sortByPrice": "ترتيب حسب السعر",
+    "sortByName": "ترتيب حسب الاسم",
+    "sortById": "ترتيب حسب المعرف"
+  },
+  "table": {
+    "item": "العنصر",
+    "quantity": "الكمية",
+    "price": "السعر",
+    "loading": "جارٍ تحميل المخزون...",
+    "error": "فشل في جلب عناصر المخزون",
+    "noItems": "لا توجد عناصر حالياً"
+  },
+  "alert": {
+    "itemsFoundTitle": "عناصر موجودة في مواقع أخرى",
+    "searchQueryMatches": "استعلام البحث",
+    "matchesItems": "يطابق عناصر غير موجودة في",
+    "butAvailable": "لكنها متوفرة في أماكن أخرى:",
+    "category": "الفئة",
+    "availableOn": "متوفر في",
+    "unit": "وحدة",
+    "units": "وحدات",
+    "request": "طلب",
+    "cancelClear": "إلغاء ومسح",
+    "notFoundTitle": "العنصر غير موجود في أي مكان",
+    "notFoundDesc": "لا توجد عناصر نشطة تطابق",
+    "notFoundSuffix": "في أي من مستودعاتك أو متاجرك.",
+    "thisWarehouse": "هذا المستودع"
+  },
+  "operations": {
+    "warehouseTitle": "عمليات المستودع",
+    "storeTitle": "عمليات المتاجر",
+    "addNewItem": "إضافة عنصر جديد",
+    "exportToStore": "تصدير إلى متجر",
+    "importFromWarehouse": "استيراد من مستودع",
+    "moveBetweenWarehouses": "نقل بين المستودعات",
+    "moveBetweenStores": "نقل بين المتاجر"
+  },
+  "popups": {
+    "addNewItem": {
+      "title": "إضافة عنصر جديد",
+      "skuIdentifier": "معرف SKU",
+      "skuPlaceholder": "مثال: SWIM-9982-AX",
+      "storageZone": "منطقة التخزين",
+      "zoneCold": "ALPHA-01 (COLD)",
+      "zoneDry": "BETA-02 (DRY)",
+      "zoneHazmat": "GAMMA-03 (HAZMAT)",
+      "description": "وصف العنصر",
+      "descriptionPlaceholder": "أدخل المواصفات الفنية والخصائص الفيزيائية...",
+      "quantity": "الكمية (وحدات)",
+      "price": "سعر الوحدة ($)",
+      "trackingProtocol": "بروتوكول التتبع",
+      "rfid": "RFID",
+      "printTag": "طباعة البطاقة",
+      "initializeEntry": "بدء الإدخال",
+      "systemLogIdle": "سجل النظام: خامل — في انتظار إدخال المشغل",
+      "successToast": "تم إضافة العنصر بنجاح"
+    },
+    "exportToStore": {
+      "subtitle": "عملية المستودع v4.2",
+      "title": "تصدير إلى المتجر",
+      "chooseItem": "اختر العنصر",
+      "chooseItemPlaceholder": "اختر عنصر",
+      "destinationStore": "المتجر الوجهة",
+      "chooseDestinationPlaceholder": "اختر الوجهة",
+      "enterQuantity": "أدخل الكمية",
+      "quantityPlaceholder": "0000",
+      "currentStock": "المخزون الحالي",
+      "transitLead": "مدة النقل",
+      "transitLeadValue": "48 ساعة",
+      "executeExport": "تنفيذ التصدير",
+      "successToast": "تم نقل العنصر بنجاح"
+    },
+    "importFromWarehouse": {
+      "subtitle": "عملية المتجر v4.2",
+      "title": "استيراد من المستودع",
+      "chooseItem": "اختر العنصر",
+      "chooseItemPlaceholder": "اختر عنصر",
+      "sourceWarehouse": "المستودع المصدر",
+      "chooseSourcePlaceholder": "اختر المصدر",
+      "enterQuantity": "أدخل الكمية",
+      "quantityPlaceholder": "0000",
+      "executeImport": "تنفيذ الاستيراد",
+      "successToast": "تم نقل العنصر بنجاح"
+    },
+    "moveBetween": {
+      "opSubtitle": "معرف العملية: trns-991284",
+      "titleWarehouses": "نقل بين المستودعات",
+      "titleStores": "نقل بين المتاجر",
+      "sourceFacility": "المرفق المصدر",
+      "chooseSourcePlaceholder": "اختر المصدر",
+      "targetFacility": "المرفق المستهدف",
+      "chooseTargetPlaceholder": "اختر الهدف",
+      "itemSelection": "اختيار العنصر",
+      "chooseItemPlaceholder": "اختر عنصر",
+      "quantity": "الكمية",
+      "quantityPlaceholder": "أدخل الكمية",
+      "initiateTransfer": "بدء النقل",
+      "systemLogLedger": "تسجيل المعاملة في دفتر النظام ...",
+      "successToast": "تم نقل العنصر بنجاح"
+    },
+    "orderConfirmation": {
+      "title": "تأكيد الطلب",
+      "orderId": "رقم الطلب",
+      "printReceipt": "طباعة الفاتورة",
+      "returnToHistory": "العودة إلى السجل",
+      "summaryDetails": "تفاصيل الملخص",
+      "customerName": "اسم العميل",
+      "itemCount": "عدد العناصر",
+      "totalAmount": "المبلغ الإجمالي"
+    }
+  }
+}

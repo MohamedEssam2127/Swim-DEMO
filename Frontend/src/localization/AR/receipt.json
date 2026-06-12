@@ -1,0 +1,48 @@
+{
+  "title": "إنشاء الإيصال",
+  "ledgerSubtitle": "دفتر الأستاذ الرقمي / دفتر المعاملات",
+  "buttons": {
+    "exportCsv": "تصدير CSV",
+    "generatePdf": "إنشاء PDF",
+    "generating": "جارٍ الإنشاء…",
+    "print": "طباعة",
+    "sending": "جارٍ الإرسال…"
+  },
+  "loadingReceipt": "جارٍ تحميل بيانات الإيصال…",
+  "header": {
+    "companyName": "شركة Swim",
+    "division": "قسم اللوجستيات الصناعية",
+    "transId": "معرف المعاملة",
+    "timestamp": "الطابع الزمني",
+    "location": "الموقع"
+  },
+  "party": {
+    "customer": "العميل",
+    "storeLocation": "المتجر / الموقع",
+    "orderStatus": "حالة الطلب"
+  },
+  "table": {
+    "itemNo": "رقم العنصر",
+    "skuIdentifier": "معرف SKU",
+    "description": "الوصف",
+    "qty": "الكمية",
+    "unitVal": "قيمة الوحدة"
+  },
+  "notes": {
+    "label": "ملاحظة",
+    "priorityShipment": "شحنة ذات أولوية: التحقق اليدوي مطلوب",
+    "internalMemo": "مذكرة داخلية",
+    "defaultMemo": "الشحنة تحتوي على مواد خطرة. تأكد من اتباع جميع بروتوكولات النوع C بدقة في منفذ الوجهة 42. تحقق من سجلات درجة الحرارة عند الوصول."
+  },
+  "totals": {
+    "subtotal": "المجموع الفرعي",
+    "totalLedgerVal": "إجمالي قيمة الدفتر"
+  },
+  "footer": {
+    "authCode": "رمز المصادقة",
+    "validatedBy": "تم التحقق بواسطة محرك دفتر Swim المركزي الإصدار 4.2.0",
+    "legalNotice": "هذا سجل رقمي ملزم قانونياً. يجب أن تحتفظ النسخ المادية بتجزئة المصادقة للامتثال للتدقيق."
+  },
+  "unknownItem": "عنصر غير معروف",
+  "failedToLoad": "فشل في تحميل بيانات الإيصال."
+}
