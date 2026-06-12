@@ -160,14 +160,10 @@ cd backend
 # 2. Install dependencies
 npm install
 
-# 3. Create your environment file
-cp .env.example .env
-# Then fill in all required values (see Environment Variables below)
-
-# 4. Start in development mode
+# 3. Start in development mode
 npm run dev
 
-# 5. Start in production mode
+# 4. Start in production mode
 npm start
 ```
 
@@ -193,36 +189,6 @@ npm run build
 ```
 
 The frontend starts on `http://localhost:5173` by default and connects to the backend at `http://localhost:3000/api/`.
-
----
-
-## Environment Variables
-
-Create a `.env` file in the `backend/` directory with the following variables:
-
-```env
-# Server
-PORT=3000
-NODE_ENV=development
-
-# Database
-MONGO_URI=mongodb://localhost:27017/swim
-
-# Authentication
-JWT_SECRET=your_jwt_secret_here
-
-# Email (Nodemailer)
-EMAIL_HOST=smtp.example.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_password
-
-# Google Gemini AI
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# Stripe
-STRIPE_SECRET_KEY=your_stripe_secret_key_here
-```
 
 ---
 
