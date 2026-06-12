@@ -52,6 +52,12 @@ export const createStockRequest = async (req, res) => {
       { path: 'items.itemId', select: 'name category price' },
     ]);
 
+    // Emit real-time notification via Socket.io
+    const io = req.app.get('socketio');
+    if (io) {
+      io.to(`org_${req.user.organizationID}`).emit('new_stock_request', populated);
+    }
+
     res.status(201).json({
       success: true,
       data: populated,
