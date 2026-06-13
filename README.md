@@ -1,301 +1,343 @@
-# 🌊 Swim — Inventory Management System
+<div align="center">
 
-A full-stack inventory management platform built for businesses that operate across multiple warehouses and stores. Swim handles stock tracking, inter-location transfers, sales orders, AI-assisted restocking, and real-time notifications — all under a role-based access system.
+# 🌊 SWIM Protocol
 
----
+### Multi-Store Inventory, Order & Stock Request Management Platform
 
-## 📋 Table of Contents
+A full-stack web application for organizations to manage **inventory across multiple stores and warehouses**, process **orders with integrated Stripe payments**, handle **stock transfer requests**, and track **real-time activity** — all from one unified dashboard.
 
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Backend Setup](#backend-setup)
-  - [Frontend Setup](#frontend-setup)
-- [Environment Variables](#environment-variables)
-- [API Reference](#api-reference)
-- [Role System](#role-system)
-- [Project Structure](#project-structure)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-View_App-00C2A8?style=for-the-badge)](https://swim-demo-phi.vercel.app/)
+[![Figma Design](https://img.shields.io/badge/Figma-Design_File-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/U0HjirmTr4i3ENCV3BTDup/SWIM-rebranding?node-id=63-5733&t=LhdDHHeLwZmVJOzq-0)
+
+</div>
 
 ---
 
-## Overview
+## 📑 Table of Contents
 
-Swim is a multi-tenant inventory management system. When an **Owner** registers, their organization, first warehouse, and account are created automatically. They can then invite **Store Managers**, create additional locations (warehouses or stores), manage items and inventory, process customer orders, and oversee stock requests from their managers — all in real time via WebSocket notifications.
-
-An integrated AI agent (powered by Google Gemini) can analyze warehouse stock levels and automatically generate smart stock request quantities and logistics notes.
+- [About the Project](#-about-the-project)
+- [Tech Stack](#-tech-stack)
+- [Features](#-features)
+- [Screenshots & Design](#-screenshots--design)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [API Documentation](#-api-documentation)
+- [Roles & Permissions](#-roles--permissions)
+- [Real-Time Notifications](#-real-time-notifications)
+- [Localization](#-localization)
+- [Contributors](#-contributors)
 
 ---
 
-## Tech Stack
+## 📖 About the Project
 
-### Backend
-| Layer | Technology |
-|---|---|
-| Runtime | Node.js (ESM) |
-| Framework | Express 5 |
-| Database | MongoDB + Mongoose |
-| Auth | JWT + bcryptjs |
-| Real-time | Socket.IO |
-| AI Agent | Google Gemini (`@google/generative-ai`) |
-| Payments | Stripe |
-| Email | Nodemailer |
-| Validation | Joi, Zod, express-validator |
-| API Docs | Swagger UI (`swagger-jsdoc` + `swagger-ui-express`) |
-| Dev Tools | Nodemon, Vitest, Supertest |
+**SWIM Protocol** is a multi-tenant inventory and operations platform built for businesses that manage stock across **multiple stores and warehouses**. It enables organization owners and store managers to:
+
+- Track inventory levels per item, per location, in real time
+- Move stock between **warehouses and stores** with full audit trails
+- Create and fulfill **customer orders** with **Stripe-powered checkout**
+- Submit, approve, and track **stock requests** between locations
+- View **transaction history**, statistics, and dashboards
+- Receive **live notifications** via Socket.IO when requests are made, approved, or rejected
+
+It was built as a collaborative full-stack project using a modern **MERN-based stack** with **TypeScript**, **Redux Toolkit**, and a fully documented **REST API**.
+
+---
+
+## 🛠 Tech Stack
 
 ### Frontend
-| Layer | Technology |
-|---|---|
-| Framework | React 19 |
-| Language | TypeScript |
-| Build Tool | Vite 8 |
-| State Management | Redux Toolkit |
-| Routing | React Router DOM v7 |
-| HTTP Client | Axios |
-| Real-time | Socket.IO Client |
-| Styling | Tailwind CSS v4 |
-| Payments | Stripe.js |
-| Notifications | React Hot Toast |
+
+![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router_7-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO_Client-010101?style=for-the-badge&logo=socket.io&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe.js-008CDD?style=for-the-badge&logo=stripe&logoColor=white)
+
+### Backend
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express_5-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=for-the-badge&logo=socket.io&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
+
+### AI / Tooling
+
+![Google Gemini](https://img.shields.io/badge/Gemini_API-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
 
 ---
 
-## Features
+## ✨ Features
 
-### 🔐 Authentication & Authorization
-- Owner self-registration (auto-creates organization + first warehouse)
-- JWT-based login with persistent sessions
-- Role-based route protection (`Owner` / `StoreManager`)
-- Email-based password reset with token expiration
-- Owner-invited Store Manager accounts
-
-### 🏢 Organization & Location Management
-- Multi-tenant organizations with `free` and `pro` tiers
-- Create and manage **Warehouses** and **Stores** as location types
-- Assign Store Managers to specific store locations
+### 🏢 Multi-Tenant Organization Management
+- Organizations with multiple **stores** and **warehouses**
+- Role-based access: **Owner**, **Store Manager**, and **Staff**
+- Location-aware inventory and permissions
 
 ### 📦 Inventory Management
-- Per-location inventory tracking with live quantity updates
-- Switch between warehouse and store views (Owner)
-- Add new items with category, price, and image
-- Export items from warehouse to store
-- Move stock between two warehouses or between two stores
-- Import stock from a warehouse into a store
-- Search and sort inventory across all locations
-- Cross-location stock alert when an item is available elsewhere
+- Real-time stock levels per item per location
+- Add new items, adjust quantities, and track item history
+- Move stock **between warehouses** or **from warehouse to store**
+- Move stock **between stores**
+- Export stock from warehouse to store with full popup workflows
 
-### 🛒 Orders & Receipts
-- Create customer orders tied to a specific store
-- Order status workflow: `pending → confirmed → shipped → delivered → cancelled`
-- Receipt generation per completed order
+### 🧾 Orders & Payments
+- Create customer orders from in-stock items
+- Integrated **Stripe checkout** (5-step payment flow: intent → confirm → webhook → order finalize → receipt)
+- Auto-generated **digital receipts** with line items, totals, and customer info
+- Order history with searchable, filterable records
 
 ### 🔄 Stock Requests
-- Store Managers submit stock requests from their store to a warehouse
-- Owners receive real-time toast notifications via Socket.IO when a new request arrives
-- Owners can approve or reject requests with an optional admin note
-- Request status: `pending → approved / rejected`
+- Store managers submit **stock requests** to the organization owner
+- Owners **approve** or **reject** requests with admin notes
+- Live request status updates pushed via WebSockets
 
-### 🤖 AI Agent
-- Chat interface powered by Google Gemini
-- AI-assisted stock request creation: analyzes warehouse availability and auto-generates a recommended quantity and logistics note (capped to available stock)
+### 📊 Dashboards & Statistics
+- Per-store and organization-wide statistics
+- Transaction history (sales, transfers, restocks, refunds/dumps)
+- Activity history feed with filters
 
-### 💳 Payments
-- Stripe integration for payment processing on orders
+### 🔐 Authentication & Authorization
+- JWT-based authentication with secure password hashing (bcrypt)
+- Role-based route guards on both frontend and backend
+- Profile management for owners, managers, and staff
 
-### 📊 Statistics & History
-- System performance metrics dashboard (latency, throughput, uptime, error rate)
-- Dock activity tracking (ONLOADING, STAGING, CLEARED)
-- Transaction history log (sales, transfers, restocks, dumps)
+### 🔔 Real-Time Notifications
+- Socket.IO powered toast notifications
+- Owners get notified instantly when a store manager submits a request
+- Managers get notified when their requests are approved/rejected
 
-### 📡 Real-time
-- Socket.IO rooms scoped per organization (`org_<id>`)
-- Live stock request notifications pushed to all connected Owners in the same org
+### 🌍 Internationalization
+- Full **English** and **Arabic** localization with a language switcher
+- RTL-ready layout support
 
----
-
-## Architecture
-
-```
-┌─────────────────────────────────────────┐
-│              Frontend (React)            │
-│  Vite · Redux Toolkit · React Router     │
-│  Socket.IO Client · Tailwind CSS         │
-└────────────────┬────────────────────────┘
-                 │ HTTP (REST) + WebSocket
-┌────────────────▼────────────────────────┐
-│              Backend (Express)           │
-│  JWT Auth · Role Middleware              │
-│  Socket.IO Server · Swagger Docs         │
-│  Google Gemini Agent · Stripe            │
-└────────────────┬────────────────────────┘
-                 │ Mongoose
-┌────────────────▼────────────────────────┐
-│              MongoDB                     │
-│  Users · Organizations · Locations       │
-│  Items · Inventory · Orders              │
-│  Transactions · StockRequests            │
-└─────────────────────────────────────────┘
-```
+### 📚 Self-Documenting API
+- Auto-generated **Swagger/OpenAPI** docs at `/api-docs`
+- Bearer-token auth support directly in the Swagger UI
 
 ---
 
-## Getting Started
+## 🎨 Screenshots & Design
+
+The complete UI/UX design system, including the SWIM rebranding, component library, and high-fidelity mockups, is available on Figma:
+
+> 🔗 **[View the Figma Design File](https://www.figma.com/design/U0HjirmTr4i3ENCV3BTDup/SWIM-rebranding?node-id=63-5733&t=LhdDHHeLwZmVJOzq-0)**
+> <h3>Landing Page</h3>
+<p>
+  <img src="https://github.com/user-attachments/assets/6f3f5488-e1c2-4c44-ac23-7a1317b77d14" width="1000"/>
+</p>
+
+> <h3>Statistics Page</h3>
+<p>
+  <img src="https://github.com/user-attachments/assets/3e805e41-83eb-467b-bb3b-d51e50bcdd78" width="1000"/>
+</p>
+
+<h3>Inventory Page</h3>
+<p>
+  <img src="https://github.com/user-attachments/assets/ecaf1c87-79d9-4d45-aedd-ffb6c03c3052" width="1000"/>
+</p>
+
+<h3>Popups</h3>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/65c3599c-3695-4f51-8f34-6aa2291cc12d" width="480" height="800"/>
+  <img src="https://github.com/user-attachments/assets/bef51d91-d98a-4b18-8038-c39bbec8eb12" width="480" height="800"/>
+</p>
+ 
+---
+
+## 📂 Project Structure
+
+```
+swim-protocol/
+├── frontend/                  # React + TypeScript + Vite client
+│   ├── src/
+│   │   ├── components/        # Reusable UI components & popups
+│   │   ├── pages/              # Route-level pages (inventory, orders, profile, history, auth...)
+│   │   ├── store/
+│   │   │   └── slices/         # Redux Toolkit slices (auth, inventory, orders, requests, store managers, history)
+│   │   ├── interfaces/         # Shared TypeScript types & DTOs
+│   │   ├── localization/       # EN / AR translation files + i18n config
+│   │   ├── layout/              # Navbar, mobile nav, footer
+│   │   ├── core/                # Socket.IO client setup
+│   │   └── utils/                # Toast helpers, formatters, etc.
+│   └── package.json
+│
+├── backend/                    # Node.js + Express + MongoDB API
+│   ├── controllers/             # Route handlers (auth, inventory, orders, transactions...)
+│   ├── models/                  # Mongoose schemas
+│   ├── routes/                  # Express route definitions
+│   ├── middlewares/              # Auth, validation, error handling
+│   ├── config/                   # DB connection & Swagger config
+│   ├── utils/                     # Helper utilities
+│   └── server.js                  # App entry point (Express + Socket.IO)
+│
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Node.js** v18+
-- **MongoDB** (local or Atlas)
-- **npm** or **yarn**
+- **Node.js** ≥ 18.x
+- **MongoDB** (local instance or MongoDB Atlas connection string)
+- **Stripe** account (test mode API keys)
+- npm or yarn
 
----
-
-### Backend Setup
+### 1️⃣ Clone the repository
 
 ```bash
-# 1. Navigate to the backend directory
+git clone https://github.com/<your-username>/swim-protocol.git
+cd swim-protocol
+```
+
+### 2️⃣ Backend setup
+
+```bash
 cd backend
-
-# 2. Install dependencies
 npm install
-
-# 3. Start in development mode
-npm run dev
-
-# 4. Start in production mode
-npm start
+cp .env.example .env   # add your environment variables (see below)
+npm run dev             # starts the server with nodemon
 ```
 
-The server starts on `http://localhost:3000` by default.  
-Interactive API docs are available at **`http://localhost:3000/api-docs`**.
+The API will run at **`http://localhost:3000`** by default, with Swagger docs at **`http://localhost:3000/api-docs`**.
 
----
-
-### Frontend Setup
+### 3️⃣ Frontend setup
 
 ```bash
-# 1. Navigate to the frontend directory
 cd frontend
-
-# 2. Install dependencies
 npm install
-
-# 3. Start the development server
 npm run dev
-
-# 4. Build for production
-npm run build
 ```
 
-The frontend starts on `http://localhost:5173` by default and connects to the backend at `http://localhost:3000/api/`.
+The app will be available at **`http://localhost:5173`** (default Vite port).
+
+### 4️⃣ Build for production
+
+```bash
+# Frontend
+cd frontend && npm run build
+
+# Backend
+cd backend && npm start
+```
 
 ---
 
-## API Reference
+## 🔑 Environment Variables
 
-All routes are prefixed with `/api`. Interactive documentation with request/response schemas is available at `/api-docs` when the backend is running.
+### Backend (`backend/.env`)
 
-| Resource | Base Path | Description |
+| Variable | Description |
+|---|---|
+| `PORT` | Port for the Express server (default `3000`) |
+| `MONGO_URI` | MongoDB connection string |
+| `JWT_SECRET` | Secret key used to sign JWT tokens |
+| `STRIPE_SECRET_KEY` | Stripe secret API key |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `GEMINI_API_KEY` | Google Gemini API key (for AI agent features) |
+| `OPENAI_API_KEY` | OpenAI key (used via LangChain, if applicable) |
+| `EMAIL_USER` / `EMAIL_PASS` | SMTP credentials for Nodemailer |
+| `NODE_ENV` | `development` \| `production` |
+
+### Frontend (`frontend/.env`)
+
+| Variable | Description |
+|---|---|
+| `VITE_API_BASE_URL` | Base URL of the backend API (e.g. `http://localhost:3000/api`) |
+| `VITE_SOCKET_URL` | URL for the Socket.IO server (e.g. `http://localhost:3000`) |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+
+---
+
+## 📘 API Documentation
+
+The backend exposes a fully interactive **Swagger UI** covering all endpoints:
+
+```
+GET /api-docs           → Interactive Swagger UI
+GET /api-docs.json      → Raw OpenAPI 3.0 spec
+```
+
+### Main API Resources
+
+| Resource | Base Route | Description |
 |---|---|---|
-| Auth | `/api/auth` | Register, login, forgot/reset password, invite store manager |
-| Users | `/api/users` | User profile management |
-| Organizations | `/api/organization` | Org CRUD, tier upgrade/downgrade |
-| Locations | `/api/location` | Warehouse and store management |
-| Items | `/api/item` | Product catalog |
-| Inventory | `/api/inventory` | Per-location stock quantities |
-| Stock Requests | `/api/stock-requests` | Restock request workflow |
-| Orders | `/api/order` | Customer order management |
-| Transactions | `/api/transactions` | Sales, transfers, restocks, dumps |
-| Customers | `/api/customer` | Customer records |
-| AI Agent | `/api/agent` | Gemini chat and AI-assisted stock requests |
+| 🔐 Auth | `/api/auth` | Register, login, JWT issuance |
+| 👤 Users | `/api/users` | User profile & management |
+| 🏢 Organizations | `/api/organization` | Organization CRUD |
+| 📍 Locations | `/api/location` | Stores & warehouses |
+| 📦 Inventory | `/api/inventory` | Stock levels, transfers, exports |
+| 🏷 Items | `/api/item` | Product/item catalog |
+| 👥 Customers | `/api/customer` | Customer records for orders |
+| 🧾 Orders | `/api/order` | Order creation, Stripe payments, receipts |
+| 🔄 Stock Requests | `/api/stock-requests` | Inter-location stock requests |
+| 💳 Transactions | `/api/transactions` | Sales, transfers, restocks, refunds |
+| 🤖 Agent | `/api/agent` | AI-powered assistant endpoints |
 
 ---
 
-## Role System
+## 👥 Roles & Permissions
 
-| Capability | Owner | StoreManager |
-|---|:---:|:---:|
-| Register organization | ✅ | — |
-| Invite Store Managers | ✅ | — |
-| Manage locations (warehouses & stores) | ✅ | — |
-| View all inventory (warehouses + stores) | ✅ | Store only |
-| Add / edit items | ✅ | — |
-| Export stock to store / move between locations | ✅ | — |
-| Create stock requests | — | ✅ |
-| Approve / reject stock requests | ✅ | — |
-| Create customer orders | ✅ | ✅ |
-| View transaction history | ✅ | ✅ |
-| Upgrade organization tier | ✅ | — |
-| Receive real-time restock notifications | ✅ | — |
+| Role | Capabilities |
+|---|---|
+| **Owner** | Full access — manages organization, all stores/warehouses, approves/rejects stock requests, views all statistics |
+| **Store Manager** | Manages inventory for their assigned store, creates orders, submits stock requests |
+| **Staff** | Limited operational access (varies by configuration) |
+
+Role-based **route guards** are enforced on the frontend (`Guards` components) and validated again on the backend via JWT middleware.
 
 ---
 
-## Project Structure
+## 🔔 Real-Time Notifications
 
-```
-├── backend/
-│   ├── config/
-│   │   ├── dbConfig.js          # MongoDB connection
-│   │   └── swagger.js           # OpenAPI spec
-│   ├── controllers/             # Business logic
-│   │   ├── agent.controller.js  # AI agent (Gemini)
-│   │   ├── auth.controller.js
-│   │   ├── inventory.controller.js
-│   │   ├── stockRequest.controller.js
-│   │   ├── transaction.controller.js
-│   │   └── ...
-│   ├── middlewares/
-│   │   ├── auth.middleware.js   # JWT protection
-│   │   └── role.middleware.js   # Role-based authorization
-│   ├── models/                  # Mongoose schemas
-│   │   ├── user.model.js
-│   │   ├── organization.model.js
-│   │   ├── location.model.js
-│   │   ├── item.model.js
-│   │   ├── inventory.model.js
-│   │   ├── order.model.js
-│   │   ├── stockRequest.model.js
-│   │   └── transaction.model.js
-│   ├── routes/                  # Express routers
-│   ├── utils/
-│   │   ├── sendEmail.js         # Nodemailer helper
-│   │   └── validators.js        # Input validation
-│   └── server.js                # Entry point + Socket.IO setup
-│
-└── frontend/
-    ├── public/
-    ├── src/
-    │   ├── components/          # Reusable UI components
-    │   ├── core/
-    │   │   ├── apiClient.ts     # Axios instance
-    │   │   ├── api.constants.ts # Base URL
-    │   │   └── socket.ts        # Socket.IO client
-    │   ├── layout/
-    │   │   ├── nav/             # Desktop + mobile navigation
-    │   │   └── footer/
-    │   ├── pages/               # Route-level pages
-    │   │   ├── home/
-    │   │   ├── inventory/
-    │   │   ├── order/
-    │   │   ├── history/
-    │   │   ├── statistics/
-    │   │   ├── profile/
-    │   │   ├── reciept/
-    │   │   ├── signin/
-    │   │   └── signup/
-    │   ├── store/               # Redux store + slices
-    │   │   └── slices/
-    │   │       ├── authSlice.ts
-    │   │       ├── inventorySlice.ts
-    │   │       ├── orderSlice.ts
-    │   │       ├── requestsSlice.ts
-    │   │       └── ...
-    │   ├── types/               # Shared TypeScript types
-    │   ├── interfaces/          # TypeScript interfaces
-    │   ├── utils/
-    │   │   └── toast.ts         # Notification helpers
-    │   ├── App.tsx              # Root layout + Socket.IO setup
-    │   └── main.tsx             # Router + Redux Provider
-    └── vite.config.ts
-```
+SWIM Protocol uses **Socket.IO** for live, room-based notifications:
+
+- Each user joins a room based on their **organization ID** and **personal user ID**
+- 📥 **Owners** receive a toast + live badge update when a new stock request comes in
+- ✅ / ❌ **Store Managers** receive a toast when their request is **approved** or **rejected**, including any admin notes
+
+---
+
+## 🌍 Localization
+
+The frontend supports full bilingual UI:
+
+- 🇬🇧 **English (EN)**
+- 🇪🇬 **Arabic (AR)**
+
+Switch languages instantly via the in-app **Language Switcher** — translations are organized per-namespace (e.g. `common`, `toast`) for easy extension to additional languages.
+
+---
+
+## 🤝 Contributors
+
+Built with ❤️ by the SWIM Protocol team.
+- 👨🏻‍💻 Abdelrahman Khaled Mohammed [Github](https://github.com/AbdelrhmanKhaled76)
+- 👨🏻‍💻 Mohamed EssamElDin AbdelFattah [Github](https://github.com/MohamedEssam2127)
+- 👨🏻‍💻 Islam Adel Ahmed [Github](https://github.com/ISLAM2ADEL)
+- 👨🏻‍💻 Mario Nady Khalaf [Github](https://github.com/marionadydev)
+- 👩🏻‍💻 Mariam Essam Edward [Github](https://github.com/MariamEssam5)
+
+---
+
+<div align="center">
+
+**⭐ If you found this project interesting, consider giving it a star!**
+
+[Live Demo](https://swim-demo-phi.vercel.app/) · [Figma Design](https://www.figma.com/design/U0HjirmTr4i3ENCV3BTDup/SWIM-rebranding?node-id=63-5733&t=LhdDHHeLwZmVJOzq-0)
+
+</div>
